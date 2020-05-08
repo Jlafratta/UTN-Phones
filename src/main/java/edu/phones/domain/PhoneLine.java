@@ -1,4 +1,4 @@
-package edu.phones.domain;
+package main.java.edu.phones.domain;
 
 public class PhoneLine {
 

@@ -1,4 +1,4 @@
-package edu.phones.domain;
+package main.java.edu.phones.domain;
 
 public class Province {
 
@@ -32,9 +32,9 @@ public class Province {
 
     @Override
     public String toString() {
-        return "Province [" +
+        return "Province{" +
                 "provinceId=" + provinceId +
                 ", name='" + name + '\'' +
-                ']';
+                '}';
     }
 }
