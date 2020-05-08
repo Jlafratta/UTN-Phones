@@ -1,4 +1,4 @@
-package main.java.edu.phones.domain;
+package edu.phones.domain;
 
 public class UserType {
 

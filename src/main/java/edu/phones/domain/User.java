@@ -1,4 +1,4 @@
-package main.java.edu.phones.domain;
+package edu.phones.domain;
 
 public class User {
 
@@ -65,12 +65,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "User [" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userProfile=" + userProfile +
-                ", city=" + city +
-                '}';
+                ", password='" + password + "\']" +
+                "\n" + userProfile +
+                "\n" + city ;
     }
 }

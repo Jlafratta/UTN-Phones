@@ -1,4 +1,4 @@
-package main.java.edu.phones.domain;
+package edu.phones.domain;
 
 public class City {
 
@@ -54,11 +54,10 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" +
+        return "City [" +
                 "cityId=" + cityId +
                 ", prefix='" + prefix + '\'' +
-                ", name='" + name + '\'' +
-                ", province=" + province +
-                '}';
+                ", name='" + name + "\']" +
+                "\n" + province;
     }
 }
