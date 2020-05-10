@@ -47,6 +47,7 @@ public class UserMySQLDao implements UserDao {
         }
     }
 
+    // Crea el usuario con la data traida del result set y lo devuelve
     private User createUser(ResultSet rs) throws SQLException {
         User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"),
                         (new UserProfile(rs.getInt("id_profile"), rs.getString("name"), rs.getString("lastname"), rs.getInt("dni") )),

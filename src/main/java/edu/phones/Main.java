@@ -2,46 +2,47 @@ package edu.phones;
 
 import edu.phones.controller.UserController;
 import edu.phones.dao.UserDao;
+import edu.phones.dao.factory.AbstractDaoFactory;
 import edu.phones.dao.mysql.UserMySQLDao;
 import edu.phones.domain.User;
 import edu.phones.exceptions.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import edu.phones.service.UserService;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        //TODO update connection
+        Properties config = new Properties();
+        config.load(new FileInputStream("./conf/app.properties"));
 
-        try{
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        }catch (InstantiationException e){
-            e.printStackTrace();
-        }catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        // Genero el factory
+        AbstractDaoFactory daoFactory =  (AbstractDaoFactory) Class.forName(config.getProperty("db.dao.factory")).getDeclaredConstructor(Properties.class).newInstance(config);
 
-        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/PhonesAPI?user=root&password=");
-
-        UserDao userDao = new UserMySQLDao(connect);
-
+        // Traigo el dao que me provee el factory
+        UserDao userDao = daoFactory.getUserDao();
+        // Service
         UserService userService = new UserService(userDao);
-
+        // Controller
         UserController userController = new UserController(userService);
 
         try {
+
             User loggedUser = userController.login("LaGorrita", "asd123");
             System.out.println(loggedUser);
-        } catch (ValidationException e) {
+
+        }  catch (UserNotExistException e) {
             e.printStackTrace();
-        } catch (UserNotExistException e) {
+        } catch (ValidationException e) {
             e.printStackTrace();
         }
 
