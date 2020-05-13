@@ -14,7 +14,7 @@ public class SessionScheduler {
     SessionManager sessionManager;
 
     @Async
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 300000)      // Esto hace que cada 5 min spring ejecute esto
     public void expiresSessions(){
         sessionManager.expireSessions();
     }

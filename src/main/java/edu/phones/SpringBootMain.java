@@ -6,8 +6,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@EnableAsync
-@EnableScheduling
+@EnableAsync        //Esto
+@EnableScheduling   //Y esto son para el scheduler del expiresSessions
 public class SpringBootMain {
 
     public static void main(String[] args){

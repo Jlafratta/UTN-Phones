@@ -2,6 +2,7 @@ package edu.phones.session;
 
 import edu.phones.domain.User;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.Hashtable;
@@ -13,7 +14,7 @@ public class SessionManager {
 
     Map<String, Session> sessionMap = new Hashtable<>();
 
-    int sessionExpiration = 60;
+    int sessionExpiration = 600;
 
     public String createSession(User user){
         String token = UUID.randomUUID().toString();
@@ -22,6 +23,10 @@ public class SessionManager {
     }
 
     public Session getSession(String token) {
+
+        if(StringUtils.isEmpty(token)){         // ESTO ESTA CROTO
+            return null;                        // pero anda xd
+        }
 
         Session session = sessionMap.get(token);
         if(session != null){

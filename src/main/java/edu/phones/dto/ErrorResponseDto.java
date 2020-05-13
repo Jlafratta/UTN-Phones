@@ -3,7 +3,7 @@ package edu.phones.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ErrorResponseDto {
-    @JsonProperty
+    @JsonProperty   // Indica que tiene que serializar a json el atributo
     int code;
     @JsonProperty
     String description;

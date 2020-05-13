@@ -25,6 +25,12 @@ public class LoginController {
         this.sessionManager = sessionManager;
     }
 
+    /**
+     *  Si quiero devolver el token en el body de la response, ademas de en el header,
+     *  tengo que castear el ResponseEntity (tipo de dato del metodo) a <String>
+     *  y declarar la response de la siguiente manera:
+     *  response = ResponseEntity.ok().headers(createHeaders(token)).body(token);
+     */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) throws InvalidLoginException, ValidationException {
         ResponseEntity response;
