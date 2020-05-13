@@ -1,36 +1,47 @@
-/**
+
 package edu.phones;
 
+import edu.phones.config.Configuration;
 import edu.phones.controller.UserController;
 import edu.phones.dao.UserDao;
-import edu.phones.dao.factory.AbstractDaoFactory;
+
 import edu.phones.dao.mysql.UserMySQLDao;
 import edu.phones.domain.User;
 import edu.phones.exceptions.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import edu.phones.service.UserService;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+
+/**
+ *      OUTDATED
+ *
+ *  Solo se usa para test de Controller/Service/Dao
+ *
+ */
 
 public class Main {
 
     public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        Properties config = new Properties();
-        config.load(new FileInputStream("./conf/app.properties"));
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+        }catch (InstantiationException e){
+            e.printStackTrace();
+        }catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
 
-        // Genero el factory
-        AbstractDaoFactory daoFactory =  (AbstractDaoFactory) Class.forName(config.getProperty("db.dao.factory")).getDeclaredConstructor(Properties.class).newInstance(config);
+        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/PhonesAPI?user=root&password=");
 
-        // Traigo el dao que me provee el factory
-        UserDao userDao = daoFactory.getUserDao();
+        // Dao
+        UserDao userDao = new UserMySQLDao(connect);
         // Service
         UserService userService = new UserService(userDao);
         // Controller
@@ -50,4 +61,3 @@ public class Main {
     }
 }
 
- **/
