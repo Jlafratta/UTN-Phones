@@ -106,3 +106,16 @@ CREATE TABLE `call`(
     CONSTRAINT `fk_id_bill` FOREIGN KEY (`id_bill`) REFERENCES `bill` (`id_bill`),
     CONSTRAINT `fk_tariff_key` FOREIGN KEY (`tariff_key`) REFERENCES `tariff` (`tariff_key`)
 );
+
+INSERT INTO `province` (province_name) values ("Buenos Aires");
+SELECT * FROM `province`;
+
+INSERT INTO `city` (prefix, city_name, id_province) values ("223","Mar del Plata", 1);
+SELECT * FROM `city`;
+
+INSERT INTO `user_profile` (name, lastname, dni) value ("Julian", "Lafratta", 41307551);
+SELECT * FROM `user_profile`;
+
+INSERT INTO `user` (username, password, id_profile, id_city) values ("LaGorrita", "asd123", 1, 1);
+SELECT * FROM `user`;
+

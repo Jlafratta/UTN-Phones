@@ -5,6 +5,9 @@ import edu.phones.domain.City;
 import edu.phones.domain.Province;
 import edu.phones.domain.User;
 import edu.phones.domain.UserProfile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,10 +21,13 @@ import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
 
+@Repository
+@Qualifier("userMySQLDao")
 public class UserMySQLDao implements UserDao {
 
     Connection connect;
 
+    @Autowired
     public UserMySQLDao(Connection connect) {
         this.connect = connect;
     }
