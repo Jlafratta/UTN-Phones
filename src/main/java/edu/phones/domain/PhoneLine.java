@@ -4,18 +4,21 @@ public class PhoneLine {
 
     Integer pLineId;
     String number;
+    Boolean state;
     User user;
     UserType userType;
 
-    public PhoneLine(Integer pLineId, String number, User user, UserType userType) {
+    public PhoneLine(Integer pLineId, String number, Boolean state, User user, UserType userType) {
         this.pLineId = pLineId;
         this.number = number;
+        this.state = state;
         this.user = user;
         this.userType = userType;
     }
 
-    public PhoneLine(String number, User user, UserType userType) {
+    public PhoneLine(String number, Boolean state, User user, UserType userType) {
         this.number = number;
+        this.state = state;
         this.user = user;
         this.userType = userType;
     }
@@ -34,6 +37,14 @@ public class PhoneLine {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Boolean getState() {
+        return state;
+    }
+
+    public void setState(Boolean state) {
+        this.state = state;
     }
 
     public User getUser() {
