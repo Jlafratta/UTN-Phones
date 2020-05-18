@@ -6,7 +6,11 @@ import edu.phones.controller.UserController;
 import edu.phones.dao.UserDao;
 
 import edu.phones.dao.mysql.UserMySQLDao;
+import edu.phones.domain.City;
+import edu.phones.domain.Province;
 import edu.phones.domain.User;
+import edu.phones.domain.UserProfile;
+import edu.phones.exceptions.UserAlreadyExistsException;
 import edu.phones.exceptions.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import edu.phones.service.UserService;
@@ -16,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *      OUTDATED
@@ -48,13 +53,39 @@ public class Main {
         UserController userController = new UserController(userService);
 
         try {
-
+            System.out.println("\nLOGIN:");
             User loggedUser = userController.login("LaGorrita", "asd123");
             System.out.println(loggedUser);
+
+            System.out.println("\nGET BY ID:");
+            User gettedById = userController.getById(2);
+            System.out.println(gettedById);
+
+            System.out.println("\nGET ALL: \n");
+            List<User> usersList = userController.getAll();
+            System.out.println(usersList);
+
+            System.out.println("\nADD USER:");
+            User newUser = new User(1, "LaGorri", "asd123", new UserProfile(1,"Julian", "Lafratta", 41307441), new City(3,"223", "Mar del Plata", new Province(1,"Buenos Aires")));
+            newUser = userController.addUser(newUser);
+            System.out.println(newUser);
+
+            System.out.println("\nMODIFY USER:");
+            newUser.setUsername("LaGorriPapa");
+            newUser = userController.modifyUser(newUser);
+            System.out.println(userController.getById(newUser.getUserId()));
+
+            System.out.println("\nREMOVE USER:");
+            userController.removeUser(newUser);
+            System.out.println(userController.getAll());
+
+
 
         }  catch (UserNotExistException e) {
             e.printStackTrace();
         } catch (ValidationException e) {
+            e.printStackTrace();
+        } catch (UserAlreadyExistsException e) {
             e.printStackTrace();
         }
 

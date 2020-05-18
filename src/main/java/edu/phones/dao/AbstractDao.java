@@ -1,10 +1,12 @@
 package edu.phones.dao;
 
+import edu.phones.exceptions.UserAlreadyExistsException;
+
 import java.util.List;
 
 public interface AbstractDao<T> {
 
-    T add(T value);
+    T add(T value) throws UserAlreadyExistsException;
 
     Integer update(T value);
 
