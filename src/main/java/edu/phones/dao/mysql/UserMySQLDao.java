@@ -147,6 +147,7 @@ public class UserMySQLDao implements UserDao {
             return u;
 
         } catch (SQLException e) {
+
             throw new RuntimeException("Error al buscar por id", e);
         }
 
