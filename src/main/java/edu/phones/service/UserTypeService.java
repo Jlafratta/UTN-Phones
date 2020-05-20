@@ -16,7 +16,7 @@ public class UserTypeService {
     UserTypeDao typeDao;
 
     @Autowired
-    public UserTypeService(@Qualifier("userTypeMysqlDao") UserTypeDao typeDao) {
+    public UserTypeService(@Qualifier("userTypeMySQLDao") UserTypeDao typeDao) {
         this.typeDao = typeDao;
     }
 

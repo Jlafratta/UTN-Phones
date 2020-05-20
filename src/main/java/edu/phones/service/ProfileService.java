@@ -13,7 +13,7 @@ public class ProfileService {
     ProfileDao profileDao;
 
     @Autowired
-    public ProfileService(@Qualifier("profileMysqlDao")ProfileDao profileDao) {
+    public ProfileService(@Qualifier("profileMySQLDao")ProfileDao profileDao) {
         this.profileDao = profileDao;
     }
 

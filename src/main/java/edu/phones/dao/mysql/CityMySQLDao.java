@@ -13,7 +13,7 @@ import java.util.List;
 // TODO completar los metodos del dao segun corresponda
 
 @Repository
-@Qualifier("cityMysqlDao")
+@Qualifier("cityMySQLDao")
 public class CityMySQLDao implements CityDao {
 
     final Connection connect;

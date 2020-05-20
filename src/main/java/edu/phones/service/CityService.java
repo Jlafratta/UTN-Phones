@@ -15,7 +15,7 @@ public class CityService {
     CityDao cityDao;
 
     @Autowired
-    public CityService(@Qualifier("cityMysqlDao")CityDao cityDao) {
+    public CityService(@Qualifier("cityMySQLDao")CityDao cityDao) {
         this.cityDao = cityDao;
     }
 

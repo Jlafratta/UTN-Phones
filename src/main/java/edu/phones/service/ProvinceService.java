@@ -18,7 +18,7 @@ public class ProvinceService {
     ProvinceDao provinceDao;
 
     @Autowired
-    public ProvinceService(@Qualifier("provinceMysqlDao")ProvinceDao provinceDao) {
+    public ProvinceService(@Qualifier("provinceMySQLDao")ProvinceDao provinceDao) {
         this.provinceDao = provinceDao;
     }
 

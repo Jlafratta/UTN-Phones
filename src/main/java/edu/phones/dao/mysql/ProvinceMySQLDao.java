@@ -12,7 +12,7 @@ import java.util.List;
 // TODO completar los metodos del dao segun corresponda
 
 @Repository
-@Qualifier("provinceMysqlDao")
+@Qualifier("provinceMySQLDao")
 public class ProvinceMySQLDao implements ProvinceDao {
 
     final Connection connect;
