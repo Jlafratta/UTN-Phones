@@ -19,22 +19,22 @@ public class ProvinceController {
     public ProvinceController(ProvinceService provinceService) {
         this.provinceService = provinceService;
     }
-    
+
     /** CRUD **/
     public Province createProvince(Province province){
         return provinceService.createProvince(province);
     }
 
-    public void removeCity(Province province) throws ProvinceNotExistException {
+    public void removeProvince(Province province) throws ProvinceNotExistException {
         provinceService.remove(province);
     }
 
-    public void updateCity(Province province) throws ProvinceNotExistException {
-        provinceService.updateCity(province);
+    public void updateProvince(Province province) throws ProvinceNotExistException {
+        provinceService.updateProvince(province);
     }
 
-    public Province getCity(Integer provinceId){
-        return provinceService.getCity(provinceId);
+    public Province getProvince(Integer provinceId){
+        return provinceService.getProvince(provinceId);
     }
 
     public List<Province> getAll(){

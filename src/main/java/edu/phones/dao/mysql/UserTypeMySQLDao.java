@@ -1,7 +1,7 @@
 package edu.phones.dao.mysql;
 
-import edu.phones.dao.ProvinceDao;
-import edu.phones.domain.Province;
+import edu.phones.dao.UserTypeDao;
+import edu.phones.domain.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -12,29 +12,28 @@ import java.util.List;
 // TODO completar los metodos del dao segun corresponda
 
 @Repository
-@Qualifier("provinceMysqlDao")
-public class ProvinceMySQLDao implements ProvinceDao {
+@Qualifier("userTypeMySQLDao")
+public class UserTypeMySQLDao implements UserTypeDao {
 
     final Connection connect;
 
     @Autowired
-    public ProvinceMySQLDao(Connection connect) {
+    public UserTypeMySQLDao(Connection connect) {
         this.connect = connect;
     }
 
-    /** CRUD **/
     @Override
-    public Province add(Province province) {
+    public UserType add(UserType type) {
         return null;
     }
 
     @Override
-    public Integer remove(Province province) {
+    public Integer remove(UserType type) {
         return null;
     }
 
     @Override
-    public Integer update(Province province) {
+    public Integer update(UserType type) {
         return null;
     }
 
@@ -44,12 +43,12 @@ public class ProvinceMySQLDao implements ProvinceDao {
     }
 
     @Override
-    public Province getById(Integer id) {
+    public UserType getById(Integer id) {
         return null;
     }
 
     @Override
-    public List<Province> getAll() {
+    public List<UserType> getAll() {
         return null;
     }
 }

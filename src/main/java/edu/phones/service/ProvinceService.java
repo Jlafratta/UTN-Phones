@@ -7,6 +7,7 @@ import edu.phones.domain.Province;
 import edu.phones.exceptions.CityNotExistException;
 import edu.phones.exceptions.ProvinceNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class ProvinceService {
     ProvinceDao provinceDao;
 
     @Autowired
-    public ProvinceService(ProvinceDao provinceDao) {
+    public ProvinceService(@Qualifier("provinceMysqlDao")ProvinceDao provinceDao) {
         this.provinceDao = provinceDao;
     }
 
@@ -31,7 +32,7 @@ public class ProvinceService {
         }
     }
 
-    public Province updateCity(Province province) throws ProvinceNotExistException {
+    public Province updateProvince(Province province) throws ProvinceNotExistException {
         if (provinceDao.update(province) > 0) {
             return province;
         } else {
@@ -39,7 +40,7 @@ public class ProvinceService {
         }
     }
 
-    public Province getCity(Integer provinceId) {
+    public Province getProvince(Integer provinceId) {
         return provinceDao.getById(provinceId);
     }
 
