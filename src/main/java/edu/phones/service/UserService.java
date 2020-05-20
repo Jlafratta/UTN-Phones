@@ -34,7 +34,7 @@ public class UserService {
         return userDao.getAll();
     }
 
-    public User addUser(User user) throws UserAlreadyExistsException {
+    public User addUser(User user) throws UserAlreadyExistsException{
         return userDao.add(user);
     }
 

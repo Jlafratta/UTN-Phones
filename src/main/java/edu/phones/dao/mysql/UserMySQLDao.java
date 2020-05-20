@@ -30,9 +30,12 @@ public class UserMySQLDao implements UserDao {
 
     Connection connect;
 
+    ProfileMySQLDao profileMySQLDao;
+
     @Autowired
-    public UserMySQLDao(Connection connect) {
+    public UserMySQLDao(Connection connect, ProfileMySQLDao profileMySQLDao) {
         this.connect = connect;
+        this.profileMySQLDao = profileMySQLDao;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class UserMySQLDao implements UserDao {
     //TODO implementar dao's externos en vez de hacer los new de cada objeto
     private User createUser(ResultSet rs) throws SQLException {
         User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"),
-                        (new UserProfile(rs.getInt("id_profile"), rs.getString("name"), rs.getString("lastname"), rs.getInt("dni") )),
+                        profileMySQLDao.getById(rs.getInt("id_profile")),
                          new City(rs.getInt("id_city"),rs.getString("prefix"), rs.getString("city_name"),
                             (new Province(rs.getInt("id_province"), rs.getString("province_name"))) ) );
         return user;
