@@ -35,11 +35,16 @@ public class UserMySQLDaoTest {
     PreparedStatement ps;
     @Mock
     ResultSet rs;
+    @Mock
+    ProfileMySQLDao profileDao;
+    @Mock
+    CityMySQLDao cityDao;
 
     @Before
     public void setUp(){
         initMocks(this);
-        userDao = new UserMySQLDao(connect);
+        userDao = new UserMySQLDao(connect, profileDao, cityDao);
+
     }
 
     /** getByUsername tests **/

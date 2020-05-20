@@ -1,7 +1,8 @@
 package edu.phones.dao.mysql;
 
-import edu.phones.dao.ProfileDao;
-import edu.phones.domain.UserProfile;
+import edu.phones.dao.CityDao;
+import edu.phones.domain.City;
+import edu.phones.exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -12,24 +13,24 @@ import java.util.List;
 // TODO completar los metodos del dao segun corresponda
 
 @Repository
-@Qualifier("profileMysqlDao")
-public class ProfileMySQLDao implements ProfileDao {
+@Qualifier("cityMysqlDao")
+public class CityMySQLDao implements CityDao {
 
     final Connection connect;
 
     @Autowired
-    public ProfileMySQLDao(Connection connect) {
+    public CityMySQLDao(Connection connect) {
         this.connect = connect;
     }
 
     /** CRUD **/
     @Override
-    public UserProfile add(UserProfile profile) {
+    public City add(City city) {
         return null;
     }
 
     @Override
-    public Integer update(UserProfile profile) {
+    public Integer update(City city) {
         return null;
     }
 
@@ -39,17 +40,17 @@ public class ProfileMySQLDao implements ProfileDao {
     }
 
     @Override
-    public Integer remove(UserProfile profile) {
+    public Integer remove(City city) {
         return null;
     }
 
     @Override
-    public UserProfile getById(Integer id) {
+    public City getById(Integer id) {
         return null;
     }
 
     @Override
-    public List<UserProfile> getAll() {
+    public List<City> getAll() {
         return null;
     }
 }

@@ -16,17 +16,16 @@ public class ProfileController {
         this.profileService = userProfileService;
     }
 
-    public UserProfile newProfile(UserProfile newProfile) {
-        return profileService.newProfile(newProfile);
+    public UserProfile createProfile(UserProfile newProfile) {
+        return profileService.createProfile(newProfile);
     }
 
-    public UserProfile getById(Integer id){
-        return profileService.getById(id);
+    public UserProfile updateProfile(UserProfile toModify) throws ProfileNotExistException {
+        return profileService.updateProfile(toModify);
     }
 
-    public UserProfile modifyProfile(UserProfile toModify) throws ProfileNotExistException {
-        return profileService.modifyProfile(toModify);
+    public UserProfile getProfile(Integer id){
+        return profileService.getProfile(id);
     }
-
 
 }

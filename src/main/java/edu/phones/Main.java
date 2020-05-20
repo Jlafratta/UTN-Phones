@@ -5,6 +5,7 @@ import edu.phones.config.Configuration;
 import edu.phones.controller.UserController;
 import edu.phones.dao.UserDao;
 
+import edu.phones.dao.mysql.CityMySQLDao;
 import edu.phones.dao.mysql.ProfileMySQLDao;
 import edu.phones.dao.mysql.UserMySQLDao;
 import edu.phones.domain.City;
@@ -48,7 +49,8 @@ public class Main {
 
         // Dao
         ProfileMySQLDao profileMySQLDao = new ProfileMySQLDao(connect);
-        UserDao userDao = new UserMySQLDao(connect, profileMySQLDao);
+        CityMySQLDao cityMySQLDao = new CityMySQLDao(connect);
+        UserDao userDao = new UserMySQLDao(connect, profileMySQLDao, cityMySQLDao);
         // Service
         UserService userService = new UserService(userDao);
         // Controller
@@ -60,7 +62,7 @@ public class Main {
             System.out.println(loggedUser);
 
             System.out.println("\nGET BY ID:");
-            User gettedById = userController.getById(2);
+            User gettedById = userController.getUser(2);
             System.out.println(gettedById);
 
             System.out.println("\nGET ALL: \n");
@@ -69,13 +71,13 @@ public class Main {
 
             System.out.println("\nADD USER:");
             User newUser = new User(1, "LaGorri", "asd123", new UserProfile(1,"Julian", "Lafratta", 41307441), new City(3,"223", "Mar del Plata", new Province(1,"Buenos Aires")));
-            newUser = userController.addUser(newUser);
+            newUser = userController.createUser(newUser);
             System.out.println(newUser);
 
             System.out.println("\nMODIFY USER:");
             newUser.setUsername("LaGorriPapa");
-            newUser = userController.modifyUser(newUser);
-            System.out.println(userController.getById(newUser.getUserId()));
+            newUser = userController.updateUser(newUser);
+            System.out.println(userController.getUser(newUser.getUserId()));
 
             System.out.println("\nREMOVE USER:");
             userController.removeUser(newUser);

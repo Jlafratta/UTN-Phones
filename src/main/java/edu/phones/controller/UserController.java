@@ -20,6 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    /** METHODS **/
     public User login(String username, String password) throws ValidationException, UserNotExistException {
         if(username != null && password != null){
             return userService.login(username, password);
@@ -28,24 +29,24 @@ public class UserController {
         }
     }
 
-    public User getById(Integer id){
-        return userService.getById(id);
-    }
-
-    public List<User> getAll(){
-        return userService.getAll();
-    }
-
-    public User addUser(User user) throws UserAlreadyExistsException {
-        return userService.addUser(user);
-    }
-
-    public User modifyUser(User user) throws UserNotExistException {
-        return userService.modifyUser(user);
+    /** CRUD **/
+    public User createUser(User user) throws UserAlreadyExistsException {
+        return userService.createUser(user);
     }
 
     public void removeUser(User user) throws UserNotExistException {
         userService.removeUser(user);
     }
 
+    public User updateUser(User user) throws UserNotExistException {
+        return userService.updateUser(user);
+    }
+
+    public User getUser(Integer id){
+        return userService.getUser(id);
+    }
+
+    public List<User> getAll(){
+        return userService.getAll();
+    }
 }

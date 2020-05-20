@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -62,13 +61,13 @@ public class UserControllerTest {
     @Test
     public void testGetByIdOk(){
         User userToSearch = new User(1, "username", "password", null, null);
-        when(userService.getById(1)).thenReturn(userToSearch);
-        User userFounded = userController.getById(1);
+        when(userService.getUser(1)).thenReturn(userToSearch);
+        User userFounded = userController.getUser(1);
 
         assertEquals(userToSearch.getUserId(), userFounded.getUserId());
         assertEquals(userToSearch.getUsername(), userFounded.getUsername());
 
-        verify(userService, times(1)).getById(1);
+        verify(userService, times(1)).getUser(1);
     }
 
     /** getAll test **/
@@ -86,11 +85,11 @@ public class UserControllerTest {
     public void testAddOk() throws UserAlreadyExistsException {
         User userToAdd = new User("username", "password", null, null);
         User userAdded = new User(1,"username", "password", null, null);
-        when(userService.addUser(userToAdd)).thenReturn(userAdded);
-        userController.addUser(userToAdd);
+        when(userService.createUser(userToAdd)).thenReturn(userAdded);
+        userController.createUser(userToAdd);
 
         assertEquals(userToAdd.getUsername(), userAdded.getUsername());
-        verify(userService, times(1)).addUser(userToAdd);
+        verify(userService, times(1)).createUser(userToAdd);
     }
 
     /** modifyUser test **/
@@ -98,11 +97,11 @@ public class UserControllerTest {
     public void testModifyUserOk() throws UserNotExistException {
         User toModify = new User(1,"username", "password", null, null);
         User modified = new User(1,"username", "password", null, null);
-        when(userService.modifyUser(toModify)).thenReturn(modified);
-        userController.modifyUser(toModify);
+        when(userService.updateUser(toModify)).thenReturn(modified);
+        userController.updateUser(toModify);
 
         assertEquals(toModify.getUserId(), modified.getUserId());
-        verify(userService, times(1)).modifyUser(toModify);
+        verify(userService, times(1)).updateUser(toModify);
     }
 
     /** removeUser test **/

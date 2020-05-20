@@ -50,7 +50,7 @@ public class UserServiceTest {
     public void testGetByIdOk(){
         User toSearch = new User(1, "username", "password", null, null);
         when(userDao.getById(1)).thenReturn(toSearch);
-        userService.getById(1);
+        userService.getUser(1);
         verify(userDao, times(1)).getById(1);
     }
 
@@ -71,7 +71,7 @@ public class UserServiceTest {
         User toAdd = new User( "username", "password", null, null);
         User added = new User(1, "username", "password", null, null);
         when(userDao.add(toAdd)).thenReturn(added);
-        User returned = userService.addUser(toAdd);
+        User returned = userService.createUser(toAdd);
 
         assertEquals(toAdd.getUsername(), returned.getUsername());
         verify(userDao, times(1)).add(toAdd);
@@ -82,7 +82,7 @@ public class UserServiceTest {
     public void testModifyUserOk() throws UserNotExistException {
         User toModify = new User(1, "username", "password", null, null);
         when(userDao.update(toModify)).thenReturn(1);
-        User modified = userService.modifyUser(toModify);
+        User modified = userService.updateUser(toModify);
 
         assertEquals(toModify.getUserId(), modified.getUserId());
         assertEquals(toModify.getUsername(), modified.getUsername());
@@ -93,7 +93,7 @@ public class UserServiceTest {
     public void testModifyUserNotExists() throws UserNotExistException {
         User toModify = new User(1, "username", "password", null, null);
         when(userDao.update(toModify)).thenReturn(0);
-        userService.modifyUser(toModify);
+        userService.updateUser(toModify);
     }
 
     /** removeUser test **/

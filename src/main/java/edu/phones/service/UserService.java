@@ -21,24 +21,24 @@ public class UserService {
         this.userDao = userDao;
     }
 
+    /** METHODS **/
     public User login(String username, String password) throws UserNotExistException {
         User user = userDao.getByUsername(username, password);
         return Optional.ofNullable(user).orElseThrow( () -> new UserNotExistException() );
     }
 
-    public User getById(Integer id) {
-        return userDao.getById(id);
-    }
-
-    public List<User> getAll() {
-        return userDao.getAll();
-    }
-
-    public User addUser(User user) throws UserAlreadyExistsException{
+    /** CRUD **/
+    public User createUser(User user) throws UserAlreadyExistsException{
         return userDao.add(user);
     }
 
-    public User modifyUser(User user) throws UserNotExistException {
+    public void removeUser(User user) throws UserNotExistException {
+        if (userDao.remove(user) == 0 ){
+            throw new UserNotExistException();
+        }
+    }
+
+    public User updateUser(User user) throws UserNotExistException {
         if(userDao.update(user)>0){
             return user;
         }else {
@@ -46,9 +46,11 @@ public class UserService {
         }
     }
 
-    public void removeUser(User user) throws UserNotExistException {
-        if (userDao.remove(user) == 0 ){
-            throw new UserNotExistException();
-        }
+    public User getUser(Integer id) {
+        return userDao.getById(id);
+    }
+
+    public List<User> getAll() {
+        return userDao.getAll();
     }
 }

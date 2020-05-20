@@ -1,31 +1,32 @@
 package edu.phones.service;
 
-import edu.phones.dao.mysql.ProfileMySQLDao;
+import edu.phones.dao.ProfileDao;
 import edu.phones.domain.UserProfile;
 import edu.phones.exceptions.ProfileNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProfileService {
 
-    ProfileMySQLDao profileMySQLDao;
+    ProfileDao profileDao;
 
     @Autowired
-    public ProfileService(ProfileMySQLDao profileMySQLDao) {
-        this.profileMySQLDao = profileMySQLDao;
+    public ProfileService(@Qualifier("profileMysqlDao")ProfileDao profileDao) {
+        this.profileDao = profileDao;
     }
 
-    public UserProfile newProfile(UserProfile newProfile) {
-        return profileMySQLDao.add(newProfile);
+    public UserProfile createProfile(UserProfile newProfile) {
+        return profileDao.add(newProfile);
     }
 
-    public UserProfile getById(Integer id) {
-        return profileMySQLDao.getById(id);
+    public UserProfile getProfile(Integer id) {
+        return profileDao.getById(id);
     }
 
-    public UserProfile modifyProfile(UserProfile toModify) throws ProfileNotExistException {
-        if(profileMySQLDao.update(toModify) > 0){
+    public UserProfile updateProfile(UserProfile toModify) throws ProfileNotExistException {
+        if(profileDao.update(toModify) > 0){
             return toModify;
         }else {
             throw new ProfileNotExistException();
