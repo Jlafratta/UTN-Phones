@@ -1,7 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.UserProfile;
-import edu.phones.exceptions.ProfileNotExistException;
+import edu.phones.exceptions.notExist.ProfileNotExistException;
 import edu.phones.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

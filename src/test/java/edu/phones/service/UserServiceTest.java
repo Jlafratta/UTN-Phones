@@ -2,8 +2,8 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.UserMySQLDao;
 import edu.phones.domain.User;
-import edu.phones.exceptions.UserAlreadyExistsException;
-import edu.phones.exceptions.UserNotExistException;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import edu.phones.exceptions.notExist.UserNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

@@ -2,8 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.UserTypeDao;
 import edu.phones.domain.UserType;
-import edu.phones.exceptions.ProvinceNotExistException;
-import edu.phones.exceptions.TypeNotExistException;
+import edu.phones.exceptions.notExist.TypeNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

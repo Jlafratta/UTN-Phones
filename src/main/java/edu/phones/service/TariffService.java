@@ -2,7 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.Tariff;
-import edu.phones.exceptions.TariffNotExistException;
+import edu.phones.exceptions.notExist.TariffNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

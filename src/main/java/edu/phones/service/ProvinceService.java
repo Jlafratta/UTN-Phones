@@ -1,11 +1,8 @@
 package edu.phones.service;
 
 import edu.phones.dao.ProvinceDao;
-import edu.phones.dao.mysql.ProvinceMySQLDao;
-import edu.phones.domain.City;
 import edu.phones.domain.Province;
-import edu.phones.exceptions.CityNotExistException;
-import edu.phones.exceptions.ProvinceNotExistException;
+import edu.phones.exceptions.notExist.ProvinceNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

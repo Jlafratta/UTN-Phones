@@ -2,8 +2,8 @@ package edu.phones.service;
 
 import edu.phones.dao.UserDao;
 import edu.phones.domain.User;
-import edu.phones.exceptions.UserAlreadyExistsException;
-import edu.phones.exceptions.UserNotExistException;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import edu.phones.exceptions.notExist.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

@@ -1,9 +1,6 @@
 package edu.phones.dao;
 
-import edu.phones.dao.AbstractDao;
 import edu.phones.domain.City;
-import edu.phones.domain.User;
-import edu.phones.exceptions.UserAlreadyExistsException;
 
 import java.util.List;
 

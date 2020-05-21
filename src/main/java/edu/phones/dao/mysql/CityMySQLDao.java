@@ -2,7 +2,6 @@ package edu.phones.dao.mysql;
 
 import edu.phones.dao.CityDao;
 import edu.phones.domain.City;
-import edu.phones.exceptions.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;

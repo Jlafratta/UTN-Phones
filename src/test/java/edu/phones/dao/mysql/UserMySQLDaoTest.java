@@ -5,8 +5,7 @@ import edu.phones.domain.City;
 import edu.phones.domain.Province;
 import edu.phones.domain.User;
 import edu.phones.domain.UserProfile;
-import edu.phones.exceptions.UserAlreadyExistsException;
-import org.hibernate.validator.constraints.br.TituloEleitoral;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -16,8 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

@@ -1,6 +1,6 @@
 package edu.phones.dao;
 
-import edu.phones.exceptions.UserAlreadyExistsException;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 
 import java.util.List;
 

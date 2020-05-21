@@ -1,4 +1,4 @@
-package edu.phones.exceptions;
+package edu.phones.exceptions.notExist;
 
 public class BillNotExistException extends Throwable {
 }

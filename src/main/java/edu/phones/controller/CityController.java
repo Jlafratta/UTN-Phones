@@ -1,7 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.City;
-import edu.phones.exceptions.CityNotExistException;
+import edu.phones.exceptions.notExist.CityNotExistException;
 import edu.phones.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

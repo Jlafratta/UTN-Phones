@@ -2,7 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
-import edu.phones.exceptions.CallNotExistException;
+import edu.phones.exceptions.notExist.CallNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

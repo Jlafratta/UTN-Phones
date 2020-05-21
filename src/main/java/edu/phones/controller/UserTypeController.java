@@ -1,12 +1,9 @@
 package edu.phones.controller;
 
-import edu.phones.domain.City;
 import edu.phones.domain.UserType;
-import edu.phones.exceptions.CityNotExistException;
-import edu.phones.exceptions.TypeNotExistException;
+import edu.phones.exceptions.notExist.TypeNotExistException;
 import edu.phones.service.UserTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;

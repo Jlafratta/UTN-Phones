@@ -2,7 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.ProfileDao;
 import edu.phones.domain.UserProfile;
-import edu.phones.exceptions.ProfileNotExistException;
+import edu.phones.exceptions.notExist.ProfileNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

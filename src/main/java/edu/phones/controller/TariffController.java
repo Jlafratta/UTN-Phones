@@ -1,7 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Tariff;
-import edu.phones.exceptions.TariffNotExistException;
+import edu.phones.exceptions.notExist.TariffNotExistException;
 import edu.phones.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

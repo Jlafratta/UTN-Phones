@@ -1,8 +1,8 @@
 package edu.phones.controller;
 
 import edu.phones.domain.User;
-import edu.phones.exceptions.UserAlreadyExistsException;
-import edu.phones.exceptions.UserNotExistException;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import edu.phones.service.UserService;
 import org.junit.Before;

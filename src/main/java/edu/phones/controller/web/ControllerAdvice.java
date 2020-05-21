@@ -2,7 +2,7 @@ package edu.phones.controller.web;
 
 import edu.phones.dto.ErrorResponseDto;
 import edu.phones.exceptions.InvalidLoginException;
-import edu.phones.exceptions.UserNotExistException;
+import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

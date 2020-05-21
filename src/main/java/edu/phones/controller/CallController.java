@@ -1,7 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Call;
-import edu.phones.exceptions.CallNotExistException;
+import edu.phones.exceptions.notExist.CallNotExistException;
 import edu.phones.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

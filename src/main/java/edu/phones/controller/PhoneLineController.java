@@ -1,7 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.PhoneLine;
-import edu.phones.exceptions.PhoneLineNotExistException;
+import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import edu.phones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

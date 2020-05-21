@@ -2,7 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.BillDao;
 import edu.phones.domain.Bill;
-import edu.phones.exceptions.BillNotExistException;
+import edu.phones.exceptions.notExist.BillNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

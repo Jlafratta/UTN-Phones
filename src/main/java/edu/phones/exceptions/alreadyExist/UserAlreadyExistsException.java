@@ -1,4 +1,4 @@
-package edu.phones.exceptions;
+package edu.phones.exceptions.alreadyExist;
 
 public class UserAlreadyExistsException extends Exception {
 }
