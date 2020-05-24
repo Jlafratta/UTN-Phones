@@ -1,6 +1,6 @@
 package edu.phones.service;
 
-import edu.phones.dao.ProfileDao;
+import edu.phones.dao.UserProfileDao;
 import edu.phones.domain.UserProfile;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileService {
 
-    ProfileDao profileDao;
+    UserProfileDao profileDao;
 
     @Autowired
-    public ProfileService(@Qualifier("profileMySQLDao")ProfileDao profileDao) {
+    public ProfileService(@Qualifier("profileMySQLDao") UserProfileDao profileDao) {
         this.profileDao = profileDao;
     }
 

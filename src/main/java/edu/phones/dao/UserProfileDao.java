@@ -4,7 +4,7 @@ import edu.phones.domain.UserProfile;
 
 import java.util.List;
 
-public interface ProfileDao extends AbstractDao<UserProfile> {
+public interface UserProfileDao extends AbstractDao<UserProfile> {
 
     /** CRUD **/
     UserProfile add(UserProfile profile);

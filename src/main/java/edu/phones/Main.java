@@ -5,7 +5,7 @@ import edu.phones.controller.UserController;
 import edu.phones.dao.UserDao;
 
 import edu.phones.dao.mysql.CityMySQLDao;
-import edu.phones.dao.mysql.ProfileMySQLDao;
+import edu.phones.dao.mysql.UserProfileMySQLDao;
 import edu.phones.dao.mysql.UserMySQLDao;
 import edu.phones.domain.City;
 import edu.phones.domain.Province;
@@ -47,7 +47,7 @@ public class Main {
         Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/PhonesAPI?user=root&password=");
 
         // Dao
-        ProfileMySQLDao profileMySQLDao = new ProfileMySQLDao(connect);
+        UserProfileMySQLDao profileMySQLDao = new UserProfileMySQLDao(connect);
         CityMySQLDao cityMySQLDao = new CityMySQLDao(connect);
         UserDao userDao = new UserMySQLDao(connect, profileMySQLDao, cityMySQLDao);
         // Service

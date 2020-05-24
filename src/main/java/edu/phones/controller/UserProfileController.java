@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class ProfileController {
+public class UserProfileController {
 
     ProfileService profileService;
 
     @Autowired
-    public ProfileController(ProfileService userProfileService) {
+    public UserProfileController(ProfileService userProfileService) {
         this.profileService = userProfileService;
     }
 

@@ -1,6 +1,6 @@
 package edu.phones.dao.mysql;
 
-import edu.phones.dao.ProfileDao;
+import edu.phones.dao.UserProfileDao;
 import edu.phones.domain.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @Repository
 @Qualifier("profileMySQLDao")
-public class ProfileMySQLDao implements ProfileDao {
+public class UserProfileMySQLDao implements UserProfileDao {
 
     final Connection connect;
 
     @Autowired
-    public ProfileMySQLDao(Connection connect) {
+    public UserProfileMySQLDao(Connection connect) {
         this.connect = connect;
     }
 

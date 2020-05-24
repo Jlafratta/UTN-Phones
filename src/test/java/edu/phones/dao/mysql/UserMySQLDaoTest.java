@@ -33,7 +33,7 @@ public class UserMySQLDaoTest {
     @Mock
     ResultSet rs;
     @Mock
-    ProfileMySQLDao profileDao;
+    UserProfileMySQLDao profileDao;
     @Mock
     CityMySQLDao cityDao;
 
@@ -191,7 +191,7 @@ public class UserMySQLDaoTest {
 
     /** remove tests **/
     @Test
-    public void testRemoveOk() throws SQLException {
+    public void testRemoveByIdOk() throws SQLException {
         Integer id = 1;
         when(connect.prepareStatement(DELETE_USER_QUERY)).thenReturn(ps);
         doNothing().when(ps).setInt(1, id);
@@ -204,11 +204,13 @@ public class UserMySQLDaoTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testRemoveError() throws SQLException {
+    public void testRemoveByIdError() throws SQLException {
         Integer id = 1;
         when(connect.prepareStatement(DELETE_USER_QUERY)).thenThrow(new SQLException());
         userDao.remove(id);
     }
+
+    // TODO remove con User como parametro
 
     /** getById tests **/
     @Test

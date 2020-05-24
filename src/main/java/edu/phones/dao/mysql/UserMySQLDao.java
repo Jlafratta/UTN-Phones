@@ -2,7 +2,7 @@ package edu.phones.dao.mysql;
 
 import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.CityDao;
-import edu.phones.dao.ProfileDao;
+import edu.phones.dao.UserProfileDao;
 import edu.phones.dao.UserDao;
 import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
@@ -29,11 +29,11 @@ public class UserMySQLDao implements UserDao {
 
     final Connection connect;
 
-    ProfileDao profileDao;
+    UserProfileDao profileDao;
     CityDao cityDao;
 
     @Autowired
-    public UserMySQLDao(Connection connect, @Qualifier("profileMysqlDao") ProfileDao profileDao, @Qualifier("cityMysqlDao") CityDao cityDao) {
+    public UserMySQLDao(Connection connect, @Qualifier("profileMySQLDao") UserProfileDao profileDao, @Qualifier("cityMySQLDao") CityDao cityDao) {
         this.connect = connect;
         this.profileDao = profileDao;
         this.cityDao = cityDao;
@@ -102,8 +102,8 @@ public class UserMySQLDao implements UserDao {
         try {
             PreparedStatement ps = connect.prepareStatement(DELETE_USER_QUERY);
             ps.setInt(1, id);
-            Integer rowsAffected = ps.executeUpdate();
-            return rowsAffected;
+            return ps.executeUpdate();
+
 
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar el usuario", e);

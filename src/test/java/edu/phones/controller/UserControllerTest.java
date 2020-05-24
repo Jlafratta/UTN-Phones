@@ -82,7 +82,7 @@ public class UserControllerTest {
 
     /** addUser test **/
     @Test
-    public void testAddOk() throws UserAlreadyExistsException {
+    public void testCreateUserOk() throws UserAlreadyExistsException {
         User userToAdd = new User("username", "password", null, null);
         User userAdded = new User(1,"username", "password", null, null);
         when(userService.createUser(userToAdd)).thenReturn(userAdded);
@@ -94,7 +94,7 @@ public class UserControllerTest {
 
     /** modifyUser test **/
     @Test
-    public void testModifyUserOk() throws UserNotExistException {
+    public void testUpdateUserOk() throws UserNotExistException {
         User toModify = new User(1,"username", "password", null, null);
         User modified = new User(1,"username", "password", null, null);
         when(userService.updateUser(toModify)).thenReturn(modified);
