@@ -22,8 +22,8 @@ public class CallController {
         return callService.createCall(call);
     }
 
-    public void remove(Call call) throws CallNotExistException {
-        callService.remove(call);
+    public void removeCall(Call call) throws CallNotExistException {
+        callService.removeCall(call);
     }
 
     public Call updateCall(Call call) throws CallNotExistException {

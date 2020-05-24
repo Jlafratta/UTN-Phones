@@ -57,6 +57,7 @@ CREATE TABLE `phone_lines`(
     CONSTRAINT `fk_id_type` FOREIGN KEY (`id_type`) REFERENCES `user_types` (`id_type`)
 );
 
+// TODO cambiar los integer a decimal
 CREATE TABLE `bills`(
 	`id_bill` INTEGER NOT NULL AUTO_INCREMENT,
     `cost` INTEGER,
@@ -69,12 +70,14 @@ CREATE TABLE `bills`(
     CONSTRAINT `fk_id_pline` FOREIGN KEY (`id_pline`) REFERENCES `phone_lines` (`id_pline`)
 );
 
+// TODO cambiar los integer a decimal
 CREATE TABLE `tariff`(
 	`tariff_key` INTEGER NOT NULL,
     `value` INTEGER,
     PRIMARY KEY (`tariff_key`)
 );
 
+// TODO cambiar los integer a decimal
 CREATE TABLE `calls`(
 	`id_call` INTEGER NOT NULL AUTO_INCREMENT,
     `duration` INTEGER NOT NULL,

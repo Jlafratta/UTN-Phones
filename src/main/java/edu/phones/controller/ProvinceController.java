@@ -27,8 +27,8 @@ public class ProvinceController {
         provinceService.remove(province);
     }
 
-    public void updateProvince(Province province) throws ProvinceNotExistException {
-        provinceService.updateProvince(province);
+    public Province updateProvince(Province province) throws ProvinceNotExistException {
+        return provinceService.updateProvince(province);
     }
 
     public Province getProvince(Integer provinceId){

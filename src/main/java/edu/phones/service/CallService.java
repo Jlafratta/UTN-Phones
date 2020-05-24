@@ -23,7 +23,7 @@ public class CallService {
         return callDao.add(call);
     }
 
-    public void remove(Call call) throws CallNotExistException {
+    public void removeCall(Call call) throws CallNotExistException {
         if(callDao.remove(call) == 0){
             throw new CallNotExistException();
         }

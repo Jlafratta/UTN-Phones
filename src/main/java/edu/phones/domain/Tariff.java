@@ -3,9 +3,9 @@ package edu.phones.domain;
 public class Tariff {
 
     Integer key;
-    Integer value;
+    Double value;
 
-    public Tariff(Integer key, Integer value) {
+    public Tariff(Integer key, Double value) {
         this.key = key;
         this.value = value;
     }
@@ -18,11 +18,11 @@ public class Tariff {
         this.key = key;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

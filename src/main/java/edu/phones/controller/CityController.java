@@ -27,8 +27,8 @@ public class CityController {
         cityService.remove(city);
     }
 
-    public void updateCity(City city) throws CityNotExistException {
-        cityService.updateCity(city);
+    public City updateCity(City city) throws CityNotExistException {
+        return cityService.updateCity(city);
     }
 
     public City getCity(Integer cityId){

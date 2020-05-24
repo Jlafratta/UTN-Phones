@@ -71,7 +71,7 @@ public class UserTypeControllerTest {
         typeList.add(new UserType(1, "TYPE"));
         typeList.add(new UserType(2, "TYPE2"));
         when(typeService.getAll()).thenReturn(typeList);
-        typeService.getAll();
+        typeController.getAll();
         assertEquals(2, typeList.size());
         verify(typeService, times(1)).getAll();
     }

@@ -5,14 +5,14 @@ import java.sql.Date;
 public class Bill {
 
     Integer billId;
-    Integer cost;
-    Integer total;
+    Double cost;
+    Double total;
     Date date;
     Date expireDate;
     Integer countCalls;
     PhoneLine pLine;
 
-    public Bill(Integer billId, Integer cost, Integer total, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
+    public Bill(Integer billId, Double cost, Double total, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
         this.billId = billId;
         this.cost = cost;
         this.total = total;
@@ -22,7 +22,7 @@ public class Bill {
         this.pLine = pLine;
     }
 
-    public Bill(Integer cost, Integer total, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
+    public Bill(Double cost, Double total, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
         this.cost = cost;
         this.total = total;
         this.date = date;
@@ -39,19 +39,19 @@ public class Bill {
         this.billId = billId;
     }
 
-    public Integer getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Integer cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public Integer getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 

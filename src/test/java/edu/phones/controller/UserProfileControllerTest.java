@@ -2,7 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.UserProfile;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
-import edu.phones.service.ProfileService;
+import edu.phones.service.UserProfileService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,7 +15,7 @@ public class UserProfileControllerTest {
 
     UserProfileController profileController;
     @Mock
-    ProfileService profileService;
+    UserProfileService profileService;
 
     @Before
     public void setUp(){

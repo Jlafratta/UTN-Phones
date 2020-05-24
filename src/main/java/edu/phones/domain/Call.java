@@ -6,15 +6,15 @@ public class Call {
 
     Integer callId;
     Integer duration;
-    Integer cost;
-    Integer totalPrice;
+    Double cost;
+    Double totalPrice;
     Date date;
     PhoneLine origin;
     PhoneLine destination;
     Bill bill;
     Tariff tariff;
 
-    public Call(Integer callId, Integer duration, Integer cost, Integer totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
+    public Call(Integer callId, Integer duration, Double cost, Double totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
         this.callId = callId;
         this.duration = duration;
         this.cost = cost;
@@ -26,7 +26,7 @@ public class Call {
         this.tariff = tariff;
     }
 
-    public Call(Integer duration, Integer cost, Integer totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
+    public Call(Integer duration, Double cost, Double totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
         this.duration = duration;
         this.cost = cost;
         this.totalPrice = totalPrice;
@@ -53,19 +53,19 @@ public class Call {
         this.duration = duration;
     }
 
-    public Integer getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Integer cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

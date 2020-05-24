@@ -96,7 +96,7 @@ public class UserControllerTest {
     @Test
     public void testUpdateUserOk() throws UserNotExistException {
         User toModify = new User(1,"username", "password", null, null);
-        User modified = new User(1,"username", "password", null, null);
+        User modified = new User(1,"username2", "password2", null, null);
         when(userService.updateUser(toModify)).thenReturn(modified);
         userController.updateUser(toModify);
 

@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProfileService {
+public class UserProfileService {
 
     UserProfileDao profileDao;
 
     @Autowired
-    public ProfileService(@Qualifier("profileMySQLDao") UserProfileDao profileDao) {
+    public UserProfileService(@Qualifier("profileMySQLDao") UserProfileDao profileDao) {
         this.profileDao = profileDao;
     }
 

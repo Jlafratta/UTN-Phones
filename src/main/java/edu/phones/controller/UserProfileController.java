@@ -2,17 +2,17 @@ package edu.phones.controller;
 
 import edu.phones.domain.UserProfile;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
-import edu.phones.service.ProfileService;
+import edu.phones.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class UserProfileController {
 
-    ProfileService profileService;
+    UserProfileService profileService;
 
     @Autowired
-    public UserProfileController(ProfileService userProfileService) {
+    public UserProfileController(UserProfileService userProfileService) {
         this.profileService = userProfileService;
     }
 

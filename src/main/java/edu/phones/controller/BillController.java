@@ -22,8 +22,8 @@ public class BillController {
         return billService.createBill(bill);
     }
 
-    public void remove(Bill bill) throws BillNotExistException {
-        billService.remove(bill);
+    public void removeBill(Bill bill) throws BillNotExistException {
+        billService.removeBill(bill);
     }
 
     public Bill updateBill(Bill bill) throws BillNotExistException {

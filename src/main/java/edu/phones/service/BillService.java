@@ -23,7 +23,7 @@ public class BillService {
         return billDao.add(bill);
     }
 
-    public void remove(Bill bill) throws BillNotExistException {
+    public void removeBill(Bill bill) throws BillNotExistException {
         if(billDao.remove(bill) == 0){
             throw new BillNotExistException();
         }
