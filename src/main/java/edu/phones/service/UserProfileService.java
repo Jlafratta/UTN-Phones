@@ -21,15 +21,15 @@ public class UserProfileService {
         return profileDao.add(newProfile);
     }
 
-    public UserProfile getProfile(Integer id) {
-        return profileDao.getById(id);
-    }
-
     public UserProfile updateProfile(UserProfile toModify) throws ProfileNotExistException {
         if(profileDao.update(toModify) > 0){
             return toModify;
         }else {
             throw new ProfileNotExistException();
         }
+    }
+
+    public UserProfile getProfile(Integer id) {
+        return profileDao.getById(id);
     }
 }

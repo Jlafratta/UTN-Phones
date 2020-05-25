@@ -100,7 +100,7 @@ public class UserServiceTest {
     @Test
     public void testRemoveUserOk() throws UserNotExistException {
         User toRemove = new User(1, "username", "password", null, null);
-        when(userDao.remove(toRemove)).thenReturn(5);
+        when(userDao.remove(toRemove)).thenReturn(1);
         userService.removeUser(toRemove);
         verify(userDao, times(1)).remove(toRemove);
     }
