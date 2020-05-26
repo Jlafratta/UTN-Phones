@@ -82,7 +82,7 @@ public class ProvinceServiceTest {
         assertEquals(id, prov.getProvinceId());
         verify(provinceDao, times(1)).getById(id);
     }
-    
+
     @Test
     public void testGetAllOk(){
         List<Province> provList = new ArrayList<>();

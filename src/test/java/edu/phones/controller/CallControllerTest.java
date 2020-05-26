@@ -34,6 +34,7 @@ public class CallControllerTest {
         callController.createCall(toAdd);
 
         assertEquals(Integer.valueOf(1), added.getCallId());
+        assertEquals(toAdd.getDuration(), added.getDuration());
         verify(callService, times(1)).createCall(toAdd);
     }
 
