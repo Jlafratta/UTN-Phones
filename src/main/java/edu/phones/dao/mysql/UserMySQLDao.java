@@ -104,7 +104,6 @@ public class UserMySQLDao implements UserDao {
             ps.setInt(1, id);
             return ps.executeUpdate();
 
-
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar el usuario", e);
         }

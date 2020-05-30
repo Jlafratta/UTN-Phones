@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.CityDao;
 import edu.phones.domain.City;
+import edu.phones.exceptions.alreadyExist.CityAlreadyExistException;
 import edu.phones.exceptions.notExist.CityNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,7 @@ public class CityService {
     }
 
     /** CRUD **/
-    public City createCity(City city) {
+    public City createCity(City city) throws CityAlreadyExistException {
         return cityDao.add(city);
     }
 

@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.UserProfileDao;
 import edu.phones.domain.UserProfile;
+import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +18,7 @@ public class UserProfileService {
         this.profileDao = profileDao;
     }
 
-    public UserProfile createProfile(UserProfile newProfile) {
+    public UserProfile createProfile(UserProfile newProfile) throws ProfileAlreadyExistException {
         return profileDao.add(newProfile);
     }
 

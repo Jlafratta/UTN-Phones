@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.City;
+import edu.phones.exceptions.alreadyExist.CityAlreadyExistException;
 import edu.phones.exceptions.notExist.CityNotExistException;
 import edu.phones.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class CityController {
     }
 
     /** CRUD **/
-    public City createCity(City city){
+    public City createCity(City city) throws CityAlreadyExistException {
         return cityService.createCity(city);
     }
 

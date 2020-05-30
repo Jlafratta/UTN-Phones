@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.City;
+import edu.phones.exceptions.alreadyExist.CityAlreadyExistException;
 import edu.phones.exceptions.notExist.CityNotExistException;
 import edu.phones.service.CityService;
 import org.junit.Before;
@@ -27,7 +28,7 @@ public class CityControllerTest {
     }
 
     @Test
-    public void testCreateCityOk(){
+    public void testCreateCityOk() throws CityAlreadyExistException {
         City toAdd = new City ("prefix", "name", null);
         City added = new City(1, "prefix", "name", null);
         when(cityService.createCity(toAdd)).thenReturn(added);

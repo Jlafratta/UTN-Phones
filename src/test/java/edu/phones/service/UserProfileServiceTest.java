@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.UserProfileMySQLDao;
 import edu.phones.domain.UserProfile;
+import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
 import edu.phones.exceptions.notExist.TypeNotExistException;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class UserProfileServiceTest {
     }
 
     @Test
-    public void testCreateProfileOk(){
+    public void testCreateProfileOk() throws ProfileAlreadyExistException {
         UserProfile toAdd = new UserProfile("name", "lastname", 12345678);
         UserProfile added = new UserProfile(1, "name", "lastname", 12345678);
         when(profileDao.add(toAdd)).thenReturn(added);

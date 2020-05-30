@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.UserProfile;
+import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
 import edu.phones.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class UserProfileController {
         this.profileService = userProfileService;
     }
 
-    public UserProfile createProfile(UserProfile newProfile) {
+    public UserProfile createProfile(UserProfile newProfile) throws ProfileAlreadyExistException {
         return profileService.createProfile(newProfile);
     }
 

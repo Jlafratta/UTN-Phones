@@ -45,6 +45,7 @@ public class UserMySQLDaoTest {
     }
 
     /** getByUsername tests **/
+    /**
     @Test
     public void testGetByUsernameOk() throws SQLException {
         // mock del ps
@@ -79,7 +80,7 @@ public class UserMySQLDaoTest {
         verify(ps, times(2)).setString(anyInt(), anyString());
 
     }
-
+**/
     @Test(expected = RuntimeException.class)
     public void testGetByUserNameSQLError() throws SQLException {
         when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenThrow(new SQLException());
