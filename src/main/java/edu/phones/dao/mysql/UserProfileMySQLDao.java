@@ -4,7 +4,6 @@ import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.UserProfileDao;
 import edu.phones.domain.UserProfile;
 import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
-import edu.phones.exceptions.notExist.ProfileNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -16,8 +15,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
-
-// TODO completar los metodos del dao segun corresponda
 
 @Repository
 @Qualifier("profileMySQLDao")
@@ -59,19 +56,32 @@ public class UserProfileMySQLDao implements UserProfileDao {
 
     @Override
     public Integer update(UserProfile profile) {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(UPDATE_PROFILE_QUERY);
+            ps.setString(1, profile.getName());
+            ps.setString(2, profile.getLastname());
+            ps.setInt(3, profile.getDni());
+            ps.setInt(4, profile.getProfileId());
+
+            Integer rowsAffected = ps.executeUpdate();
+            return rowsAffected; // Retorno la cantidad de campos modificados
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al modificar el perfil", e);
+        }
     }
 
     @Override
     public Integer remove(Integer id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Integer remove(UserProfile profile) {
-        return null;
+    public Integer remove(UserProfile value) {
+        throw new UnsupportedOperationException();
     }
 
+    // TODO getById UserProfile
     @Override
     public UserProfile getById(Integer id) {
         return null;
@@ -79,6 +89,7 @@ public class UserProfileMySQLDao implements UserProfileDao {
 
     @Override
     public List<UserProfile> getAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
+
 }

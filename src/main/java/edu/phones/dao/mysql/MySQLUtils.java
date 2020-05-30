@@ -54,19 +54,19 @@ protected static String BASE_CITY_QUERY ="SELECT * FROM 'cities' AS c" +
                                                 "VALUES (?)";
 
     protected static String INSERT_PLINE_QUERY = "INSERT INTO `phone_lines` (phone_number, state, id_user, id_type)" +
-            "VALUES (?, ?, ?, ?)";
+                                                 "VALUES (?, ?, ?, ?)";
 
     protected static String INSERT_PROVINCE_QUERY = "INSERT INTO `provinces` (province_name)" +
-            "VALUES (?)";
+                                                    "VALUES (?)";
 
     protected static String INSERT_BILLS_QUERY = "INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline)" +
-            "VALUES (?, ?, ?, ?, ? , ? )";
+                                                 "VALUES (?, ?, ?, ?, ? , ? )";
 
     protected static String INSERT_TARIFF_QUERY = "INSERT INTO `tariff` (tariff_key, value)" +
-            "VALUES (?, ?)";
+                                                  "VALUES (?, ?)";
 
     protected static String INSERT_CALLS_QUERY = "INSERT INTO `Calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination, pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+                                                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /** UPDATEs **/
 
@@ -77,28 +77,25 @@ protected static String BASE_CITY_QUERY ="SELECT * FROM 'cities' AS c" +
                                                 "WHERE id_type = ?";
 
     protected static String UPDATE_PLINE_QUERY = "UPDATE `phone_lines` SET phone_number = ?, state = ?, id_user = ?, id_type = ? " +
-            "WHERE id_pline = ?";
+                                                 "WHERE id_pline = ?";
 
     protected static String UPDATE_PROVINCE_QUERY = "UPDATE `provinces` SET province_name = ? " +
-            "WHERE id_province = ?";
+                                                    "WHERE id_province = ?";
 
     protected static String UPDATE_CITY_QUERY = "UPDATE `cities` SET prefix = ?, city_name = ?, id_province = ? " +
-            "WHERE id_city = ?";
+                                                "WHERE id_city = ?";
 
     protected static String UPDATE_PROFILE_QUERY = "UPDATE `user_profile` SET name = ?, lastname = ?, dni = ? " +
-            "WHERE id_profile = ?";
-
-
-
+                                                   "WHERE id_profile = ?";
 
     protected static String UPDATE_BILLS_QUERY = "UPDATE `bills` SET cost = ?, total = ?, bill_date = ?, expire_date = ? , calls_count = ?, id_pline= ? " +
-            "WHERE id_bill = ?";
+                                                 "WHERE id_bill = ?";
 
     protected static String UPDATE_TARIFF_QUERY = "UPDATE `tariff` SET value = ? " +
-            "WHERE id_tariff = ?";
+                                                  "WHERE id_tariff = ?";
 
     protected static String UPDATE_CALLS_QUERY = "UPDATE `calls` SET duration = ?, cost = ?, total_price = ?, call_date = ? ,pnumber_origin = ?, pnumber_destination = ?, pline_origin = ?, pline_destination = ?, city_origin = ?, city_destination = ? , id_bill =? , tariff_key = ? " +
-            "WHERE id_call = ?";
+                                                 "WHERE id_call = ?";
 
     /** DELETEs **/
 

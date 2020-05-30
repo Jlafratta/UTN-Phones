@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**     Los metodos que no se usan tiran un
- *  throw new UnsupportedOperationException()
+ *  throw new UnsupportedOperationException();
  **/
 
 import static edu.phones.dao.mysql.MySQLUtils.*;

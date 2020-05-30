@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.UserTypeDao;
 import edu.phones.domain.UserType;
+import edu.phones.exceptions.alreadyExist.TypeAlreadyExistsException;
 import edu.phones.exceptions.notExist.TypeNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,7 @@ public class UserTypeService {
     }
 
     /** CRUD **/
-    public UserType createType(UserType type) {
+    public UserType createType(UserType type) throws TypeAlreadyExistsException {
         return typeDao.add(type);
     }
 

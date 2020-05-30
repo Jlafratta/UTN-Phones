@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.UserType;
+import edu.phones.exceptions.alreadyExist.TypeAlreadyExistsException;
 import edu.phones.exceptions.notExist.TypeNotExistException;
 import edu.phones.service.UserTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserTypeController {
     }
 
     /** CRUD **/
-    public UserType createType(UserType type){
+    public UserType createType(UserType type) throws TypeAlreadyExistsException {
         return typeService.createType(type);
     }
 
