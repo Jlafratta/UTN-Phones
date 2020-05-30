@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.util.List;
 
+// TODO completar los metodos del dao segun corresponda
+
 @Repository
 @Qualifier("tariffMySQLDao")
 public class TariffMySQLDao implements TariffDao {

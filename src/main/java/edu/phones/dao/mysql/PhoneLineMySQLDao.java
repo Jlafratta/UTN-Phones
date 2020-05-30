@@ -17,8 +17,6 @@ import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
 
-// TODO completar los metodos del dao segun corresponda
-
 @Repository
 @Qualifier("phoneLineMySQLDao")
 public class PhoneLineMySQLDao implements PhoneLineDao {

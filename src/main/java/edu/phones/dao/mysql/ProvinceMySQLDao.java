@@ -3,6 +3,7 @@ package edu.phones.dao.mysql;
 import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.ProvinceDao;
 import edu.phones.domain.Province;
+import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.ProvinceAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PrimitiveIterator;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
-
-// TODO completar los metodos del dao segun corresponda
 
 @Repository
 @Qualifier("provinceMySQLDao")
@@ -89,15 +89,44 @@ public class ProvinceMySQLDao implements ProvinceDao {
         }
     }
 
-    // TODO getById & getAll
     @Override
     public Province getById(Integer id) {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ID_PROVINCE_QUERY);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            Province prov = null;
+            if(rs.next()){
+                prov = createProvince(rs);
+            }
+            rs.close();
+            ps.close();
+
+            return prov;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error al buscar por id", e);
+        }
     }
 
     @Override
     public List<Province> getAll() {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(BASE_PROVINCE_QUERY);
+            ResultSet rs = ps.executeQuery();
+
+            List<Province> provList = new ArrayList<>();
+            while(rs.next()){
+                provList.add(createProvince(rs));
+            }
+
+            return provList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las provincias", e);
+        }
     }
 
     private Province createProvince(ResultSet rs) throws SQLException {
