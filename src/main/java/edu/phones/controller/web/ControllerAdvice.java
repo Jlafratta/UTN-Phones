@@ -2,6 +2,9 @@ package edu.phones.controller.web;
 
 import edu.phones.dto.ErrorResponseDto;
 import edu.phones.exceptions.InvalidLoginException;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import edu.phones.exceptions.notExist.CityNotExistException;
+import edu.phones.exceptions.notExist.ProfileNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -32,9 +35,26 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UserNotExistException.class)
-    public ErrorResponseDto handleUserNotExists() {
+    public ErrorResponseDto handleUserNotExist() {
         return new ErrorResponseDto(3, "User not exists");
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ErrorResponseDto handleUserAlreadyExistException(){
+        return new ErrorResponseDto(4, "User already exist");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProfileNotExistException.class)
+    public ErrorResponseDto handleProfileNotExist(){
+        return new ErrorResponseDto(5, "Profile not exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CityNotExistException.class)
+    public ErrorResponseDto handleCityNotExist(){
+        return new ErrorResponseDto(6, "City not exists");
+    }
 
 }
