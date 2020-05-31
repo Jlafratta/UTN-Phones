@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AbstractDao<T> {
 
-    T add(T value) throws UserAlreadyExistsException, CityAlreadyExistException, ProfileAlreadyExistException, TypeAlreadyExistsException, ProvinceAlreadyExistsException, PhoneLineAlreadyExistsException;
+    T add(T value) throws UserAlreadyExistsException, CityAlreadyExistException, ProfileAlreadyExistException, TypeAlreadyExistsException, ProvinceAlreadyExistsException, PhoneLineAlreadyExistsException, BillAlreadyExistsException, CallAlreadyExistsException;
 
     Integer update(T value);
 

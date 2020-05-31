@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.PhoneLineDao;
 import edu.phones.domain.PhoneLine;
+import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,7 @@ public class PhoneLineService {
     }
 
     /** CRUD **/
-    public PhoneLine createLine(PhoneLine line) {
+    public PhoneLine createLine(PhoneLine line) throws PhoneLineAlreadyExistsException {
         return lineDao.add(line);
     }
 

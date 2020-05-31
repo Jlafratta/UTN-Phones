@@ -65,7 +65,7 @@ public class ProvinceMySQLDao implements ProvinceDao {
     @Override
     public Integer update(Province province) {
         try {
-            PreparedStatement ps = connect.prepareStatement(UPDATE_USER_QUERY);
+            PreparedStatement ps = connect.prepareStatement(UPDATE_PROVINCE_QUERY);
             ps.setString(1, province.getName());
             ps.setInt(2, province.getProvinceId());
 

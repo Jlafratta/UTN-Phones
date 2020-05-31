@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.Bill;
 import edu.phones.domain.PhoneLine;
+import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
 import edu.phones.exceptions.notExist.BillNotExistException;
 import edu.phones.service.BillService;
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class BillControllerTest {
     }
 
     @Test
-    public void testCreateBillOk(){
+    public void testCreateBillOk() throws BillAlreadyExistsException {
         Bill toAdd = new Bill(1.0, 1.0, null, null, 1, null);
         Bill added = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billService.createBill(toAdd)).thenReturn(added);

@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.PhoneLineMySQLDao;
 import edu.phones.domain.PhoneLine;
+import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class PhoneLineServiceTest {
     }
 
     @Test
-    public void testCreateLineOk(){
+    public void testCreateLineOk() throws PhoneLineAlreadyExistsException {
         PhoneLine toAdd = new PhoneLine("2235997823", true, null, null);
         PhoneLine added = new PhoneLine(1, "2235997823", true, null, null);
         when(lineDao.add(toAdd)).thenReturn(added);

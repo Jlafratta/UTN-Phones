@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Bill;
+import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
 import edu.phones.exceptions.notExist.BillNotExistException;
 import edu.phones.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class BillController {
         this.billService = billService;
     }
 
-    public Bill createBill(Bill bill){
+    public Bill createBill(Bill bill) throws BillAlreadyExistsException {
         return billService.createBill(bill);
     }
 

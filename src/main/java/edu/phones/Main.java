@@ -5,6 +5,7 @@ import edu.phones.controller.UserController;
 import edu.phones.dao.UserDao;
 
 import edu.phones.dao.mysql.CityMySQLDao;
+import edu.phones.dao.mysql.ProvinceMySQLDao;
 import edu.phones.dao.mysql.UserProfileMySQLDao;
 import edu.phones.dao.mysql.UserMySQLDao;
 import edu.phones.domain.City;
@@ -32,15 +33,11 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void main(String[] args) throws SQLException {
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        }catch (InstantiationException e){
-            e.printStackTrace();
-        }catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }catch (ClassNotFoundException e){
+        }catch (InstantiationException | IllegalAccessException | ClassNotFoundException e){
             e.printStackTrace();
         }
 
@@ -48,7 +45,8 @@ public class Main {
 
         // Dao
         UserProfileMySQLDao profileMySQLDao = new UserProfileMySQLDao(connect);
-        CityMySQLDao cityMySQLDao = new CityMySQLDao(connect);
+        ProvinceMySQLDao provinceMySQLDao = new ProvinceMySQLDao(connect);
+        CityMySQLDao cityMySQLDao = new CityMySQLDao(connect, provinceMySQLDao);
         UserDao userDao = new UserMySQLDao(connect, profileMySQLDao, cityMySQLDao);
         // Service
         UserService userService = new UserService(userDao);
@@ -56,6 +54,10 @@ public class Main {
         UserController userController = new UserController(userService);
 
         try {
+
+
+            /** USER  **/
+
             System.out.println("\nLOGIN:");
             User loggedUser = userController.login("LaGorrita", "asd123");
             System.out.println(loggedUser);
@@ -84,11 +86,9 @@ public class Main {
 
 
 
-        }  catch (UserNotExistException e) {
-            e.printStackTrace();
-        } catch (ValidationException e) {
-            e.printStackTrace();
-        } catch (UserAlreadyExistsException e) {
+
+
+        }  catch (UserNotExistException | ValidationException | UserAlreadyExistsException e) {
             e.printStackTrace();
         }
 

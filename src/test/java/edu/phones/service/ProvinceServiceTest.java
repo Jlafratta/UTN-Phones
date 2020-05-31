@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.ProvinceMySQLDao;
 import edu.phones.domain.Province;
+import edu.phones.exceptions.alreadyExist.ProvinceAlreadyExistsException;
 import edu.phones.exceptions.notExist.ProvinceNotExistException;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class ProvinceServiceTest {
     }
 
     @Test
-    public void testCreateProvinceOk(){
+    public void testCreateProvinceOk() throws ProvinceAlreadyExistsException {
         Province toAdd = new Province("name");
         Province added = new Province(1, "name");
         when(provinceDao.add(toAdd)).thenReturn(added);

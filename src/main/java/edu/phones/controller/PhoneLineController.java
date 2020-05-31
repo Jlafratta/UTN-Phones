@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.PhoneLine;
+import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import edu.phones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PhoneLineController {
     }
 
     /** CRUD **/
-    public PhoneLine createLine(PhoneLine line){
+    public PhoneLine createLine(PhoneLine line) throws PhoneLineAlreadyExistsException {
         return lineService.createLine(line);
     }
 

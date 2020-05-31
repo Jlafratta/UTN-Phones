@@ -60,8 +60,8 @@ CREATE TABLE `phone_lines`(
 // TODO cambiar los integer a decimal
 CREATE TABLE `bills`(
 	`id_bill` INTEGER NOT NULL AUTO_INCREMENT,
-    `cost` INTEGER,
-    `total` INTEGER,
+    `cost` DECIMAL,
+    `total` DECIMAL,
     `bill_date` DATETIME,
     `expire_date` DATETIME,
     `calls_count` INTEGER,
@@ -73,7 +73,7 @@ CREATE TABLE `bills`(
 // TODO cambiar los integer a decimal
 CREATE TABLE `tariff`(
 	`tariff_key` INTEGER NOT NULL,
-    `value` INTEGER,
+    `value` DECIMAL,
     PRIMARY KEY (`tariff_key`)
 );
 
@@ -81,8 +81,8 @@ CREATE TABLE `tariff`(
 CREATE TABLE `calls`(
 	`id_call` INTEGER NOT NULL AUTO_INCREMENT,
     `duration` INTEGER NOT NULL,
-    `cost` INTEGER NOT NULL,
-    `total_price` INTEGER,
+    `cost` DECIMAL NOT NULL,
+    `total_price` DECIMAL,
     `call_date` DATETIME,
     `pnumber_origin` VARCHAR(11) NOT NULL,
     `pnumber_destination` VARCHAR(11) NOT NULL,

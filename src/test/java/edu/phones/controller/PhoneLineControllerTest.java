@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.PhoneLine;
 import edu.phones.domain.Province;
+import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import edu.phones.service.PhoneLineService;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class PhoneLineControllerTest {
     }
 
     @Test
-    public void testCreateLineOk(){
+    public void testCreateLineOk() throws PhoneLineAlreadyExistsException {
         PhoneLine toAdd = new PhoneLine("2235997823", false, null , null);
         PhoneLine added = new PhoneLine(1, "2235997823", true, null, null);
         when(lineService.createLine(toAdd)).thenReturn(added);

@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.User;
 import edu.phones.domain.UserType;
+import edu.phones.exceptions.alreadyExist.TypeAlreadyExistsException;
 import edu.phones.exceptions.notExist.TypeNotExistException;
 import edu.phones.service.UserTypeService;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class UserTypeControllerTest {
     }
 
     @Test
-    public void testCreateTypeOk(){
+    public void testCreateTypeOk() throws TypeAlreadyExistsException {
         UserType toAdd = new UserType("TYPE");
         UserType added = new UserType(1, "TYPE");
         when(typeService.createType(toAdd)).thenReturn(added);

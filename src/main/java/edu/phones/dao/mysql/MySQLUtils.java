@@ -10,17 +10,17 @@ public class MySQLUtils {
 
     protected static String BASE_PLINE_QUERY = " SELECT * FROM `phone_lines` AS pl";
 
-    protected static String BASE_CITY_QUERY ="SELECT * FROM 'cities' AS c";
+    protected static String BASE_CITY_QUERY ="SELECT * FROM `cities` AS c";
 
-    protected static String BASE_PROVINCE_QUERY = "SELECT * FROM 'provinces' as p";
+    protected static String BASE_PROVINCE_QUERY = "SELECT * FROM `provinces` as p";
 
-    protected static String BASE_BILLS_QUERY =" SELECT * FROM 'bills' as b";
+    protected static String BASE_BILLS_QUERY =" SELECT * FROM `bills` as b";
 
-    protected static String BASE_CALLS_QUERY = " SELECT * FROM 'calls' as c";
+    protected static String BASE_CALLS_QUERY = " SELECT * FROM `calls` as c";
 
-    protected  static String BASE_PROFILE_QUERY  = "SELECT * FROM 'user_profile' AS up";
+    protected  static String BASE_PROFILE_QUERY  = "SELECT * FROM `user_profile` AS up";
 
-    protected  static String BASE_TARIFF_QUERY  = "SELECT * FROM 'tariff' AS t";
+    protected  static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t";
 
 
 
@@ -37,7 +37,7 @@ public class MySQLUtils {
 
     protected static String GET_BY_ID_CITY_QUERY = BASE_CITY_QUERY + " WHERE c.id_city = ?";
 
-    protected static String GET_BY_ID_PROVINCE_QUERY = BASE_PROVINCE_QUERY + " WHERE p.id_provinces = ?";
+    protected static String GET_BY_ID_PROVINCE_QUERY = BASE_PROVINCE_QUERY + " WHERE p.id_province = ?";
 
     protected static String GET_BY_ID_BILLS_QUERY = BASE_BILLS_QUERY + " WHERE b.id_bill = ?";
 
@@ -75,7 +75,7 @@ public class MySQLUtils {
     protected static String INSERT_TARIFF_QUERY = "INSERT INTO `tariff` (tariff_key, value)" +
             "VALUES (?, ?)";
 
-    protected static String INSERT_CALLS_QUERY = "INSERT INTO `Calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination, pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)" +
+    protected static String INSERT_CALLS_QUERY = "INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination, pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)" +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
     /* UPDATEs */
@@ -121,7 +121,7 @@ public class MySQLUtils {
 
     protected static String DELETE_TARIFF_QUERY = "DELETE FROM `tariff` WHERE id_tariff = ?";
 
-    protected static String DELETE_PROFILE_QUERY = "DELETE FROM `user_profile` WHERE id_profile = ?";
+    //protected static String DELETE_PROFILE_QUERY = "DELETE FROM `user_profile` WHERE id_profile = ?";
 
     protected static String DELETE_PROVINCE_QUERY = "DELETE FROM `provinces` WHERE id_province = ?";
 

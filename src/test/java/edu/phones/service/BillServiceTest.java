@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.BillMySQLDao;
 import edu.phones.domain.Bill;
+import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
 import edu.phones.exceptions.notExist.BillNotExistException;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class BillServiceTest {
     }
 
     @Test
-    public void testCreateBillOk(){
+    public void testCreateBillOk() throws BillAlreadyExistsException {
         Bill toAdd = new Bill(1.0, 1.0, null, null, 1, null);
         Bill added = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billDao.add(toAdd)).thenReturn(added);

@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Province;
+import edu.phones.exceptions.alreadyExist.ProvinceAlreadyExistsException;
 import edu.phones.exceptions.notExist.ProvinceNotExistException;
 import edu.phones.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ProvinceController {
     }
 
     /** CRUD **/
-    public Province createProvince(Province province){
+    public Province createProvince(Province province) throws ProvinceAlreadyExistsException {
         return provinceService.createProvince(province);
     }
 

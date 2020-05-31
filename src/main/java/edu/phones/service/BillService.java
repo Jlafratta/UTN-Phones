@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.BillDao;
 import edu.phones.domain.Bill;
+import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
 import edu.phones.exceptions.notExist.BillNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,7 @@ public class BillService {
         this.billDao = billDao;
     }
 
-    public Bill createBill(Bill bill) {
+    public Bill createBill(Bill bill) throws BillAlreadyExistsException {
         return billDao.add(bill);
     }
 

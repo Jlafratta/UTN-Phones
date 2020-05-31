@@ -90,7 +90,7 @@ public class UserTypeMySQLDao implements UserTypeDao {
     @Override
     public UserType getById(Integer id) {
         try {
-            PreparedStatement ps = connect.prepareStatement(GET_BY_ID_USER_QUERY);
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ID_TYPE_QUERY);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 

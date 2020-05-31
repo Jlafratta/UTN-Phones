@@ -136,7 +136,7 @@ public class CityMySQLDao implements CityDao {
     }
 
     private City createCity(ResultSet rs) throws SQLException {
-        return new City(rs.getInt("city_id"), rs.getString("prefix"), rs.getString("city_name"),
+        return new City(rs.getInt("id_city"), rs.getString("prefix"), rs.getString("city_name"),
                     provinceDao.getById(rs.getInt("id_province")));
     }
 }

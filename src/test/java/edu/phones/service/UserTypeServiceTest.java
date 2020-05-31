@@ -3,6 +3,7 @@ package edu.phones.service;
 import edu.phones.dao.mysql.UserTypeMySQLDao;
 import edu.phones.domain.User;
 import edu.phones.domain.UserType;
+import edu.phones.exceptions.alreadyExist.TypeAlreadyExistsException;
 import edu.phones.exceptions.notExist.TypeNotExistException;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class UserTypeServiceTest {
     }
 
     @Test
-    public void testCreateTypeOk(){
+    public void testCreateTypeOk() throws TypeAlreadyExistsException {
         UserType toAdd = new UserType("name");
         UserType added = new UserType(1, "name");
         when(typeService.createType(toAdd)).thenReturn(added);

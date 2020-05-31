@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Province;
+import edu.phones.exceptions.alreadyExist.ProvinceAlreadyExistsException;
 import edu.phones.exceptions.notExist.ProvinceNotExistException;
 import edu.phones.service.ProvinceService;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class ProvinceControllerTest {
     }
 
     @Test
-    public void testCreateProvinceOk(){
+    public void testCreateProvinceOk() throws ProvinceAlreadyExistsException {
         Province toAdd = new Province("name");
         Province added = new Province(1, "name");
         when(provinceService.createProvince(toAdd)).thenReturn(added);

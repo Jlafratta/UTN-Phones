@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.ProvinceDao;
 import edu.phones.domain.Province;
+import edu.phones.exceptions.alreadyExist.ProvinceAlreadyExistsException;
 import edu.phones.exceptions.notExist.ProvinceNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,7 @@ public class ProvinceService {
         this.provinceDao = provinceDao;
     }
 
-    public Province createProvince(Province province) {
+    public Province createProvince(Province province) throws ProvinceAlreadyExistsException {
         return provinceDao.add(province);
     }
 
