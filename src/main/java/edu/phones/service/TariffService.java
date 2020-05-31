@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.Tariff;
+import edu.phones.exceptions.alreadyExist.TarriffAlreadyExistsException;
 import edu.phones.exceptions.notExist.TariffNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,7 @@ public class TariffService {
         this.tariffDao = tariffDao;
     }
 
-    public Tariff createTariff(Tariff tariff) {
+    public Tariff createTariff(Tariff tariff) throws TarriffAlreadyExistsException {
         return tariffDao.add(tariff);
     }
 

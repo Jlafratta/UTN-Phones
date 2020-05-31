@@ -28,8 +28,8 @@ public class UserTypeController {
         typeService.remove(type);
     }
 
-    public void updateType(UserType type) throws TypeNotExistException {
-        typeService.updateType(type);
+    public UserType updateType(UserType type) throws TypeNotExistException {
+        return typeService.updateType(type);
     }
 
     public UserType getType(Integer typeId){

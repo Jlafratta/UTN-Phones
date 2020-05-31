@@ -2,20 +2,22 @@
 package edu.phones;
 
 import edu.phones.controller.UserController;
+import edu.phones.controller.UserProfileController;
+import edu.phones.controller.UserTypeController;
 import edu.phones.dao.UserDao;
 
-import edu.phones.dao.mysql.CityMySQLDao;
-import edu.phones.dao.mysql.ProvinceMySQLDao;
-import edu.phones.dao.mysql.UserProfileMySQLDao;
-import edu.phones.dao.mysql.UserMySQLDao;
-import edu.phones.domain.City;
-import edu.phones.domain.Province;
-import edu.phones.domain.User;
-import edu.phones.domain.UserProfile;
+import edu.phones.dao.mysql.*;
+import edu.phones.domain.*;
+import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
+import edu.phones.exceptions.alreadyExist.TypeAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import edu.phones.exceptions.notExist.ProfileNotExistException;
+import edu.phones.exceptions.notExist.TypeNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
+import edu.phones.service.UserProfileService;
 import edu.phones.service.UserService;
+import edu.phones.service.UserTypeService;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -48,10 +50,18 @@ public class Main {
         ProvinceMySQLDao provinceMySQLDao = new ProvinceMySQLDao(connect);
         CityMySQLDao cityMySQLDao = new CityMySQLDao(connect, provinceMySQLDao);
         UserDao userDao = new UserMySQLDao(connect, profileMySQLDao, cityMySQLDao);
+        UserProfileMySQLDao profileDao = new UserProfileMySQLDao(connect);
+        UserTypeMySQLDao typeDao = new UserTypeMySQLDao(connect);
+
         // Service
         UserService userService = new UserService(userDao);
+        UserProfileService profileService = new UserProfileService(profileDao);
+        UserTypeService typeService = new UserTypeService(typeDao);
+
         // Controller
         UserController userController = new UserController(userService);
+        UserProfileController profileController = new UserProfileController(profileService);
+        UserTypeController typeController = new UserTypeController(typeService);
 
         try {
 
@@ -84,11 +94,48 @@ public class Main {
             userController.removeUser(newUser);
             System.out.println(userController.getAll());
 
+            /** USER PROFILE **/
+
+            System.out.println("\nADD PROFILE:");
+            UserProfile newProfile = new UserProfile("profileName", "profileLastname", 12312312);
+            newProfile = profileController.createProfile(newProfile);
+            System.out.println(newProfile);
+
+            System.out.println("\nUPDATE PROFILE:");
+            newProfile.setName("NAMEEEE");
+            newProfile = profileController.updateProfile(newProfile);
+            System.out.println(newProfile);
+
+            /** USER TYPE **/
+
+            System.out.println("\nADD TYPE:");
+            UserType newType = new UserType("userType3");
+            newType = typeController.createType(newType);
+            System.out.println(newType);
+
+            System.out.println("\nUPDATE:");
+            newType.setName("type2");
+            newType = typeController.updateType(newType);
+            System.out.println(newType);
+
+            System.out.println("\nREMOVE:");
+            typeController.removeType(newType);
 
 
 
 
-        }  catch (UserNotExistException | ValidationException | UserAlreadyExistsException e) {
+
+
+
+
+
+
+
+
+
+
+
+        }  catch (UserNotExistException | ValidationException | UserAlreadyExistsException | ProfileAlreadyExistException | ProfileNotExistException | TypeAlreadyExistsException | TypeNotExistException e) {
             e.printStackTrace();
         }
 

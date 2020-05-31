@@ -1,8 +1,10 @@
 package edu.phones.dao.mysql;
 
+import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.PhoneLine;
 import edu.phones.domain.Tariff;
+import edu.phones.exceptions.alreadyExist.TarriffAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -14,10 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static edu.phones.dao.mysql.MySQLUtils.BASE_PLINE_QUERY;
-import static edu.phones.dao.mysql.MySQLUtils.BASE_TARIFF_QUERY;
-
-// TODO completar los metodos del dao segun corresponda
+import static edu.phones.dao.mysql.MySQLUtils.*;
 
 @Repository
 @Qualifier("tariffMySQLDao")
@@ -32,7 +31,7 @@ public class TariffMySQLDao implements TariffDao {
 
     /* CRUD */
     @Override
-    public Tariff add(Tariff tariff) {
+    public Tariff add(Tariff tariff) throws TarriffAlreadyExistsException {
         try {
             PreparedStatement ps = connect.prepareStatement(INSERT_TARIFF_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, tariff.getKey());
@@ -125,7 +124,7 @@ public class TariffMySQLDao implements TariffDao {
             return tariffList;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error al traer todas las lineas telefonicas", e);
+            throw new RuntimeException("Error al traer todas las tarifas", e);
         }
     }
 

@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Tariff;
+import edu.phones.exceptions.alreadyExist.TarriffAlreadyExistsException;
 import edu.phones.exceptions.notExist.TariffNotExistException;
 import edu.phones.service.TariffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class TariffController {
         this.tariffService = tariffService;
     }
 
-    public Tariff createTariff(Tariff tariff){
+    public Tariff createTariff(Tariff tariff) throws TarriffAlreadyExistsException {
         return tariffService.createTariff(tariff);
     }
 

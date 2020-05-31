@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
+import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,7 @@ public class CallService {
         this.callDao = callDao;
     }
 
-    public Call createCall(Call call) {
+    public Call createCall(Call call) throws CallAlreadyExistsException {
         return callDao.add(call);
     }
 

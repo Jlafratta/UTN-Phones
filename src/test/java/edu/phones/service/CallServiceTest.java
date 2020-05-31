@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.CallMySQLDao;
 import edu.phones.domain.Call;
+import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.hibernate.validator.constraints.br.TituloEleitoral;
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class CallServiceTest {
     }
 
     @Test
-    public void testCreateCallOk(){
+    public void testCreateCallOk() throws CallAlreadyExistsException {
         Call toAdd = new Call(120, 1.0, 2.0, null, null, null, null, null);
         Call added = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
         when(callDao.add(toAdd)).thenReturn(added);

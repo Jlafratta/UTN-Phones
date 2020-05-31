@@ -14,7 +14,7 @@ public class SessionManager {
 
     Map<String, Session> sessionMap = new Hashtable<>();
 
-    int sessionExpiration = 600;
+    int sessionExpiration = 60000;
 
     public String createSession(User user){
         String token = UUID.randomUUID().toString();

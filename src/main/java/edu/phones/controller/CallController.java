@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Call;
+import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import edu.phones.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class CallController {
         this.callService = callService;
     }
 
-    public Call createCall(Call call){
+    public Call createCall(Call call) throws CallAlreadyExistsException {
         return callService.createCall(call);
     }
 
