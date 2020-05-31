@@ -4,56 +4,29 @@ public class MySQLUtils {
 
     /* BASEs */
 
-    protected static String BASE_USER_QUERY =   "SELECT * FROM `users` AS u " +
-            "INNER JOIN `user_profile` AS p " +
-            "ON u.id_profile = p.id_profile " +
-            "INNER JOIN `cities` AS c " +
-            "ON u.id_city = c.id_city " +
-            "INNER JOIN `provinces` as pr " +
-            "ON c.id_province = pr.id_province";
+    protected static String BASE_USER_QUERY =   "SELECT * FROM `users` AS u";
 
-    protected static String BASE_TYPE_QUERY = " SELECT * FROM `user_types` AS ut ";
+    protected static String BASE_TYPE_QUERY = " SELECT * FROM `user_types` AS ut";
 
-    protected static String BASE_PLINE_QUERY = " SELECT * FROM `phone_lines` AS pl " +
-            "INNER JOIN `users` AS u " +
-            "ON pl.id_user=u.id_user " +
-            "INNER JOIN `user_profile` AS p " +
-            "ON pl.id_type=p.id_type";
+    protected static String BASE_PLINE_QUERY = " SELECT * FROM `phone_lines` AS pl";
 
-    protected static String BASE_CITY_QUERY ="SELECT * FROM 'cities' AS c" +
-            "INNER JOIN 'provinces' AS p " +
-            "ON c.id_province = p.id_province ";
+    protected static String BASE_CITY_QUERY ="SELECT * FROM 'cities' AS c";
 
-    protected static String BASE_PROVINCE_QUERY = "SELECT * FROM 'provinces' as p" ;
+    protected static String BASE_PROVINCE_QUERY = "SELECT * FROM 'provinces' as p";
 
-    protected static String BASE_BILLS_QUERY =" SELECT * FROM 'bills' as b" +
-            "INNER JOIN  'phone_line' as pl " +
-            " ON pl.id_pline=b.id_pline ";
+    protected static String BASE_BILLS_QUERY =" SELECT * FROM 'bills' as b";
 
-    protected static String BASE_CALLS_QUERY = " SELECT * FROM 'calls' as c "+
-            "INNER JOIN 'phone_lines' AS plo" +
-            "ON plo.id_pline=c.pline_origin "+
-            "INNER JOIN 'phone_lines' AS pld" +
-            "ON pld.id_pline=c.pline_destination "+
-            "INNER JOIN 'cities' AS co" +
-            "ON co.id_city=c.city_origin "+
-            "INNER JOIN 'cities' AS cd" +
-            "ON cd.id_city=c.city_destination "+
-            "INNER JOIN 'bills' AS b" +
-            "ON b.id_bill=c.id_bill "+
-            "INNER JOIN 'tariff' AS t" +
-            "ON t.tariff_key=c.tariff_key ";
+    protected static String BASE_CALLS_QUERY = " SELECT * FROM 'calls' as c";
 
-    protected  static String BASE_PROFILE_QUERY  = "SELECT * FROM 'user_profile' AS up ";
+    protected  static String BASE_PROFILE_QUERY  = "SELECT * FROM 'user_profile' AS up";
 
-    protected  static String BASE_TARIFF_QUERY  = "SELECT * FROM 'tariff' AS t ";
+    protected  static String BASE_TARIFF_QUERY  = "SELECT * FROM 'tariff' AS t";
 
 
 
     /* GETs */
 
-    protected static String GET_BY_USERNAME_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ? " +
-            "AND u.password = ?";
+    protected static String GET_BY_USERNAME_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ? AND u.password = ?";
 
     // byId
     protected static String GET_BY_ID_USER_QUERY = BASE_USER_QUERY + " WHERE u.id_user = ?";
@@ -66,7 +39,7 @@ public class MySQLUtils {
 
     protected static String GET_BY_ID_PROVINCE_QUERY = BASE_PROVINCE_QUERY + " WHERE p.id_provinces = ?";
 
-    protected static String GET_BY_ID_BILLS_QUERY = BASE_BILLS_QUERY + " WHERE b.id_bill = ? ";
+    protected static String GET_BY_ID_BILLS_QUERY = BASE_BILLS_QUERY + " WHERE b.id_bill = ?";
 
     protected static String GET_BY_ID_CALLS_QUERY = BASE_CALLS_QUERY + " WHERE c.id_call = ?";
 
@@ -124,9 +97,6 @@ public class MySQLUtils {
 
     protected static String UPDATE_PROFILE_QUERY = "UPDATE `user_profile` SET name = ?, lastname = ?, dni = ? " +
             "WHERE id_profile = ?";
-
-
-
 
     protected static String UPDATE_BILLS_QUERY = "UPDATE `bills` SET cost = ?, total = ?, bill_date = ?, expire_date = ? , calls_count = ?, id_pline= ? " +
             "WHERE id_bill = ?";

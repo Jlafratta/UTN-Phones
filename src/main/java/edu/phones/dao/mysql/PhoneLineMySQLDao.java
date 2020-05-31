@@ -2,7 +2,10 @@ package edu.phones.dao.mysql;
 
 import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.PhoneLineDao;
+import edu.phones.dao.UserDao;
+import edu.phones.dao.UserTypeDao;
 import edu.phones.domain.PhoneLine;
+import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
@@ -22,10 +26,14 @@ import static edu.phones.dao.mysql.MySQLUtils.*;
 public class PhoneLineMySQLDao implements PhoneLineDao {
 
     final Connection connect;
+    UserDao userDao;
+    UserTypeDao typeDao;
 
     @Autowired
-    public PhoneLineMySQLDao(Connection connect) {
+    public PhoneLineMySQLDao(Connection connect, @Qualifier("userMySQLDao")UserDao userDao, @Qualifier("userTypeMySQLDao")UserTypeDao typeDao) {
         this.connect = connect;
+        this.userDao = userDao;
+        this.typeDao = typeDao;
     }
 
 
@@ -92,14 +100,49 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
         }
     }
 
-    // TODO getById & getAll
     @Override
     public PhoneLine getById(Integer id) {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ID_PLINE_QUERY);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            PhoneLine line = null;
+            if(rs.next()){
+                line = createLine(rs);
+            }
+            rs.close();
+            ps.close();
+
+            return line;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error al buscar por id", e);
+        }
     }
 
     @Override
     public List<PhoneLine> getAll() {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(BASE_PLINE_QUERY);
+            ResultSet rs = ps.executeQuery();
+
+            List<PhoneLine> lineList = new ArrayList<>();
+            while(rs.next()){
+                lineList.add(createLine(rs));
+            }
+
+            return lineList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las lineas telefonicas", e);
+        }
+    }
+
+    private PhoneLine createLine(ResultSet rs) throws SQLException {
+        return new PhoneLine(rs.getInt("id_pline"), rs.getString("phone_number"), rs.getBoolean("state"),
+                userDao.getById(rs.getInt("id_user")),
+                typeDao.getById(rs.getInt("id_type")));
     }
 }

@@ -2,6 +2,7 @@ package edu.phones.dao.mysql;
 
 import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.UserProfileDao;
+import edu.phones.domain.User;
 import edu.phones.domain.UserProfile;
 import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,15 +82,35 @@ public class UserProfileMySQLDao implements UserProfileDao {
         throw new UnsupportedOperationException();
     }
 
-    // TODO getById UserProfile
     @Override
     public UserProfile getById(Integer id) {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ID_PROFILE_QUERY);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            UserProfile profile = null;
+            if(rs.next()){
+                profile = createProfile(rs);
+            }
+            rs.close();
+            ps.close();
+
+            return profile;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error al buscar por id", e);
+        }
     }
 
     @Override
     public List<UserProfile> getAll() {
         throw new UnsupportedOperationException();
+    }
+
+    private UserProfile createProfile(ResultSet rs) throws SQLException {
+        return new UserProfile(rs.getInt("id_profile"), rs.getString("name"), rs.getString("lastname"), rs.getInt("dni"));
     }
 
 }
