@@ -7,6 +7,7 @@ import edu.phones.domain.City;
 import edu.phones.domain.User;
 import edu.phones.domain.UserProfile;
 import edu.phones.dto.AddUserDto;
+import edu.phones.dto.UserDto;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import edu.phones.exceptions.notExist.CityNotExistException;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
@@ -21,7 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -62,8 +62,9 @@ public class UserWebController {
         return (users.size() > 0) ? ResponseEntity.ok(users) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    // TODO preguntar a pablo si esta bien
     @PostMapping
-    public ResponseEntity addUser(@RequestHeader("Authorization") String sessionToken, @RequestBody AddUserDto userDto) throws UserAlreadyExistsException, ProfileNotExistException, CityNotExistException {
+    public ResponseEntity<User> addUser(@RequestHeader("Authorization") String sessionToken, @RequestBody AddUserDto userDto) throws UserAlreadyExistsException, ProfileNotExistException, CityNotExistException {
 
         User toAdd;
         UserProfile profile = profileController.getProfile(userDto.getProfileId());
@@ -83,10 +84,52 @@ public class UserWebController {
         return ResponseEntity.created(getLocation(toAdd)).build();
     }
 
+    @PostMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestHeader("Authorization") String sessionToken, @RequestBody UserDto userDto) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
+
+        User toUpdate;
+        UserProfile profile = profileController.getProfile(userDto.getProfileId());
+        City city = cityController.getCity(userDto.getCityId());
+
+        if(profile != null && city != null){
+            toUpdate = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
+            toUpdate = userController.updateUser(toUpdate);
+        }else {
+            if(profile == null){
+                throw new ProfileNotExistException();
+            }else {
+                throw new CityNotExistException();
+            }
+        }
+
+        return ResponseEntity.created(getLocation(toUpdate)).build();
+    }
+
+    @PostMapping("/remove")
+    public ResponseEntity<User> removeUser(@RequestHeader("Authorization") String sessionToken, @RequestBody UserDto userDto) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
+
+        User toRemove;
+        UserProfile profile = profileController.getProfile(userDto.getProfileId());
+        City city = cityController.getCity(userDto.getCityId());
+
+        if(profile != null && city != null){
+            toRemove = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
+            userController.removeUser(toRemove);
+        }else {
+            if(profile == null){
+                throw new ProfileNotExistException();
+            }else {
+                throw new CityNotExistException();
+            }
+        }
+        return ResponseEntity.ok(toRemove);
+    }
+
+    // TODO preguntar a pablo ( fromCurrentRequest vs fromCurrentContextPath )
     private URI getLocation(User newUser) {
         return ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
+                .fromCurrentContextPath()
+                .path("/api/user/{id}")
                 .buildAndExpand(newUser.getUserId())
                 .toUri();
     }
