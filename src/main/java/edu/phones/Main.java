@@ -81,7 +81,7 @@ public class Main {
             System.out.println(usersList);
 
             System.out.println("\nADD USER:");
-            User newUser = new User(1, "LaGorri", "asd123", new UserProfile(1,"Julian", "Lafratta", 41307441), new City(3,"223", "Mar del Plata", new Province(1,"Buenos Aires")));
+            User newUser = new User("LaGorri", "asd123", new UserProfile(1,"Julian", "Lafratta", 41307441), new City(3,"223", "Mar del Plata", new Province(1,"Buenos Aires")));
             newUser = userController.createUser(newUser);
             System.out.println(newUser);
 
