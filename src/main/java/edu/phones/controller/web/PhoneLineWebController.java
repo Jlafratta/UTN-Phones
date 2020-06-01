@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +64,7 @@ public class PhoneLineWebController {
     @GetMapping
     public ResponseEntity<List<PhoneLine>> getLines(@RequestHeader("Authorization") String sessionToken){
 
-        List<PhoneLine> lines = new ArrayList<>();
+        List<PhoneLine> lines;
         lines = lineController.getAll();
 
         return (lines.size() > 0) ? ResponseEntity.ok(lines) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();

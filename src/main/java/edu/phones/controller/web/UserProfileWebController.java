@@ -1,7 +1,6 @@
 package edu.phones.controller.web;
 
 import edu.phones.controller.UserProfileController;
-import edu.phones.domain.User;
 import edu.phones.domain.UserProfile;
 import edu.phones.dto.AddProfileDto;
 import edu.phones.dto.ProfileDto;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")

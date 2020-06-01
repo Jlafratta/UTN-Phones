@@ -75,7 +75,7 @@ public class UserWebController {
     @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
 
-        User toUpdate = null;
+        User toUpdate;
         UserProfile profile = profileController.getProfile(userDto.getProfileId());
         City city = cityController.getCity(userDto.getCityId());
 
@@ -91,7 +91,7 @@ public class UserWebController {
     @DeleteMapping
     public ResponseEntity<User> removeUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
 
-        User toRemove = null;
+        User toRemove;
         UserProfile profile = profileController.getProfile(userDto.getProfileId());
         City city = cityController.getCity(userDto.getCityId());
 
