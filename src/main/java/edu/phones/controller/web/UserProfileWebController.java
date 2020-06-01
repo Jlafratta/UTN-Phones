@@ -46,20 +46,19 @@ public class UserProfileWebController {
         return ResponseEntity.created(getLocation(profile)).build();
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public ResponseEntity<UserProfile> updateProfile(@RequestBody ProfileDto profileDto, @RequestHeader("Authorization") String sessionToken) throws ProfileNotExistException {
 
         UserProfile profile = new UserProfile(profileDto.getProfileId(), profileDto.getName(), profileDto.getLastname(), profileDto.getDni());
         profile = profileController.updateProfile(profile);
 
-        return ResponseEntity.created(getLocation(profile)).build();
+        return ResponseEntity.ok(profile);
     }
 
-    // TODO preguntar a pablo ( fromCurrentRequest vs fromCurrentContextPath )
     private URI getLocation(UserProfile profile) {
         return ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/api/profile/{id}")
+                .fromCurrentRequest()
+                .path("/{id}")
                 .buildAndExpand(profile.getProfileId())
                 .toUri();
     }

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -41,18 +42,11 @@ public class UserWebController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@RequestHeader("Authorization") String sessionToken, @PathVariable Integer id){
+    public ResponseEntity<User> getUser(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken){
 
         User user = userController.getUser(id);
 
-        ResponseEntity<User> responseEntity;
-
-        if(user != null){
-            responseEntity = ResponseEntity.ok(user);
-        }else {
-            responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return responseEntity;
+        return (user != null) ? ResponseEntity.ok(user) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping
@@ -62,74 +56,58 @@ public class UserWebController {
         return (users.size() > 0) ? ResponseEntity.ok(users) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    // TODO preguntar a pablo si esta bien
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestHeader("Authorization") String sessionToken, @RequestBody AddUserDto userDto) throws UserAlreadyExistsException, ProfileNotExistException, CityNotExistException {
+    public ResponseEntity<User> addUser(@RequestBody AddUserDto userDto, @RequestHeader("Authorization") String sessionToken) throws UserAlreadyExistsException, ProfileNotExistException, CityNotExistException {
 
         User toAdd;
         UserProfile profile = profileController.getProfile(userDto.getProfileId());
         City city = cityController.getCity(userDto.getCityId());
 
-        if(profile != null && city != null){
-            toAdd = new User(userDto.getUsername(), userDto.getPassword(), profile, city);
-            toAdd = userController.createUser(toAdd);
-        }else {
-            if(profile == null){
-                throw new ProfileNotExistException();
-            }else {
-                throw new CityNotExistException();
-            }
-        }
+        Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
+        Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
+
+        toAdd = new User(userDto.getUsername(), userDto.getPassword(), profile, city);
+        toAdd = userController.createUser(toAdd);
 
         return ResponseEntity.created(getLocation(toAdd)).build();
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<User> updateUser(@RequestHeader("Authorization") String sessionToken, @RequestBody UserDto userDto) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
+    @PutMapping
+    public ResponseEntity<User> updateUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
 
-        User toUpdate;
+        User toUpdate = null;
         UserProfile profile = profileController.getProfile(userDto.getProfileId());
         City city = cityController.getCity(userDto.getCityId());
 
-        if(profile != null && city != null){
-            toUpdate = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
-            toUpdate = userController.updateUser(toUpdate);
-        }else {
-            if(profile == null){
-                throw new ProfileNotExistException();
-            }else {
-                throw new CityNotExistException();
-            }
-        }
+        Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
+        Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
 
-        return ResponseEntity.created(getLocation(toUpdate)).build();
+        toUpdate = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
+        toUpdate = userController.updateUser(toUpdate);
+
+        return ResponseEntity.ok(toUpdate);
     }
 
-    @PostMapping("/remove")
-    public ResponseEntity<User> removeUser(@RequestHeader("Authorization") String sessionToken, @RequestBody UserDto userDto) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
+    @DeleteMapping
+    public ResponseEntity<User> removeUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
 
-        User toRemove;
+        User toRemove = null;
         UserProfile profile = profileController.getProfile(userDto.getProfileId());
         City city = cityController.getCity(userDto.getCityId());
 
-        if(profile != null && city != null){
-            toRemove = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
-            userController.removeUser(toRemove);
-        }else {
-            if(profile == null){
-                throw new ProfileNotExistException();
-            }else {
-                throw new CityNotExistException();
-            }
-        }
+        Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
+        Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
+
+        toRemove = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
+        userController.removeUser(toRemove);
+
         return ResponseEntity.ok(toRemove);
     }
 
-    // TODO preguntar a pablo ( fromCurrentRequest vs fromCurrentContextPath )
     private URI getLocation(User newUser) {
         return ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/api/user/{id}")
+                .fromCurrentRequest()
+                .path("/{id}")
                 .buildAndExpand(newUser.getUserId())
                 .toUri();
     }

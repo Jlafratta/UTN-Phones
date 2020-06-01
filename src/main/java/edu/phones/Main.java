@@ -69,7 +69,7 @@ public class Main {
             /** USER  **/
 
             System.out.println("\nLOGIN:");
-            User loggedUser = userController.login("LaGorrita", "asd123");
+            User loggedUser = userController.login("admin", "admin");
             System.out.println(loggedUser);
 
             System.out.println("\nGET BY ID:");

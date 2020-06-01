@@ -45,7 +45,7 @@ public class UserMySQLDaoTest {
     }
 
     /** getByUsername tests **/
-    /**
+
     @Test
     public void testGetByUsernameOk() throws SQLException {
         // mock del ps
@@ -58,11 +58,14 @@ public class UserMySQLDaoTest {
         // simulo el if como valido
         when(rs.next()).thenReturn(true);
         // simulo la devolucion de datos de la query (los valores no tienen importancia)
-        when(rs.getInt("id_user")).thenReturn(3);
-        when(rs.getInt("id_profile")).thenReturn(5);
-        when(rs.getInt("id_city")).thenReturn(7);
+        when(rs.getInt("id_user")).thenReturn(1);
+        when(rs.getInt("id_profile")).thenReturn(1);
+        when(rs.getInt("id_city")).thenReturn(1);
         // a todos los string que traiga la query les asigno 'StringValue'
         when(rs.getString(any())).thenReturn("StringValue");
+
+        when(profileDao.getById(rs.getInt("id_profile"))).thenReturn(new UserProfile(1, "name", "lastname", 12312312));
+        when(cityDao.getById(rs.getInt("id_city"))).thenReturn(new City(1, "223", "cityName", null));
 
         doNothing().when(rs).close();
         doNothing().when(ps).close();
@@ -71,16 +74,17 @@ public class UserMySQLDaoTest {
         User user = userDao.getByUsername("username", "password");
 
         // Asserts para comparar lo retornado (los valores tienen que ser los mismos que simulo devolver en la query para que este ok)
-        assertEquals(Integer.valueOf(3), user.getUserId());
-        assertEquals(Integer.valueOf(5), user.getUserProfile().getProfileId());
-        assertEquals(Integer.valueOf(7), user.getCity().getCityId());
+        assertEquals(Integer.valueOf(1), user.getUserId());
+        assertEquals(Integer.valueOf(1), user.getUserProfile().getProfileId());
+        assertEquals(Integer.valueOf(1), user.getCity().getCityId());
 
         // verifico que el ps haga los setString 2 veces,
         // para los campos correspondientes (username y password son los unicos 2 campos String)
         verify(ps, times(2)).setString(anyInt(), anyString());
-
+        verify(profileDao, times(1)).getById(rs.getInt("id_profile"));
+        verify(cityDao, times(1)).getById(rs.getInt("id_city"));
     }
-**/
+
     @Test(expected = RuntimeException.class)
     public void testGetByUserNameSQLError() throws SQLException {
         when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenThrow(new SQLException());

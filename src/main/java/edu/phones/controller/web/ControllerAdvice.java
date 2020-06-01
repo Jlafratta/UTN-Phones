@@ -2,11 +2,10 @@ package edu.phones.controller.web;
 
 import edu.phones.dto.ErrorResponseDto;
 import edu.phones.exceptions.InvalidLoginException;
+import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
-import edu.phones.exceptions.notExist.CityNotExistException;
-import edu.phones.exceptions.notExist.ProfileNotExistException;
-import edu.phones.exceptions.notExist.UserNotExistException;
+import edu.phones.exceptions.notExist.*;
 import edu.phones.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +61,24 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ProfileAlreadyExistException.class)
     public ErrorResponseDto handleProfileAlreadyExist(){
         return new ErrorResponseDto(7, "Profile already exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PhoneLineAlreadyExistsException.class)
+    public ErrorResponseDto handlePhoneLineAlreadyExist(){
+        return new ErrorResponseDto(8, "PhoneLine already exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PhoneLineNotExistException.class)
+    public ErrorResponseDto handlePhoneLineNotExist(){
+        return new ErrorResponseDto(9, "PhoneLine not exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TypeNotExistException.class)
+    public ErrorResponseDto handleUserTypeNotExist(){
+        return new ErrorResponseDto(10, "UserType not exists");
     }
 
 }
