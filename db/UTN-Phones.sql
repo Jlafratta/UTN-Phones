@@ -36,7 +36,7 @@ CREATE TABLE `users`(
 	`id_profile` INTEGER,
 	`id_city` INTEGER,
 	PRIMARY KEY (`id_user`),
-	CONSTRAINT `fk_id_profile` FOREIGN KEY (`id_profile`) REFERENCES `user_profile` (`id_profile`),
+	CONSTRAINT `fk_id_profile` FOREIGN KEY (`id_profile`) REFERENCES `user_profile` (`id_profile`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_id_city` FOREIGN KEY (`id_city`) REFERENCES `cities` (`id_city`)
 );
 
@@ -53,11 +53,10 @@ CREATE TABLE `phone_lines`(
     `id_user` INTEGER NOT NULL,
     `id_type` INTEGER,
     PRIMARY KEY (`id_pline`),
-    CONSTRAINT `fk_id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
+    CONSTRAINT `fk_id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_id_type` FOREIGN KEY (`id_type`) REFERENCES `user_types` (`id_type`)
 );
 
-// TODO cambiar los integer a decimal
 CREATE TABLE `bills`(
 	`id_bill` INTEGER NOT NULL AUTO_INCREMENT,
     `cost` DECIMAL,
@@ -70,14 +69,12 @@ CREATE TABLE `bills`(
     CONSTRAINT `fk_id_pline` FOREIGN KEY (`id_pline`) REFERENCES `phone_lines` (`id_pline`)
 );
 
-// TODO cambiar los integer a decimal
 CREATE TABLE `tariff`(
 	`tariff_key` INTEGER NOT NULL,
     `value` DECIMAL,
     PRIMARY KEY (`tariff_key`)
 );
 
-// TODO cambiar los integer a decimal
 CREATE TABLE `calls`(
 	`id_call` INTEGER NOT NULL AUTO_INCREMENT,
     `duration` INTEGER NOT NULL,

@@ -2,6 +2,7 @@ package edu.phones.controller.web;
 
 import edu.phones.dto.ErrorResponseDto;
 import edu.phones.exceptions.InvalidLoginException;
+import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import edu.phones.exceptions.notExist.CityNotExistException;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
@@ -55,6 +56,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CityNotExistException.class)
     public ErrorResponseDto handleCityNotExist(){
         return new ErrorResponseDto(6, "City not exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProfileAlreadyExistException.class)
+    public ErrorResponseDto handleProfileAlreadyExist(){
+        return new ErrorResponseDto(7, "Profile already exists");
     }
 
 }
