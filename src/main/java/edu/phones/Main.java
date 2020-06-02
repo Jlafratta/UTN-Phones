@@ -24,7 +24,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import static java.time.LocalTime.now;
 
 /**
  *      OUTDATED
@@ -64,6 +69,20 @@ public class Main {
         UserTypeController typeController = new UserTypeController(typeService);
 
         try {
+
+
+            String fecha = "02/06/2020";
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+
+            try {
+                java.util.Date utilDate = format.parse("2014/04/13");
+                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                System.out.println(sqlDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 
 
             /** USER  **/

@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
@@ -38,6 +39,46 @@ public class CallMySQLDao implements CallDao {
         this.lineDao = lineDao;
         this.billDao = billDao;
         this.tariffDao = tariffDao;
+    }
+
+    @Override
+    public List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
+            ps.setInt(1, currentUser.getUserId());
+            ps.setDate(2, (java.sql.Date) from);
+            ps.setDate(3, (java.sql.Date) to);
+            ResultSet rs = ps.executeQuery();
+
+            List<Call> calls = new ArrayList<>();
+            while (rs.next()){
+                calls.add(createCall(rs));
+            }
+
+            return calls;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las llamdas", e);
+        }
+    }
+
+    @Override
+    public List<Call> getByOriginUser(User currentUser) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_CALLS_QUERY);
+            ps.setInt(1, currentUser.getUserId());
+            ResultSet rs = ps.executeQuery();
+
+            List<Call> calls = new ArrayList<>();
+            while (rs.next()){
+                calls.add(createCall(rs));
+            }
+
+            return calls;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las llamdas", e);
+        }
     }
 
     @Override

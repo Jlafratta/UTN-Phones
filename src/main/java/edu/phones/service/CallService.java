@@ -2,12 +2,14 @@ package edu.phones.service;
 
 import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
+import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,5 +46,13 @@ public class CallService {
 
     public List<Call> getAll() {
         return callDao.getAll();
+    }
+
+    public List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+        return callDao.getByOriginUserFilterByDate(currentUser, from, to);
+    }
+
+    public List<Call> getByOriginUser(User currentUser) {
+        return callDao.getByOriginUser(currentUser);
     }
 }
