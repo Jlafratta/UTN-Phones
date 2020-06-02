@@ -4,6 +4,7 @@ import edu.phones.dto.ErrorResponseDto;
 import edu.phones.exceptions.InvalidLoginException;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
+import edu.phones.exceptions.alreadyExist.TarriffAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import edu.phones.exceptions.notExist.*;
 import edu.phones.exceptions.ValidationException;
@@ -52,6 +53,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TariffNotExistException.class)
+    public ErrorResponseDto handleTariffNotExist(){
+        return new ErrorResponseDto(5, "Tariff not exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(CityNotExistException.class)
     public ErrorResponseDto handleCityNotExist(){
         return new ErrorResponseDto(6, "City not exists");
@@ -70,10 +77,18 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(TarriffAlreadyExistsException.class)
+    public ErrorResponseDto handleTariffAlreadyExist(){
+        return new ErrorResponseDto(7, "Tariff already  exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PhoneLineNotExistException.class)
     public ErrorResponseDto handlePhoneLineNotExist(){
         return new ErrorResponseDto(9, "PhoneLine not exists");
     }
+
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeNotExistException.class)
