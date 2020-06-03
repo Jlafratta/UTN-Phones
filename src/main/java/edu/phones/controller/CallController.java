@@ -50,7 +50,7 @@ public class CallController {
         return callService.getByOriginUser(currentUser);
     }
 
-    public CallRequestDto getDurationByMonth(User currentUser, String from, String to) {
-        return callService.getDurationByMonth(currentUser, from, to);
+    public CallRequestDto getCallsDuration(User currentUser, String from, String to) {
+        return callService.getCallsDuration(currentUser, from, to);
     }
 }

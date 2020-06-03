@@ -58,8 +58,7 @@ public class CallService {
         return callDao.getByOriginUser(currentUser);
     }
 
-    public CallRequestDto getDurationByMonth(User currentUser, String from, String to) {
-
-        return callDao.getDurationByMonth(currentUser, from, to);
+    public CallRequestDto getCallsDuration(User currentUser, String from, String to) {
+        return callDao.getCallsDuration(currentUser, from, to);
     }
 }

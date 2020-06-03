@@ -45,7 +45,7 @@ public class AppWebController {
 
             String from = "01-" + month + "-" + Calendar.getInstance().get(Calendar.YEAR);
             String to = "01-" + (Integer.parseInt(month) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR);
-            CallRequestDto dto = callController.getDurationByMonth(currentUser, from, to);
+            CallRequestDto dto = callController.getCallsDuration(currentUser, from, to);
             return ResponseEntity.ok(dto);
         }
     }

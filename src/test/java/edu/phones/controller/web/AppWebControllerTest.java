@@ -95,7 +95,7 @@ public class AppWebControllerTest {
         CallRequestDto dto = new CallRequestDto("name", "lastname", 10);
 
         when(sessionManager.getCurrentUser(sessiontoken)).thenReturn(currentUser);
-        when(callController.getDurationByMonth(currentUser, from, to)).thenReturn(dto);
+        when(callController.getCallsDuration(currentUser, from, to)).thenReturn(dto);
 
         ResponseEntity<CallRequestDto> response = appWebController.getCallsDuration(month, sessiontoken);
 
@@ -103,7 +103,7 @@ public class AppWebControllerTest {
         assertEquals(dto.getName(), response.getBody().getName());
         assertEquals(dto.getLastname(), response.getBody().getLastname());
         verify(sessionManager, times(1)).getCurrentUser(sessiontoken);
-        verify(callController, times(1)).getDurationByMonth(currentUser, from, to);
+        verify(callController, times(1)).getCallsDuration(currentUser, from, to);
     }
 
     @Test

@@ -44,7 +44,7 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public CallRequestDto getDurationByMonth(User currentUser, String from, String to) {
+    public CallRequestDto getCallsDuration(User currentUser, String from, String to) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_DURATION_BY_MONTH_CALLS_QUERY);
             ps.setInt(1, currentUser.getUserId());
