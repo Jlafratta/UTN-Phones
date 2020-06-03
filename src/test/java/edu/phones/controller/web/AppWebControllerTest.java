@@ -59,8 +59,8 @@ public class AppWebControllerTest {
         ResponseEntity<List<Call>> response =  appWebController.getCalls(from, to, sessionToken);
 
         assertNotNull(calls);
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), calls);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(calls, response.getBody());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
         verify(callController, times(1)).getByOriginUserFilterByDate(currentUser, new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to));
     }
@@ -79,29 +79,31 @@ public class AppWebControllerTest {
 
         ResponseEntity<List<Call>> response =  appWebController.getCalls(from, to, sessionToken);
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), calls);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(calls, response.getBody());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
         verify(callController, times(1)).getByOriginUser(currentUser);
     }
 
     @Test
     public void testGetCallsDurationOk() throws UserNotExistException, ParseException {
-        String month = "06";
+        String month = "6";
         String sessiontoken = "StringValue";
-        String date = "01-06-2020";
-        User currentUser = new User (1, "username", "password", null, null);
+        String from = "01-6-2020";
+        String to = "01-7-2020";
+        User currentUser = new User (1, "LaGorrita", "asd123", null, null);
         CallRequestDto dto = new CallRequestDto("name", "lastname", 10);
 
         when(sessionManager.getCurrentUser(sessiontoken)).thenReturn(currentUser);
-        when(callController.getDurationByMonth(currentUser, date)).thenReturn(dto);
+        when(callController.getDurationByMonth(currentUser, from, to)).thenReturn(dto);
 
         ResponseEntity<CallRequestDto> response = appWebController.getCallsDuration(month, sessiontoken);
 
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
-        assertEquals(response.getBody(), dto);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(dto.getName(), response.getBody().getName());
+        assertEquals(dto.getLastname(), response.getBody().getLastname());
         verify(sessionManager, times(1)).getCurrentUser(sessiontoken);
-        verify(callController, times(1)).getDurationByMonth(currentUser, date);
+        verify(callController, times(1)).getDurationByMonth(currentUser, from, to);
     }
 
     @Test
@@ -113,7 +115,7 @@ public class AppWebControllerTest {
 
         ResponseEntity<CallRequestDto> response =  appWebController.getCallsDuration(month, sessiontoken);
 
-        assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessiontoken);
     }
 

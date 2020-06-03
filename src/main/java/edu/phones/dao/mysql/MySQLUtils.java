@@ -12,7 +12,7 @@ public class MySQLUtils {
                                                                 "on u.id_user = pl.id_user " +
                                                                 "inner join calls as c " +
                                                                 "on c.pline_origin = pl.id_pline " +
-                                                                "where u.id_user = ? AND c.call_date >= ? AND c.call_date <= (DATE_ADD( ? ,INTERVAL 1 MONTH))";
+                                                                "where u.id_user = ? AND c.call_date >= ? AND c.call_date <= ?";
 
     protected static String GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY = "SELECT * FROM users as u " +
                                                                             "INNER JOIN phone_lines as pl " +

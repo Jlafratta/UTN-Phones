@@ -43,8 +43,9 @@ public class AppWebController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else {
 
-            String date = "01-" + month + "-" + Calendar.getInstance().get(Calendar.YEAR);
-            CallRequestDto dto = callController.getDurationByMonth(currentUser, date);
+            String from = "01-" + month + "-" + Calendar.getInstance().get(Calendar.YEAR);
+            String to = "01-" + (Integer.parseInt(month) + 1) + "-" + Calendar.getInstance().get(Calendar.YEAR);
+            CallRequestDto dto = callController.getDurationByMonth(currentUser, from, to);
             return ResponseEntity.ok(dto);
         }
     }

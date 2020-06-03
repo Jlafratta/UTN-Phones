@@ -21,5 +21,5 @@ public interface CallDao extends AbstractDao<Call>{
 
     List<Call> getByOriginUser(User currentUser);
 
-    CallRequestDto getDurationByMonth(User currentUser, String date);
+    CallRequestDto getDurationByMonth(User currentUser, String from, String to);
 }

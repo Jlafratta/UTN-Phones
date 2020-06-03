@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +58,8 @@ public class CallService {
         return callDao.getByOriginUser(currentUser);
     }
 
-    public CallRequestDto getDurationByMonth(User currentUser, String date) {
-        return callDao.getDurationByMonth(currentUser, date);
+    public CallRequestDto getDurationByMonth(User currentUser, String from, String to) {
+
+        return callDao.getDurationByMonth(currentUser, from, to);
     }
 }

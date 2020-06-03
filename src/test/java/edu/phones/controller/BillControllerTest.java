@@ -34,8 +34,10 @@ public class BillControllerTest {
         Bill toAdd = new Bill(1.0, 1.0, null, null, 1, null);
         Bill added = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billService.createBill(toAdd)).thenReturn(added);
-        billController.createBill(toAdd);
 
+        Bill bill = billController.createBill(toAdd);
+
+        assertEquals(added.getBillId(), bill.getBillId());
         verify(billService, times(1)).createBill(toAdd);
     }
 
@@ -43,6 +45,7 @@ public class BillControllerTest {
     public void testRemoveBillOk() throws BillNotExistException {
         Bill toRemove = new Bill(1, 1.0, 1.0, null, null, 1, null);
         doNothing().when(billService).removeBill(toRemove);
+
         billController.removeBill(toRemove);
 
         verify(billService, times(1)).removeBill(toRemove);
