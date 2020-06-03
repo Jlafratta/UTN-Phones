@@ -7,6 +7,7 @@ import edu.phones.dao.PhoneLineDao;
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallQuantityDto;
 import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,27 @@ public class CallMySQLDao implements CallDao {
         this.lineDao = lineDao;
         this.billDao = billDao;
         this.tariffDao = tariffDao;
+    }
+
+    @Override
+    public CallQuantityDto getCallsFromChristmas() {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_QUANTITY_FROM_CHRISTMAS_CALL_QUERY);
+            ResultSet rs = ps.executeQuery();
+
+            CallQuantityDto dto = null;
+            if(rs.next()){
+                dto = new CallQuantityDto(rs.getInt("Cant_llamadas")) ;
+            }
+            rs.close();
+            ps.close();
+
+            return dto;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error al buscar la cantidad de llamdas de la navidad del 92", e);
+        }
     }
 
     @Override

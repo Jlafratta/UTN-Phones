@@ -3,6 +3,7 @@ package edu.phones.service;
 import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallQuantityDto;
 import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
@@ -60,5 +61,9 @@ public class CallService {
 
     public CallRequestDto getCallsDuration(User currentUser, String from, String to) {
         return callDao.getCallsDuration(currentUser, from, to);
+    }
+
+    public CallQuantityDto getCallsFromChristmas() {
+        return callDao.getCallsFromChristmas();
     }
 }

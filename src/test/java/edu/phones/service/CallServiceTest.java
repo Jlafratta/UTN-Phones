@@ -1,10 +1,11 @@
 package edu.phones.service;
 
-import edu.phones.dao.mysql.CallMySQLDao;
+import edu.phones.dao.CallDao;
+import edu.phones.dao.mysql.CallMySQLDaoTest;
 import edu.phones.domain.Call;
+import edu.phones.dto.CallQuantityDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
-import org.hibernate.validator.constraints.br.TituloEleitoral;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,12 +22,22 @@ public class CallServiceTest {
 
     CallService callService;
     @Mock
-    CallMySQLDao callDao;
+    CallDao callDao;
 
     @Before
     public void setUp(){
         initMocks(this);
         callService = new CallService(callDao);
+    }
+
+    @Test
+    public void testGetCantCallsFromChristmasOk(){
+        CallQuantityDto dto = new CallQuantityDto(10);
+        when(callDao.getCallsFromChristmas()).thenReturn(dto);
+        CallQuantityDto returnedDto = callDao.getCallsFromChristmas();
+
+        assertEquals(dto.getQuantity(), returnedDto.getQuantity());
+        verify(callDao, times(1)).getCallsFromChristmas();
     }
 
     @Test

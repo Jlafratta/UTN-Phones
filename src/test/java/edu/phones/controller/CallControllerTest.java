@@ -1,6 +1,7 @@
 package edu.phones.controller;
 
 import edu.phones.domain.Call;
+import edu.phones.dto.CallQuantityDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import edu.phones.service.CallService;
@@ -25,6 +26,16 @@ public class CallControllerTest {
     public void setUp(){
         initMocks(this);
         callController = new CallController(callService);
+    }
+
+    @Test
+    public void testGetCantCallsFromChristmasOk(){
+        CallQuantityDto dto = new CallQuantityDto(10);
+        when(callService.getCallsFromChristmas()).thenReturn(dto);
+        CallQuantityDto returnedDto = callController.getCallsFromChristmas();
+
+        assertEquals(dto.getQuantity(), returnedDto.getQuantity());
+        verify(callService, times(1)).getCallsFromChristmas();
     }
 
     @Test

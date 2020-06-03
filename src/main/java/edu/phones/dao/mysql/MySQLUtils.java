@@ -4,6 +4,10 @@ public class MySQLUtils {
 
     /* Custom */
 
+    protected static String GET_QUANTITY_FROM_CHRISTMAS_CALL_QUERY = "select count(c.id_call) as Cant_llamadas " +
+                                                                     " from calls as c " +
+                                                                     "where c.call_date >= '1992-12-25' AND c.call_date < '1992-12-26';";
+
     protected static String GET_DURATION_BY_MONTH_CALLS_QUERY = "SELECT up.name as Nombre, up.lastname as Apellido, sum(c.duration) as Duracion_total " +
                                                                 "from user_profile as up " +
                                                                 "inner join users as u " +

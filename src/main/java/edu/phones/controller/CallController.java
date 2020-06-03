@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallQuantityDto;
 import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
@@ -52,5 +53,9 @@ public class CallController {
 
     public CallRequestDto getCallsDuration(User currentUser, String from, String to) {
         return callService.getCallsDuration(currentUser, from, to);
+    }
+
+    public CallQuantityDto getCallsFromChristmas() {
+        return callService.getCallsFromChristmas();
     }
 }
