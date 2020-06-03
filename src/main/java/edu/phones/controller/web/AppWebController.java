@@ -32,8 +32,7 @@ public class AppWebController {
         this.billController = billController;
         this.sessionManager = sessionManager;
     }
-
-    /********************************************************/
+    
 
     @GetMapping("/call/duration")
     public ResponseEntity<CallRequestDto> getCallsDuration(@RequestParam(value = "month") String month,
@@ -49,9 +48,6 @@ public class AppWebController {
             return ResponseEntity.ok(dto);
         }
     }
-
-    /********************************************************/
-
 
     @GetMapping("/call")
     public ResponseEntity<List<Call>> getCalls(@RequestParam(value = "from", required = false) String from,
