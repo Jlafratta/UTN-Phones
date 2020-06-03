@@ -2,10 +2,7 @@ package edu.phones.controller.web;
 
 import edu.phones.dto.ErrorResponseDto;
 import edu.phones.exceptions.InvalidLoginException;
-import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
-import edu.phones.exceptions.alreadyExist.ProfileAlreadyExistException;
-import edu.phones.exceptions.alreadyExist.TarriffAlreadyExistsException;
-import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import edu.phones.exceptions.alreadyExist.*;
 import edu.phones.exceptions.notExist.*;
 import edu.phones.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
@@ -40,11 +37,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(3, "User not exists");
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ErrorResponseDto handleUserAlreadyExistException(){
-        return new ErrorResponseDto(4, "User already exist");
-    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ProfileNotExistException.class)
@@ -65,6 +58,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProvinceNotExistException.class)
+    public ErrorResponseDto handleProvinceNotExist(){
+        return new ErrorResponseDto(6, "Pronvince not exists");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ProfileAlreadyExistException.class)
     public ErrorResponseDto handleProfileAlreadyExist(){
         return new ErrorResponseDto(7, "Profile already exists");
@@ -75,10 +74,26 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handlePhoneLineAlreadyExist(){
         return new ErrorResponseDto(8, "PhoneLine already exists");
     }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ErrorResponseDto handleUserAlreadyExistException(){
+        return new ErrorResponseDto(4, "User already exist");
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ProvinceAlreadyExistsException.class)
+    public ErrorResponseDto handleProvinceAlreadyExistException(){
+        return new ErrorResponseDto(4, "Province already exist");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CityAlreadyExistException.class)
+    public ErrorResponseDto handleCityAlreadyExistException() {
+        return new ErrorResponseDto(4, "City already exist");
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TarriffAlreadyExistsException.class)
-    public ErrorResponseDto handleTariffAlreadyExist(){
+        public ErrorResponseDto handleTariffAlreadyExist(){
         return new ErrorResponseDto(7, "Tariff already  exists");
     }
 
@@ -87,6 +102,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handlePhoneLineNotExist(){
         return new ErrorResponseDto(9, "PhoneLine not exists");
     }
+
 
 
 
