@@ -2,12 +2,14 @@ package edu.phones.service;
 
 import edu.phones.dao.BillDao;
 import edu.phones.domain.Bill;
+import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
 import edu.phones.exceptions.notExist.BillNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -44,5 +46,13 @@ public class BillService {
 
     public List<Bill> getAll() {
         return billDao.getAll();
+    }
+
+    public List<Bill> getByUserFilterByDate(User currentUser, Date dFrom, Date dTo) {
+        return billDao.getByUserFilterByDate(currentUser, dFrom, dTo);
+    }
+
+    public List<Bill> getByUser(User currentUser) {
+        return billDao.getByUser(currentUser);
     }
 }
