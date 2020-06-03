@@ -52,13 +52,17 @@ INSERT INTO `cities` (prefix, city_name, id_province) values ("263","San Martin"
 
 ------------------
 
+INSERT INTO `tariff` (tariff_key, value) values ("11223",  25);
+INSERT INTO `tariff` (tariff_key, value) values ("223249", 11);
+
+------------------
+
 INSERT INTO `user_profile` (name, lastname, dni) values ("Julian", "Lafratta", 41307551);
 INSERT INTO `user_profile` (name, lastname, dni) values ("Nicolas", "Garcia", 40475927);
 INSERT INTO `user_profile` (name, lastname, dni) values ("admin", "admin", 99999999);
 INSERT INTO `user_profile` (name, lastname, dni) values ("admin2", "admin2", 99999999);
 
 ------------------
-
 INSERT INTO `users` (username, password, id_profile, id_city) values ("LaGorrita", "asd123", 1, 3);
 INSERT INTO `users` (username, password, id_profile, id_city) values ("NicoGarcia137", "asd123", 2, 7);
 INSERT INTO `users` (username, password, id_profile, id_city) values ("admin", "admin", 3, 6);
