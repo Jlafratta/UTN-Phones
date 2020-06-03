@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import edu.phones.service.CallService;
@@ -47,5 +48,9 @@ public class CallController {
 
     public List<Call> getByOriginUser(User currentUser) {
         return callService.getByOriginUser(currentUser);
+    }
+
+    public CallRequestDto getDurationByMonth(User currentUser, String date) {
+        return callService.getDurationByMonth(currentUser, date);
     }
 }

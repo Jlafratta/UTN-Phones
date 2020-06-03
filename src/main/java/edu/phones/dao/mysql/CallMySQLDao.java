@@ -7,6 +7,7 @@ import edu.phones.dao.PhoneLineDao;
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +17,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +41,37 @@ public class CallMySQLDao implements CallDao {
         this.lineDao = lineDao;
         this.billDao = billDao;
         this.tariffDao = tariffDao;
+    }
+
+    @Override
+    public CallRequestDto getDurationByMonth(User currentUser, String date) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_DURATION_BY_MONTH_CALLS_QUERY);
+            ps.setInt(1, currentUser.getUserId());
+            ps.setDate(2, new java.sql.Date(dateConverter(date).getTime()));
+            ps.setDate(3, new java.sql.Date(dateConverter(date).getTime()));
+            ResultSet rs = ps.executeQuery();
+
+            CallRequestDto call = null;
+            if(rs.next()){
+                call = createCallRequestDo(rs);
+            }
+            rs.close();
+            ps.close();
+
+            return call;
+
+        } catch (SQLException | ParseException e) {
+
+            throw new RuntimeException("Error al buscar por id", e);
+        }
+    }
+    Date dateConverter(String toConvert) throws ParseException {
+        return new SimpleDateFormat("dd-MM-yyyy").parse(toConvert);
+    }
+
+    private CallRequestDto createCallRequestDo(ResultSet rs) throws SQLException {
+        return new CallRequestDto(rs.getString("Nombre"), rs.getString("Apellido"), rs.getInt("Duracion_total"));
     }
 
     @Override

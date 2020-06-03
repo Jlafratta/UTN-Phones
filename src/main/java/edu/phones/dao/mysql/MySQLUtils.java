@@ -4,6 +4,16 @@ public class MySQLUtils {
 
     /* Custom */
 
+    protected static String GET_DURATION_BY_MONTH_CALLS_QUERY = "SELECT up.name as Nombre, up.lastname as Apellido, sum(c.duration) as Duracion_total " +
+                                                                "from user_profile as up " +
+                                                                "inner join users as u " +
+                                                                "on u.id_profile = up.id_profile " +
+                                                                "inner join phone_lines as pl " +
+                                                                "on u.id_user = pl.id_user " +
+                                                                "inner join calls as c " +
+                                                                "on c.pline_origin = pl.id_pline " +
+                                                                "where u.id_user = ? AND c.call_date >= ? AND c.call_date <= (DATE_ADD( ? ,INTERVAL 1 MONTH))";
+
     protected static String GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY = "SELECT * FROM users as u " +
                                                                             "INNER JOIN phone_lines as pl " +
                                                                             "ON u.id_user = pl.id_user " +

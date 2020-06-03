@@ -5,6 +5,7 @@ import edu.phones.controller.CallController;
 import edu.phones.domain.Bill;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,25 @@ public class AppWebController {
         this.billController = billController;
         this.sessionManager = sessionManager;
     }
+
+    /********************************************************/
+
+    @GetMapping("/duration")
+    public ResponseEntity<CallRequestDto> getCallsDuration(@RequestParam(value = "month", required = true) String month,
+                                                           @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
+        User currentUser = getCurrentUser(sessionToken);
+        if (month == null || Integer.parseInt(month) < 1 || Integer.parseInt(month) > 12 ){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+
+            month ="01-"+month+"-"+Calendar.getInstance().get(Calendar.YEAR);
+            CallRequestDto dto = callController.getDurationByMonth(currentUser, month);
+            return ResponseEntity.ok(dto);
+        }
+    }
+
+    /********************************************************/
+
 
     @GetMapping("/calls")
     public ResponseEntity<List<Call>> getCalls(@RequestParam(value = "from", required = false) String from,

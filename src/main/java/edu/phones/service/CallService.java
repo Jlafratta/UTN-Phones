@@ -3,6 +3,7 @@ package edu.phones.service;
 import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,9 @@ public class CallService {
 
     public List<Call> getByOriginUser(User currentUser) {
         return callDao.getByOriginUser(currentUser);
+    }
+
+    public CallRequestDto getDurationByMonth(User currentUser, String date) {
+        return callDao.getDurationByMonth(currentUser, date);
     }
 }
