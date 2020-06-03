@@ -35,16 +35,16 @@ public class AppWebController {
 
     /********************************************************/
 
-    @GetMapping("/duration")
-    public ResponseEntity<CallRequestDto> getCallsDuration(@RequestParam(value = "month", required = true) String month,
+    @GetMapping("/call/duration")
+    public ResponseEntity<CallRequestDto> getCallsDuration(@RequestParam(value = "month") String month,
                                                            @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
         User currentUser = getCurrentUser(sessionToken);
         if (month == null || Integer.parseInt(month) < 1 || Integer.parseInt(month) > 12 ){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else {
 
-            month ="01-"+month+"-"+Calendar.getInstance().get(Calendar.YEAR);
-            CallRequestDto dto = callController.getDurationByMonth(currentUser, month);
+            String date = "01-" + month + "-" + Calendar.getInstance().get(Calendar.YEAR);
+            CallRequestDto dto = callController.getDurationByMonth(currentUser, date);
             return ResponseEntity.ok(dto);
         }
     }
@@ -52,7 +52,7 @@ public class AppWebController {
     /********************************************************/
 
 
-    @GetMapping("/calls")
+    @GetMapping("/call")
     public ResponseEntity<List<Call>> getCalls(@RequestParam(value = "from", required = false) String from,
                                                @RequestParam(value = "to", required = false) String to,
                                                @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
@@ -68,7 +68,7 @@ public class AppWebController {
         return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @GetMapping("/bills")
+    @GetMapping("/bill")
     public ResponseEntity<List<Bill>> getBills(@RequestParam(value = "from", required = false) String from,
                                                @RequestParam(value = "to", required = false) String to,
                                                @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
