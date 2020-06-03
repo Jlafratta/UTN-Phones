@@ -53,4 +53,8 @@ public class UserService {
     public List<User> getAll() {
         return userDao.getAll();
     }
+
+    public List<User> getAllByFilter(String province, Integer id) {
+        return userDao.getAllByFilter(province , id);
+    }
 }

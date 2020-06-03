@@ -41,6 +41,21 @@ public class UserWebController {
         this.cityController = cityController;
     }
 
+    /********************************************************/
+    @GetMapping ("/{Province, Id}")
+    public ResponseEntity<List<User>> getUsersByProvinceAndDni(@RequestBody String Province , @RequestBody Integer Id,@RequestHeader("Authorization") String sessionToken) {
+
+
+
+                List<User> users = new ArrayList<>();
+                users = userController.getAllByFilter(Province, Id);
+                return (users.size() > 0) ? ResponseEntity.ok(users) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+    /********************************************************/
+
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken){
 

@@ -16,4 +16,6 @@ public interface UserDao extends AbstractDao<User>{
     Integer update(User user);
     User getById(Integer id);
     List<User> getAll();
+
+    List<User> getAllByFilter(String province, Integer id);
 }

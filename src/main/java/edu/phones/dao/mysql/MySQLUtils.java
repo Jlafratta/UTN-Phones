@@ -44,6 +44,18 @@ public class MySQLUtils {
                                                       "ON b.id_pline = pl.id_pline " +
                                                       "WHERE u.id_user = ?";
 
+
+    protected  static String GET_BY_USER_PROVINCE_DNI_QUERY = "select u.id_user as id_user , u.username as username , u.password  as password , u.id_profile as id_profile , u.id_city as id_city  from users as u " +
+            "inner join user_profile as up " +
+            "on u.id_profile = up.id_profile " +
+            "inner join cities as c " +
+            "on c.id_city = u.id_city " +
+            "inner join provinces as p " +
+            "on c.id_province = p.id_province " +
+            "where p.province_name = ? and (up.dni % 2 = ? ) ";
+
+
+
     /* BASEs */
 
     protected static String BASE_USER_QUERY =   "SELECT * FROM `users` AS u";

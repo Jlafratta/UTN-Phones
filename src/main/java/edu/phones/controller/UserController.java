@@ -49,4 +49,8 @@ public class UserController {
     public List<User> getAll(){
         return userService.getAll();
     }
+
+    public List<User> getAllByFilter(String province, Integer id) {
+        return userService.getAllByFilter(province , id);
+    }
 }

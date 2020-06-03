@@ -65,7 +65,7 @@ public class UserMySQLDao implements UserDao {
     private User createUser(ResultSet rs) throws SQLException {
         User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"),
                 profileDao.getById(rs.getInt("id_profile")),
-                cityDao.getById(rs.getInt("id_city")) );
+                cityDao.getById(rs.getInt("id_city")));
         return user;
     }
 
@@ -175,4 +175,23 @@ public class UserMySQLDao implements UserDao {
         }
     }
 
+    @Override
+    public List<User> getAllByFilter(String province, Integer id) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_USER_PROVINCE_DNI_QUERY);
+            ps.setString(1,province);
+            ps.setInt(2,id);
+            ResultSet rs = ps.executeQuery();
+
+            List<User> userList = new ArrayList<>();
+            while(rs.next()){
+                userList.add(createUser(rs));
+            }
+
+            return userList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todos los usuarios Por Filtro Provincia y Por filtro de DNI", e);
+        }
+    }
 }
