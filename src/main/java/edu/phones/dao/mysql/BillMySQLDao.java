@@ -4,6 +4,7 @@ import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.BillDao;
 import edu.phones.dao.PhoneLineDao;
 import edu.phones.domain.Bill;
+import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
@@ -16,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
@@ -31,6 +33,46 @@ public class BillMySQLDao implements BillDao {
     public BillMySQLDao(Connection connect, @Qualifier("phoneLineMySQLDao")PhoneLineDao lineDao) {
         this.connect = connect;
         this.lineDao = lineDao;
+    }
+
+    @Override
+    public List<Bill> getByUserFilterByDate(User currentUser, Date dFrom, Date dTo) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_USER_FILTER_BY_DATE_BILLS_QUERY);
+            ps.setInt(1, currentUser.getUserId());
+            ps.setDate(2, new java.sql.Date(dFrom.getTime()));
+            ps.setDate(3, new java.sql.Date(dTo.getTime()));
+            ResultSet rs = ps.executeQuery();
+
+            List<Bill> bills = new ArrayList<>();
+            while (rs.next()){
+                bills.add(createBill(rs));
+            }
+
+            return bills;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las facturas", e);
+        }
+    }
+
+    @Override
+    public List<Bill> getByUser(User currentUser) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_USER_BILLS_QUERY);
+            ps.setInt(1, currentUser.getUserId());
+            ResultSet rs = ps.executeQuery();
+
+            List<Bill> bills = new ArrayList<>();
+            while (rs.next()){
+                bills.add(createBill(rs));
+            }
+
+            return bills;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las facturas", e);
+        }
     }
 
     @Override

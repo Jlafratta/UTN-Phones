@@ -118,6 +118,16 @@ INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnu
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
                     VALUES (100, 0.25, 250, DATE_ADD(NOW(),INTERVAL 4 DAY), "2235252225", "2635872341", 5, 2, 3, 7, null, "223263");
                     
+------------------
+
+INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline) values (1, 1000, now(), date_add(now(), INTERVAL 15 DAY), 4, 1);
+INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline) values (1, 250, now(), date_add(now(), INTERVAL 15 DAY), 1, 5);
+INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline) values (1, 750, now(), date_add(now(), INTERVAL 15 DAY), 1, 3);
+
+select * from bills;
+
+
+
 
 -- traer las llamadas de un usuario y una linea
 SELECT c.id_call, c.call_date, c.pnumber_origin, c.pline_origin, u.id_user, u.username
@@ -137,6 +147,15 @@ on c.pline_origin = pl.id_pline
 where u.id_user = 3 AND c.call_date >= CAST('2020-06-03' AS DATE) AND c.call_date <= CAST('2020-06-12'AS DATE);
 
 select * from calls;
+
+-- traer las facturas de un usuario
+SELECT * from users as u
+inner join phone_lines as pl
+on u.id_user = pl.id_user
+inner join bills as b
+on b.id_pline = pl.id_pline
+where u.id_user = 1 AND b.bill_date >= CAST('2020-06-01' AS DATE) AND b.bill_date <= CAST('2020-06-12'AS DATE);
+
 
 
 

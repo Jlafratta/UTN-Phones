@@ -19,6 +19,21 @@ public class MySQLUtils {
                                                              "ON c.pline_origin = pl.id_pline " +
                                                              "WHERE u.id_user = ? ";
 
+    protected static String GET_BY_USER_FILTER_BY_DATE_BILLS_QUERY = "SELECT * FROM users as u " +
+                                                                     "INNER JOIN phone_lines as pl " +
+                                                                     "ON u.id_user = pl.id_user " +
+                                                                     "INNER JOIN bills as b " +
+                                                                     "ON b.id_pline = pl.id_pline " +
+                                                                     "WHERE u.id_user = ? " +
+                                                                     "AND b.bill_date >= ? AND b.bill_date <= ?";
+
+    protected static String GET_BY_USER_BILLS_QUERY = "SELECT * FROM users as u " +
+                                                      "INNER JOIN phone_lines as pl " +
+                                                      "ON u.id_user = pl.id_user " +
+                                                      "INNER JOIN bills as b " +
+                                                      "ON b.id_pline = pl.id_pline " +
+                                                      "WHERE u.id_user = ?";
+
     /* BASEs */
 
     protected static String BASE_USER_QUERY =   "SELECT * FROM `users` AS u";

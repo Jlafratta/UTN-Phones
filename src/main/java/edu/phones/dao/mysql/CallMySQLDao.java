@@ -6,10 +6,8 @@ import edu.phones.dao.CallDao;
 import edu.phones.dao.PhoneLineDao;
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.Call;
-import edu.phones.domain.Tariff;
 import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
-import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -46,8 +44,8 @@ public class CallMySQLDao implements CallDao {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
             ps.setInt(1, currentUser.getUserId());
-            ps.setDate(2, (java.sql.Date) from);
-            ps.setDate(3, (java.sql.Date) to);
+            ps.setDate(2, new java.sql.Date(from.getTime()));
+            ps.setDate(3, new java.sql.Date(to.getTime()));
             ResultSet rs = ps.executeQuery();
 
             List<Call> calls = new ArrayList<>();

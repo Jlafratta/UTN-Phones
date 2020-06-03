@@ -4,6 +4,8 @@ CREATE DATABASE `PhonesAPI`;
 
 USE `PhonesAPI`;
 
+SET @@global.time_zone = '-03:00';
+
 SHOW TABLES;
 
 CREATE TABLE `provinces`(
