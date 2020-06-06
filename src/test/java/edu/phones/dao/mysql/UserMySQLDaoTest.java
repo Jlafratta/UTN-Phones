@@ -172,10 +172,11 @@ public class UserMySQLDaoTest {
         doNothing().when(ps).setInt(4, toUpdate.getCity().getCityId());
         doNothing().when(ps).setInt(5, toUpdate.getUserId());
 
-        when(ps.executeUpdate()).thenReturn(2);
+        when(ps.executeUpdate()).thenReturn(1);
 
-        userDao.update(toUpdate);
+        Integer rows = userDao.update(toUpdate);
 
+        assertEquals(Integer.valueOf(1), rows);
         verify(ps, times(1)).executeUpdate();
     }
 
@@ -203,8 +204,9 @@ public class UserMySQLDaoTest {
 
         when(ps.executeUpdate()).thenReturn(1);
 
-        userDao.remove(id);
+        Integer rows = userDao.remove(id);
 
+        assertEquals(Integer.valueOf(1), rows);
         verify(ps, times(1)).executeUpdate();
     }
 

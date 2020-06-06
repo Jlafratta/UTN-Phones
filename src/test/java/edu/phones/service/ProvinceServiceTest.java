@@ -32,9 +32,11 @@ public class ProvinceServiceTest {
         Province toAdd = new Province("name");
         Province added = new Province(1, "name");
         when(provinceDao.add(toAdd)).thenReturn(added);
-        provinceService.createProvince(toAdd);
 
-        assertEquals(toAdd.getName(), added.getName());
+        Province prov = provinceService.createProvince(toAdd);
+
+        assertEquals(added.getProvinceId(), prov.getProvinceId());
+        assertEquals(added.getName(), prov.getName());
         verify(provinceDao, times(1)).add(toAdd);
     }
 
@@ -59,8 +61,10 @@ public class ProvinceServiceTest {
     public void testUpdateProvinceOk() throws ProvinceNotExistException {
         Province toUpdate = new Province(1, "name");
         when(provinceDao.update(toUpdate)).thenReturn(1);
-        provinceService.updateProvince(toUpdate);
 
+        Province prov = provinceService.updateProvince(toUpdate);
+
+        assertEquals(toUpdate.getProvinceId(), prov.getProvinceId());
         verify(provinceDao, times(1)).update(toUpdate);
     }
 
@@ -78,9 +82,10 @@ public class ProvinceServiceTest {
         Province prov = new Province(1, "name");
         Integer id = 1;
         when(provinceDao.getById(id)).thenReturn(prov);
-        provinceService.getProvince(id);
 
-        assertEquals(id, prov.getProvinceId());
+        Province getted = provinceService.getProvince(id);
+
+        assertEquals(prov.getProvinceId(), getted.getProvinceId());
         verify(provinceDao, times(1)).getById(id);
     }
 
@@ -89,8 +94,10 @@ public class ProvinceServiceTest {
         List<Province> provList = new ArrayList<>();
         provList.add(new Province(1, "name"));
         when(provinceDao.getAll()).thenReturn(provList);
-        provinceService.getAll();
 
+        List<Province> provinces = provinceService.getAll();
+
+        assertEquals(provList.size(), provinces.size());
         verify(provinceDao, times(1)).getAll();
     }
 

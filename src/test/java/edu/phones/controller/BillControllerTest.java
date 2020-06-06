@@ -34,8 +34,10 @@ public class BillControllerTest {
         Bill toAdd = new Bill(1.0, 1.0, null, null, 1, null);
         Bill added = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billService.createBill(toAdd)).thenReturn(added);
-        billController.createBill(toAdd);
 
+        Bill bill = billController.createBill(toAdd);
+
+        assertEquals(added.getBillId(), bill.getBillId());
         verify(billService, times(1)).createBill(toAdd);
     }
 
@@ -43,6 +45,7 @@ public class BillControllerTest {
     public void testRemoveBillOk() throws BillNotExistException {
         Bill toRemove = new Bill(1, 1.0, 1.0, null, null, 1, null);
         doNothing().when(billService).removeBill(toRemove);
+
         billController.removeBill(toRemove);
 
         verify(billService, times(1)).removeBill(toRemove);
@@ -53,9 +56,10 @@ public class BillControllerTest {
         Bill toUpdate = new Bill(1, 1.0, 1.0, null, null, 1, null);
         Bill updated = new Bill(1, 2.0, 2.0, null, null, 1, null);
         when(billService.updateBill(toUpdate)).thenReturn(updated);
-        billController.updateBill(toUpdate);
 
-        assertEquals(toUpdate.getBillId(), updated.getBillId());
+        Bill bill = billController.updateBill(toUpdate);
+
+        assertEquals(updated.getBillId(), bill.getBillId());
         verify(billService, times(1)).updateBill(toUpdate);
     }
 
@@ -64,9 +68,10 @@ public class BillControllerTest {
         Bill bill = new Bill(1, 1.0, 1.0, null, null, 1, null);
         Integer id = 1;
         when(billService.getBill(id)).thenReturn(bill);
-        billController.getBill(id);
 
-        assertEquals(Integer.valueOf(id), bill.getBillId());
+        Bill getted = billController.getBill(id);
+
+        assertEquals(bill.getBillId(), getted.getBillId());
         verify(billService, times(1)).getBill(id);
     }
 
@@ -75,8 +80,10 @@ public class BillControllerTest {
         List<Bill> bills = new ArrayList<>();
         bills.add(new Bill(1, 1.0, 1.0, null, null, 1, null));
         when(billService.getAll()).thenReturn(bills);
-        billController.getAll();
 
+        List<Bill> billList = billController.getAll();
+
+        assertEquals(bills.size(), billList.size());
         verify(billService, times(1)).getAll();
     }
 }

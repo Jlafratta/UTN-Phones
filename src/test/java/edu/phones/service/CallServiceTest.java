@@ -34,10 +34,10 @@ public class CallServiceTest {
         Call toAdd = new Call(120, 1.0, 2.0, null, null, null, null, null);
         Call added = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
         when(callDao.add(toAdd)).thenReturn(added);
-        callService.createCall(toAdd);
 
-        assertEquals(Integer.valueOf(1), added.getCallId());
-        assertEquals(toAdd.getDuration(), added.getDuration());
+        Call call = callService.createCall(toAdd);
+
+        assertEquals(added.getCallId(), call.getCallId());
         verify(callDao, times(1)).add(toAdd);
     }
 
@@ -63,8 +63,10 @@ public class CallServiceTest {
     public void testUpdateCallOk() throws CallNotExistException {
         Call toUpdate = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
         when(callDao.update(toUpdate)).thenReturn(1);
-        callService.updateCall(toUpdate);
 
+        Call call = callService.updateCall(toUpdate);
+
+        assertEquals(toUpdate.getCallId(), call.getCallId());
         verify(callDao, times(1)).update(toUpdate);
     }
 
@@ -82,9 +84,10 @@ public class CallServiceTest {
         Call call = new Call(1,120, 1.0, 2.0, null, null, null, null, null);
         Integer id = 1;
         when(callDao.getById(id)).thenReturn(call);
-        callService.getCall(id);
 
-        assertEquals(id, call.getCallId());
+        Call getted = callService.getCall(id);
+
+        assertEquals(call.getCallId(), getted.getCallId());
         verify(callDao, times(1)).getById(id);
     }
 
@@ -93,8 +96,10 @@ public class CallServiceTest {
         List<Call> calls = new ArrayList<>();
         calls.add(new Call(1,120, 1.0, 2.0, null, null, null, null, null));
         when(callDao.getAll()).thenReturn(calls);
-        callService.getAll();
 
+        List<Call> callList = callService.getAll();
+
+        assertEquals(calls.size(), callList.size());
         verify(callDao, times(1)).getAll();
     }
 }

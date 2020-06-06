@@ -32,10 +32,11 @@ public class CityServiceTest {
         City toAdd = new City("prefix", "name", null);
         City added = new City(1, "prefix", "name", null);
         when(cityDao.add(toAdd)).thenReturn(added);
-        cityService.createCity(toAdd);
 
-        assertEquals(toAdd.getPrefix(), added.getPrefix());
-        assertEquals(toAdd.getName(), added.getName());
+        City city = cityService.createCity(toAdd);
+
+        assertEquals(added.getCityId(), city.getCityId());
+        assertEquals(added.getPrefix(), city.getPrefix());
         verify(cityDao, times(1)).add(toAdd);
     }
 
@@ -61,8 +62,10 @@ public class CityServiceTest {
     public void testUpdateCity() throws CityNotExistException {
         City toUpdate = new City(1, "prefix", "name", null);
         when(cityDao.update(toUpdate)).thenReturn(2);
-        cityService.updateCity(toUpdate);
 
+        City city = cityService.updateCity(toUpdate);
+
+        assertEquals(toUpdate.getCityId(), city.getCityId());
         verify(cityDao, times(1)).update(toUpdate);
     }
 
@@ -80,9 +83,10 @@ public class CityServiceTest {
         City city = new City(1, "prefix", "name", null);
         Integer id = 1;
         when(cityDao.getById(id)).thenReturn(city);
-        cityService.getCity(id);
 
-        assertEquals(id, city.getCityId());
+        City getted = cityService.getCity(id);
+
+        assertEquals(city.getCityId(), getted.getCityId());
         verify(cityDao, times(1)).getById(id);
     }
 
@@ -91,8 +95,10 @@ public class CityServiceTest {
         List<City> cities = new ArrayList<>();
         cities.add(new City(1, "prefix", "name", null));
         when(cityDao.getAll()).thenReturn(cities);
-        cityService.getAll();
 
+        List<City> cityList = cityService.getAll();
+
+        assertEquals(cities.size(), cityList.size());
         verify(cityDao, times(1)).getAll();
     }
 }

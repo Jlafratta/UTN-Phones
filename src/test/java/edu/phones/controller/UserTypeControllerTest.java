@@ -33,9 +33,11 @@ public class UserTypeControllerTest {
         UserType toAdd = new UserType("TYPE");
         UserType added = new UserType(1, "TYPE");
         when(typeService.createType(toAdd)).thenReturn(added);
-        typeController.createType(toAdd);
 
-        assertEquals(toAdd.getName(), added.getName());
+        UserType type = typeController.createType(toAdd);
+
+        assertEquals(added.getTypeId(), type.getTypeId());
+        assertEquals(added.getName(), type.getName());
         verify(typeService, times(1)).createType(toAdd);
     }
 
@@ -52,8 +54,10 @@ public class UserTypeControllerTest {
         UserType toUpdate = new UserType(1, "TYPE");
         UserType updated = new UserType(1, "TYPE2");
         when(typeService.updateType(toUpdate)).thenReturn(updated);
-        typeController.updateType(toUpdate);
-        assertEquals(toUpdate.getTypeId(), updated.getTypeId());
+
+        UserType type = typeController.updateType(toUpdate);
+
+        assertEquals(updated.getTypeId(), type.getTypeId());
         verify(typeService, times(1)).updateType(toUpdate);
     }
 
@@ -61,8 +65,10 @@ public class UserTypeControllerTest {
     public void testGetTypeOk(){
         UserType type = new UserType(1, "TYPE");
         when(typeService.getType(1)).thenReturn(type);
-        typeController.getType(1);
-        assertEquals(Integer.valueOf(1), type.getTypeId());
+
+        UserType getted = typeController.getType(1);
+
+        assertEquals(type.getTypeId(), getted.getTypeId());
         verify(typeService, times(1)).getType(1);
     }
 
@@ -72,8 +78,10 @@ public class UserTypeControllerTest {
         typeList.add(new UserType(1, "TYPE"));
         typeList.add(new UserType(2, "TYPE2"));
         when(typeService.getAll()).thenReturn(typeList);
-        typeController.getAll();
-        assertEquals(2, typeList.size());
+
+        List<UserType> types = typeController.getAll();
+
+        assertEquals(typeList.size(), types.size());
         verify(typeService, times(1)).getAll();
     }
 

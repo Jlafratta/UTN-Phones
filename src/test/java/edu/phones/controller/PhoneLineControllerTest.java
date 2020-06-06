@@ -33,9 +33,10 @@ public class PhoneLineControllerTest {
         PhoneLine toAdd = new PhoneLine("2235997823", false, null , null);
         PhoneLine added = new PhoneLine(1, "2235997823", true, null, null);
         when(lineService.createLine(toAdd)).thenReturn(added);
-        lineController.createLine(toAdd);
 
-        assertEquals(toAdd.getNumber(), added.getNumber());
+        PhoneLine pLine = lineController.createLine(toAdd);
+
+        assertEquals(added.getNumber(), pLine.getNumber());
         assertEquals(true, added.getState());
         verify(lineService, times(1)).createLine(toAdd);
     }
@@ -44,6 +45,7 @@ public class PhoneLineControllerTest {
     public void testRemoveLineOk() throws PhoneLineNotExistException {
         PhoneLine toRemove = new PhoneLine(1, "2235997823", true, null, null);
         doNothing().when(lineService).removeLine(toRemove);
+
         lineController.removeLine(toRemove);
 
         verify(lineService, times(1)).removeLine(toRemove);
@@ -54,9 +56,10 @@ public class PhoneLineControllerTest {
         PhoneLine toUpdate = new PhoneLine(1,"2235997823", true, null , null);
         PhoneLine updated = new PhoneLine(1, "2235997822", true, null, null);
         when(lineService.updateLine(toUpdate)).thenReturn(updated);
-        lineController.updateLine(toUpdate);
 
-        assertEquals(toUpdate.getpLineId(), updated.getpLineId());
+        PhoneLine pLine = lineController.updateLine(toUpdate);
+
+        assertEquals(updated.getpLineId(), pLine.getpLineId());
         verify(lineService, times(1)).updateLine(toUpdate);
     }
 
@@ -65,9 +68,10 @@ public class PhoneLineControllerTest {
         PhoneLine line = new PhoneLine(1, "2235997823", true, null, null);
         Integer id = 1;
         when(lineService.getLine(id)).thenReturn(line);
-        lineController.getLine(id);
 
-        assertEquals(id, line.getpLineId());
+        PhoneLine getted = lineController.getLine(id);
+
+        assertEquals(line.getpLineId(), getted.getpLineId());
         verify(lineService, times(1)).getLine(id);
     }
 
@@ -76,8 +80,10 @@ public class PhoneLineControllerTest {
         List<PhoneLine> lines = new ArrayList<>();
         lines.add(new PhoneLine(1, "2235997823", true, null, null));
         when(lineService.getAll()).thenReturn(lines);
-        lineController.getAll();
 
+        List<PhoneLine> lineList = lineController.getAll();
+
+        assertEquals(lines.size(), lineList.size());
         verify(lineService, times(1)).getAll();
     }
 }

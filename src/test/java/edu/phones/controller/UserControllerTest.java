@@ -76,7 +76,10 @@ public class UserControllerTest {
         List<User> users = new ArrayList<>();
         users.add(new User(1, "username", "password", null, null));
         when(userService.getAll()).thenReturn(users);
-        userController.getAll();
+
+        List<User> userList = userController.getAll();
+
+        assertEquals(users.size(), userList.size());
         verify(userService, times(1)).getAll();
     }
 
@@ -86,9 +89,11 @@ public class UserControllerTest {
         User userToAdd = new User("username", "password", null, null);
         User userAdded = new User(1,"username", "password", null, null);
         when(userService.createUser(userToAdd)).thenReturn(userAdded);
-        userController.createUser(userToAdd);
 
-        assertEquals(userToAdd.getUsername(), userAdded.getUsername());
+        User user = userController.createUser(userToAdd);
+
+        assertEquals(userAdded.getUserId(), user.getUserId());
+        assertEquals(userAdded.getUsername(), user.getUsername());
         verify(userService, times(1)).createUser(userToAdd);
     }
 
@@ -98,9 +103,10 @@ public class UserControllerTest {
         User toModify = new User(1,"username", "password", null, null);
         User modified = new User(1,"username2", "password2", null, null);
         when(userService.updateUser(toModify)).thenReturn(modified);
-        userController.updateUser(toModify);
 
-        assertEquals(toModify.getUserId(), modified.getUserId());
+        User user = userController.updateUser(toModify);
+
+        assertEquals(modified.getUserId(), user.getUserId());
         verify(userService, times(1)).updateUser(toModify);
     }
 

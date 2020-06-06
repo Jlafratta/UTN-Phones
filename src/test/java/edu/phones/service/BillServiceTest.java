@@ -33,11 +33,10 @@ public class BillServiceTest {
         Bill toAdd = new Bill(1.0, 1.0, null, null, 1, null);
         Bill added = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billDao.add(toAdd)).thenReturn(added);
-        billService.createBill(toAdd);
 
-        assertEquals(toAdd.getCost(), added.getCost());
-        assertEquals(toAdd.getTotal(), added.getTotal());
-        assertEquals(Integer.valueOf(1), added.getBillId());
+        Bill bill = billService.createBill(toAdd);
+
+        assertEquals(added.getBillId(), bill.getBillId());
         verify(billDao, times(1)).add(toAdd);
     }
 
@@ -45,6 +44,7 @@ public class BillServiceTest {
     public void testRemoveBillOk() throws BillNotExistException {
         Bill toRemove = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billDao.remove(toRemove)).thenReturn(1);
+
         billService.removeBill(toRemove);
 
         verify(billDao, times(1)).remove(toRemove);
@@ -54,6 +54,7 @@ public class BillServiceTest {
     public void testRemoveBillNotExist() throws BillNotExistException {
         Bill toRemove = new Bill(1,1.0, 1.0, null, null, 1, null);
         when(billDao.remove(toRemove)).thenReturn(0);
+
         billService.removeBill(toRemove);
 
         verify(billDao, times(1)).remove(toRemove);
@@ -63,8 +64,10 @@ public class BillServiceTest {
     public void testUpdateBillOk() throws BillNotExistException {
         Bill toUpdate = new Bill(1, 1.0, 1.0, null, null, 1, null);
         when(billDao.update(toUpdate)).thenReturn(1);
-        billService.updateBill(toUpdate);
 
+        Bill bill = billService.updateBill(toUpdate);
+
+        assertEquals(toUpdate.getBillId(), bill.getBillId());
         verify(billDao, times(1)).update(toUpdate);
     }
 
@@ -82,9 +85,10 @@ public class BillServiceTest {
         Bill bill = new Bill(1, 1.0, 1.0, null, null, 1, null);
         Integer id = 1;
         when(billDao.getById(id)).thenReturn(bill);
-        billService.getBill(id);
 
-        assertEquals(id, bill.getBillId());
+        Bill getted = billService.getBill(id);
+
+        assertEquals(bill.getBillId(), getted.getBillId());
         verify(billDao, times(1)).getById(id);
     }
 
@@ -93,8 +97,10 @@ public class BillServiceTest {
         List<Bill> bills = new ArrayList<>();
         bills.add(new Bill(1, 1.0, 1.0, null, null, 1, null));
         when(billDao.getAll()).thenReturn(bills);
-        billService.getAll();
 
+        List<Bill> billList = billService.getAll();
+
+        assertEquals(bills.size(), billList.size());
         verify(billDao, times(1)).getAll();
     }
 }

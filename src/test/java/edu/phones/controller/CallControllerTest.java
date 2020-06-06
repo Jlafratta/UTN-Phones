@@ -32,10 +32,10 @@ public class CallControllerTest {
         Call toAdd = new Call(120, 1.0, 2.0, null, null, null, null, null);
         Call added = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
         when(callService.createCall(toAdd)).thenReturn(added);
-        callController.createCall(toAdd);
 
-        assertEquals(Integer.valueOf(1), added.getCallId());
-        assertEquals(toAdd.getDuration(), added.getDuration());
+        Call call = callController.createCall(toAdd);
+
+        assertEquals(added.getCallId(), call.getCallId());
         verify(callService, times(1)).createCall(toAdd);
     }
 
@@ -43,6 +43,7 @@ public class CallControllerTest {
     public void testRemoveCallOk() throws CallNotExistException {
         Call toRemove = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
         doNothing().when(callService).removeCall(toRemove);
+
         callController.removeCall(toRemove);
 
         verify(callService, times(1)).removeCall(toRemove);
@@ -53,9 +54,10 @@ public class CallControllerTest {
         Call toUpdate = new Call(1,120, 1.0, 2.0, null, null, null, null, null);
         Call updated = new Call(1, 120, 2.0, 4.0, null, null, null, null, null);
         when(callService.updateCall(toUpdate)).thenReturn(updated);
-        callController.updateCall(toUpdate);
 
-        assertEquals(toUpdate.getCallId(), updated.getCallId());
+        Call call = callController.updateCall(toUpdate);
+
+        assertEquals(updated.getCallId(), call.getCallId());
         verify(callService, times(1)).updateCall(toUpdate);
     }
 
@@ -64,9 +66,10 @@ public class CallControllerTest {
         Call call = new Call(1,120, 1.0, 2.0, null, null, null, null, null);
         Integer id = 1;
         when(callService.getCall(id)).thenReturn(call);
-        callController.getCall(id);
 
-        assertEquals(Integer.valueOf(id), call.getCallId());
+        Call getted = callController.getCall(id);
+
+        assertEquals(call.getCallId(), getted.getCallId());
         verify(callService, times(1)).getCall(id);
     }
 
@@ -75,8 +78,10 @@ public class CallControllerTest {
         List<Call> calls = new ArrayList<>();
         calls.add(new Call(1,120, 1.0, 2.0, null, null, null, null, null));
         when(callService.getAll()).thenReturn(calls);
-        callController.getAll();
 
+        List<Call> callList = callController.getAll();
+
+        assertEquals(calls.size(), callList.size());
         verify(callService, times(1)).getAll();
     }
 }

@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -30,8 +31,10 @@ public class UserProfileServiceTest {
         UserProfile toAdd = new UserProfile("name", "lastname", 12345678);
         UserProfile added = new UserProfile(1, "name", "lastname", 12345678);
         when(profileDao.add(toAdd)).thenReturn(added);
-        profileService.createProfile(toAdd);
 
+        UserProfile profile = profileService.createProfile(toAdd);
+
+        assertEquals(added.getProfileId(), profile.getProfileId());
         verify(profileDao, times(1)).add(toAdd);
     }
 
@@ -39,8 +42,10 @@ public class UserProfileServiceTest {
     public void testUpdateProfileOk() throws ProfileNotExistException {
         UserProfile toUpdate = new UserProfile(1, "name", "lastname", 12345678);
         when(profileDao.update(toUpdate)).thenReturn(1);
-        profileService.updateProfile(toUpdate);
 
+        UserProfile profile = profileService.updateProfile(toUpdate);
+
+        assertEquals(toUpdate.getProfileId(), profile.getProfileId());
         verify(profileDao, times(1)).update(toUpdate);
     }
 
@@ -58,9 +63,10 @@ public class UserProfileServiceTest {
         UserProfile profile = new UserProfile(1, "name", "lastname", 12345678);
         Integer id = 1;
         when(profileDao.getById(id)).thenReturn(profile);
-        profileService.getProfile(id);
 
-        assertEquals(id, profile.getProfileId());
+        UserProfile getted = profileService.getProfile(id);
+
+        assertEquals(profile.getProfileId(), getted.getProfileId());
         verify(profileDao, times(1)).getById(id);
     }
 }

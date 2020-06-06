@@ -34,9 +34,10 @@ public class UserTypeServiceTest {
         UserType toAdd = new UserType("name");
         UserType added = new UserType(1, "name");
         when(typeService.createType(toAdd)).thenReturn(added);
-        typeService.createType(toAdd);
 
-        assertEquals(toAdd.getName(), added.getName());
+        UserType type = typeService.createType(toAdd);
+
+        assertEquals(added.getTypeId(), type.getTypeId());
         verify(typeDao, times(1)).add(toAdd);
     }
 
@@ -60,8 +61,10 @@ public class UserTypeServiceTest {
     public void testUpdateTypeOk() throws TypeNotExistException {
         UserType toUpdate = new UserType(1, "name");
         when(typeDao.update(toUpdate)).thenReturn(1);
-        typeService.updateType(toUpdate);
 
+        UserType type = typeService.updateType(toUpdate);
+
+        assertEquals(toUpdate.getTypeId(), type.getTypeId());
         verify(typeDao, times(1)).update(toUpdate);
     }
 
@@ -79,9 +82,10 @@ public class UserTypeServiceTest {
         UserType type = new UserType(1, "name");
         Integer id = 1;
         when(typeDao.getById(id)).thenReturn(type);
-        typeService.getType(id);
 
-        assertEquals(id, type.getTypeId());
+        UserType getted = typeService.getType(id);
+
+        assertEquals(type.getTypeId(), getted.getTypeId());
         verify(typeDao, times(1)).getById(id);
     }
 
@@ -90,8 +94,10 @@ public class UserTypeServiceTest {
         List<UserType> types = new ArrayList<>();
         types.add(new UserType(1, "name"));
         when(typeDao.getAll()).thenReturn(types);
-        typeService.getAll();
 
+        List<UserType> userTypes = typeService.getAll();
+
+        assertEquals(types.size(), userTypes.size());
         verify(typeDao, times(1)).getAll();
     }
 }

@@ -29,9 +29,10 @@ public class UserProfileControllerTest {
         UserProfile toAdd = new UserProfile("Name", "Lastname", 12346789);
         UserProfile added = new UserProfile(1, "Name", "Lastname", 12346789);
         when(profileService.createProfile(toAdd)).thenReturn(added);
-        profileController.createProfile(toAdd);
 
-        assertEquals(toAdd.getDni(), added.getDni());
+        UserProfile profile = profileController.createProfile(toAdd);
+
+        assertEquals(added.getProfileId(), profile.getProfileId());
         verify(profileService, times(1)).createProfile(toAdd);
     }
 
@@ -40,9 +41,10 @@ public class UserProfileControllerTest {
         UserProfile toUpdate = new UserProfile(1, "Name", "Lastname", 12346789);
         UserProfile updated = new UserProfile(1, "Name2", "Lastname2", 12346789);
         when(profileService.updateProfile(toUpdate)).thenReturn(updated);
-        profileController.updateProfile(toUpdate);
 
-        assertEquals(toUpdate.getProfileId(), updated.getProfileId());
+        UserProfile profile = profileController.updateProfile(toUpdate);
+
+        assertEquals(updated.getProfileId(), profile.getProfileId());
         verify(profileService, times(1)).updateProfile(toUpdate);
     }
 
@@ -50,9 +52,10 @@ public class UserProfileControllerTest {
     public void testGetProfileOk(){
         UserProfile profile = new UserProfile(1, "Name", "Lastname", 12346789);
         when(profileService.getProfile(1)).thenReturn(profile);
-        profileController.getProfile(1);
 
-        assertEquals(Integer.valueOf(1), profile.getProfileId());
+        UserProfile getted = profileController.getProfile(1);
+
+        assertEquals(profile.getProfileId(), getted.getProfileId());
         verify(profileService, times(1)).getProfile(1);
     }
 

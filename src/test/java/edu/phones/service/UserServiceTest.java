@@ -50,7 +50,10 @@ public class UserServiceTest {
     public void testGetByIdOk(){
         User toSearch = new User(1, "username", "password", null, null);
         when(userDao.getById(1)).thenReturn(toSearch);
-        userService.getUser(1);
+
+        User user = userService.getUser(1);
+
+        assertEquals(toSearch.getUserId(), user.getUserId());
         verify(userDao, times(1)).getById(1);
     }
 
@@ -60,8 +63,10 @@ public class UserServiceTest {
         List<User> userList = new ArrayList<>();
         userList.add(new User(1, "username", "password", null, null));
         when(userDao.getAll()).thenReturn(userList);
-        userService.getAll();
 
+        List<User> users = userService.getAll();
+
+        assertEquals(userList.size(), users.size());
         verify(userDao, times(1)).getAll();
     }
 
@@ -71,9 +76,11 @@ public class UserServiceTest {
         User toAdd = new User( "username", "password", null, null);
         User added = new User(1, "username", "password", null, null);
         when(userDao.add(toAdd)).thenReturn(added);
+
         User returned = userService.createUser(toAdd);
 
-        assertEquals(toAdd.getUsername(), returned.getUsername());
+        assertEquals(added.getUserId(), returned.getUserId());
+        assertEquals(added.getUsername(), returned.getUsername());
         verify(userDao, times(1)).add(toAdd);
     }
 

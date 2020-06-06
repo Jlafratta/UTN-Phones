@@ -32,10 +32,11 @@ public class CityControllerTest {
         City toAdd = new City ("prefix", "name", null);
         City added = new City(1, "prefix", "name", null);
         when(cityService.createCity(toAdd)).thenReturn(added);
-        cityController.createCity(toAdd);
 
-        assertEquals(toAdd.getPrefix(), added.getPrefix());
-        assertEquals(toAdd.getName(), added.getName());
+        City city = cityController.createCity(toAdd);
+
+        assertEquals(added.getPrefix(), city.getPrefix());
+        assertEquals(added.getCityId(), city.getCityId());
         verify(cityService, times(1)).createCity(toAdd);
     }
 
@@ -43,6 +44,7 @@ public class CityControllerTest {
     public void testRemoveCityOk() throws CityNotExistException {
         City toRemove = new City(1, "prefix", "name", null);
         doNothing().when(cityService).remove(toRemove);
+
         cityController.removeCity(toRemove);
 
         verify(cityService, times(1)).remove(toRemove);
@@ -53,9 +55,10 @@ public class CityControllerTest {
         City toUpdate = new City (1,"prefix", "name", null);
         City updated = new City(1, "prefix2", "name2", null);
         when(cityService.updateCity(toUpdate)).thenReturn(updated);
-        cityController.updateCity(toUpdate);
 
-        assertEquals(toUpdate.getCityId(), updated.getCityId());
+        City city = cityController.updateCity(toUpdate);
+
+        assertEquals(updated.getCityId(), city.getCityId());
         verify(cityService, times(1)).updateCity(toUpdate);
     }
 
@@ -64,9 +67,10 @@ public class CityControllerTest {
         City city = new City(1, "prefix", "name", null);
         Integer id = 1;
         when(cityService.getCity(id)).thenReturn(city);
-        cityController.getCity(id);
 
-        assertEquals(id, city.getCityId());
+        City getted = cityController.getCity(id);
+
+        assertEquals(city.getCityId(), getted.getCityId());
         verify(cityService, times(1)).getCity(id);
     }
 
@@ -75,8 +79,10 @@ public class CityControllerTest {
         List<City> cities = new ArrayList<>();
         cities.add(new City(1, "prefix", "name", null));
         when(cityService.getAll()).thenReturn(cities);
-        cityController.getAll();
 
+        List<City> cityList = cityController.getAll();
+
+        assertEquals(cities.size(), cityList.size());
         verify(cityService, times(1)).getAll();
     }
 }

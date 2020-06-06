@@ -32,9 +32,11 @@ public class PhoneLineServiceTest {
         PhoneLine toAdd = new PhoneLine("2235997823", true, null, null);
         PhoneLine added = new PhoneLine(1, "2235997823", true, null, null);
         when(lineDao.add(toAdd)).thenReturn(added);
-        lineService.createLine(toAdd);
 
-        assertEquals(toAdd.getNumber(), added.getNumber());
+        PhoneLine line = lineService.createLine(toAdd);
+
+        assertEquals(added.getpLineId(), line.getpLineId());
+        assertEquals(added.getNumber(), line.getNumber());
         verify(lineDao, times(1)).add(toAdd);
     }
 
@@ -60,8 +62,10 @@ public class PhoneLineServiceTest {
     public void testUpdateLineOk() throws PhoneLineNotExistException {
         PhoneLine toUpdate = new PhoneLine(1, "2235997823", true, null, null);
         when(lineDao.update(toUpdate)).thenReturn(1);
-        lineService.updateLine(toUpdate);
 
+        PhoneLine line = lineService.updateLine(toUpdate);
+
+        assertEquals(toUpdate.getpLineId(), line.getpLineId());
         verify(lineDao, times(1)).update(toUpdate);
     }
 
@@ -79,9 +83,10 @@ public class PhoneLineServiceTest {
         PhoneLine line = new PhoneLine(1, "2235997823", true, null, null);
         Integer id = 1;
         when(lineDao.getById(id)).thenReturn(line);
-        lineService.getLine(id);
 
-        assertEquals(id, line.getpLineId());
+        PhoneLine getted = lineService.getLine(id);
+
+        assertEquals(line.getpLineId(), getted.getpLineId());
         verify(lineDao, times(1)).getById(id);
     }
 
@@ -90,8 +95,10 @@ public class PhoneLineServiceTest {
         List<PhoneLine> lines = new ArrayList<>();
         lines.add(new PhoneLine(1, "2235997823", true, null, null));
         when(lineDao.getAll()).thenReturn(lines);
-        lineService.getAll();
 
+        List<PhoneLine> lineList = lineService.getAll();
+
+        assertEquals(lines.size(), lineList.size());
         verify(lineDao, times(1)).getAll();
     }
 }
