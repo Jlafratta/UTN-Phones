@@ -71,7 +71,7 @@ public class UserMySQLDaoTest {
         doNothing().when(ps).close();
 
         // invoco el metodo a testear
-        User user = userDao.getByUsername("username", "password");
+        User user = userDao.getByUsernameAndPassword("username", "password");
 
         // Asserts para comparar lo retornado (los valores tienen que ser los mismos que simulo devolver en la query para que este ok)
         assertEquals(Integer.valueOf(1), user.getUserId());
@@ -88,7 +88,7 @@ public class UserMySQLDaoTest {
     @Test(expected = RuntimeException.class)
     public void testGetByUserNameSQLError() throws SQLException {
         when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenThrow(new SQLException());
-        User user = userDao.getByUsername("username", "password");
+        User user = userDao.getByUsernameAndPassword("username", "password");
     }
 
     @Test
@@ -105,7 +105,7 @@ public class UserMySQLDaoTest {
         doNothing().when(rs).close();
         doNothing().when(ps).close();
 
-        User user = userDao.getByUsername("username", "password");
+        User user = userDao.getByUsernameAndPassword("username", "password");
         // el usuario retornado es = a null
         assertNull(user);
     }

@@ -23,7 +23,7 @@ public class UserService {
 
     /** METHODS **/
     public User login(String username, String password) throws UserNotExistException {
-        User user = userDao.getByUsername(username, password);
+        User user = userDao.getByUsernameAndPassword(username, password);
         return Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
     }
 
@@ -52,5 +52,9 @@ public class UserService {
 
     public List<User> getAll() {
         return userDao.getAll();
+    }
+
+    public User getByUsername(String username) {
+        return userDao.getByUsername(username);
     }
 }

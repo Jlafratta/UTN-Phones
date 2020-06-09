@@ -49,4 +49,8 @@ public class UserController {
     public List<User> getAll(){
         return userService.getAll();
     }
+
+    public User getByUsername(String username) {
+        return userService.getByUsername(username);
+    }
 }

@@ -58,7 +58,9 @@ public class MySQLUtils {
 
     /* GETs */
 
-    protected static String GET_BY_USERNAME_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ? AND u.password = ?";
+    protected static String GET_BY_USERNAME_AND_PASS_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ? AND u.password = ?";
+
+    protected static String GET_BY_USERNAME_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ?";
 
     // byId
     protected static String GET_BY_ID_USER_QUERY = BASE_USER_QUERY + " WHERE u.id_user = ?";

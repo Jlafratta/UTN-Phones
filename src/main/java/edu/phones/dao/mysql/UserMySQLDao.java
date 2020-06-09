@@ -40,10 +40,31 @@ public class UserMySQLDao implements UserDao {
     }
 
     /** METHODS **/
+
     @Override
-    public User getByUsername(String username, String password) {
+    public User getByUsername(String username){
         try{
             PreparedStatement ps = connect.prepareStatement(GET_BY_USERNAME_USER_QUERY);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            User user = null;
+            if(rs.next()){
+                user = createUser(rs);
+            }
+            rs.close();
+            ps.close();
+            return user;
+
+        }catch(SQLException e){
+            throw new RuntimeException("Error al obtener datos del usuario");
+        }
+    }
+
+    @Override
+    public User getByUsernameAndPassword(String username, String password) {
+        try{
+            PreparedStatement ps = connect.prepareStatement(GET_BY_USERNAME_AND_PASS_USER_QUERY);
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
