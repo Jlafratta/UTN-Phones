@@ -7,12 +7,18 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 @org.springframework.context.annotation.Configuration
+@EnableSwagger2
 @PropertySource("app.properties")
 @EnableScheduling
 public class Configuration {
@@ -37,6 +43,15 @@ public class Configuration {
         Class.forName(driver).newInstance();
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/" + db + "?user=" + username + "&password=" + password + "");
         return connection;
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("edu.phones"))
+                .paths(PathSelectors.any())
+                .build();
     }
 
     // Registro el filtro en spring
