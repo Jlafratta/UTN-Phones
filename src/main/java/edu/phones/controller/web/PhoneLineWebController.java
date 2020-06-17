@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/line")
+@RequestMapping("/backoffice/lines")
 public class PhoneLineWebController {
 
     PhoneLineController lineController;
@@ -38,6 +38,8 @@ public class PhoneLineWebController {
         this.typeController = typeController;
         this.sessionManager = sessionManager;
     }
+
+    /* 3) Alta , baja y suspensión de líneas. */
 
     @PatchMapping("/{id}")
     public ResponseEntity<PhoneLine> changeState(@PathVariable Integer id, @RequestBody StateDto stateDto, @RequestHeader("Authorization") String sessionToken) throws PhoneLineNotExistException {

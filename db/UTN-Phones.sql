@@ -61,8 +61,8 @@ CREATE TABLE `phone_lines`(
 
 CREATE TABLE `bills`(
 	`id_bill` INTEGER NOT NULL AUTO_INCREMENT,
-    `cost` DECIMAL,
-    `total` DECIMAL,
+    `cost` DOUBLE,
+    `price` DOUBLE,
     `bill_date` DATETIME,
     `expire_date` DATETIME,
     `calls_count` INTEGER,
@@ -73,15 +73,18 @@ CREATE TABLE `bills`(
 
 CREATE TABLE `tariff`(
 	`tariff_key` INTEGER NOT NULL,
-    `value` DECIMAL,
+    `cost` DOUBLE NOT NULL,
+    `price` DOUBLE NOT NULL,
     PRIMARY KEY (`tariff_key`)
 );
 
 CREATE TABLE `calls`(
 	`id_call` INTEGER NOT NULL AUTO_INCREMENT,
     `duration` INTEGER NOT NULL,
-    `cost` DECIMAL NOT NULL,
-    `total_price` DECIMAL,
+    `cost` DOUBLE NOT NULL,
+    `total_cost` DOUBLE NOT NULL,
+    `price` DOUBLE NOT NULL,
+    `total_price` DOUBLE NOT NULL,
     `call_date` DATETIME,
     `pnumber_origin` VARCHAR(11) NOT NULL,
     `pnumber_destination` VARCHAR(11) NOT NULL,

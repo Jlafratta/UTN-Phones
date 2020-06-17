@@ -2,6 +2,7 @@ package edu.phones.controller.web;
 
 import edu.phones.controller.BillController;
 import edu.phones.controller.CallController;
+import edu.phones.controller.UserController;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.exceptions.notExist.UserNotExistException;
@@ -22,21 +23,23 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class AppWebControllerTest {
+public class ClientWebControllerTest {
 
     @Mock
     CallController callController;
     @Mock
     BillController billController;
     @Mock
+    UserController userController;
+    @Mock
     SessionManager sessionManager;
 
-    AppWebController appWebController;
+    ClientWebController appWebController;
 
     @Before
     public void setUp() {
         initMocks(this);
-        this.appWebController = new AppWebController(callController, billController, sessionManager);
+        this.appWebController = new ClientWebController(callController, billController, userController, sessionManager);
     }
 
     @Test
@@ -46,7 +49,7 @@ public class AppWebControllerTest {
         String to = "01/01/2021";
         String sessionToken = "StringValue";
         List<Call> calls = new ArrayList<>();
-        calls.add(new Call(1, 1, 1.0, 1.0, null, null, null, null, null));
+        calls.add(new Call( 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
         User currentUser = new User (1, "username", "password", null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
@@ -67,7 +70,7 @@ public class AppWebControllerTest {
         String to = null;
         String sessionToken = "StringValue";
         List<Call> calls = new ArrayList<>();
-        calls.add(new Call(1, 1, 1.0, 1.0, null, null, null, null, null));
+        calls.add(new Call(120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
         User currentUser = new User (1, "username", "password", null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);

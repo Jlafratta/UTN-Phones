@@ -28,7 +28,7 @@ public class CallWebController {
         this.userController = userController;
         this.sessionManager = sessionManager;
     }
-
+/**
     @GetMapping()
     public ResponseEntity<List<Call>> getCalls(@RequestParam(value = "username", required = false) String username, @RequestHeader("Authorization") String sessionToken){
 
@@ -42,5 +42,5 @@ public class CallWebController {
 
         return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-
+**/
 }

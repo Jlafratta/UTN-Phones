@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/backoffice/users")
 public class UserWebController {
 
     UserController userController;
@@ -40,6 +40,8 @@ public class UserWebController {
         this.profileController = profileController;
         this.cityController = cityController;
     }
+
+    /* 2) Manejo de clientes. */
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken){

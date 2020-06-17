@@ -3,6 +3,7 @@ package edu.phones.service;
 import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.AddCallDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class CallService {
         this.callDao = callDao;
     }
 
-    public Call createCall(Call call) throws CallAlreadyExistsException {
+    public Call createCall(AddCallDto call) throws CallAlreadyExistsException {
         return callDao.add(call);
     }
 

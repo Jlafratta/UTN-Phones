@@ -2,7 +2,6 @@ package edu.phones.dao.mysql;
 
 import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.TariffDao;
-import edu.phones.domain.PhoneLine;
 import edu.phones.domain.Tariff;
 import edu.phones.exceptions.alreadyExist.TarriffAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,8 @@ public class TariffMySQLDao implements TariffDao {
         try {
             PreparedStatement ps = connect.prepareStatement(INSERT_TARIFF_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, tariff.getKey());
-            ps.setDouble(2, tariff.getValue());
+            ps.setDouble(2, tariff.getCost());
+            ps.setDouble(3, tariff.getPrice());
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -65,7 +65,8 @@ public class TariffMySQLDao implements TariffDao {
         try {
             PreparedStatement ps = connect.prepareStatement(UPDATE_TARIFF_QUERY);
             ps.setInt(1, tariff.getKey());
-            ps.setDouble(2, tariff.getValue());
+            ps.setDouble(2, tariff.getCost());
+            ps.setDouble(3, tariff.getPrice());
 
 
             Integer rowsAffected = ps.executeUpdate();
@@ -129,7 +130,7 @@ public class TariffMySQLDao implements TariffDao {
     }
 
     private Tariff createTariff(ResultSet rs) throws SQLException {
-        return new Tariff(rs.getInt("tariff_key"), rs.getDouble("value"));
+        return new Tariff(rs.getInt("tariff_key"), rs.getDouble("cost"), rs.getDouble("price"));
 
     }
 }

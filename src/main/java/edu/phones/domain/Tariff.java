@@ -3,11 +3,13 @@ package edu.phones.domain;
 public class Tariff {
 
     Integer key;
-    Double value;
+    Double cost;
+    Double price;
 
-    public Tariff(Integer key, Double value) {
+    public Tariff(Integer key, Double cost, Double price) {
         this.key = key;
-        this.value = value;
+        this.cost = cost;
+        this.price = price;
     }
 
     public Integer getKey() {
@@ -18,19 +20,28 @@ public class Tariff {
         this.key = key;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getCost() {
+        return cost;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     @Override
     public String toString() {
         return "Tariff{" +
                 "key=" + key +
-                ", value=" + value +
+                ", cost=" + cost +
+                ", price=" + price +
                 '}';
     }
 }

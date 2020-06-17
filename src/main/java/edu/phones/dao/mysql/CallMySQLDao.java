@@ -7,15 +7,15 @@ import edu.phones.dao.PhoneLineDao;
 import edu.phones.dao.TariffDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
-import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
+import edu.phones.dto.AddCallDto;
+import edu.phones.exceptions.alreadyExist.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,38 +80,37 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public Call add(Call call) throws CallAlreadyExistsException {
+    public Call add(AddCallDto call) throws CallAlreadyExistsException {
         try {
             PreparedStatement ps = connect.prepareStatement(INSERT_CALLS_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, call.getDuration());
-            ps.setDouble(2, call.getCost());
-            ps.setDouble(3, call.getTotalPrice());
-            ps.setDate(4, call.getDate());
-            ps.setString(5, call.getOrigin().getNumber());
-            ps.setString(6, call.getDestination().getNumber());
-            ps.setInt(7, call.getOrigin().getpLineId());
-            ps.setInt(8, call.getDestination().getpLineId());
-            ps.setInt(9, call.getOrigin().getUser().getCity().getCityId());
-            ps.setInt(10, call.getDestination().getUser().getCity().getCityId());
-            ps.setInt(11, call.getBill().getBillId());
-            ps.setInt(12, call.getTariff().getKey());
+            ps.setDate(2, new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(call.getDate()) .getTime()));
+            ps.setString(3, call.getFrom());
+            ps.setString(4, call.getTo());
 
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();
-
+            Call newCall = null;
             if(rs != null && rs.next()){
-                call.setCallId(rs.getInt(1));
+                newCall = getById(rs.getInt(1));
             }
-            return call;
+            return newCall;
 
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY){
                 throw new CallAlreadyExistsException();
             }else{
-                throw new RuntimeException("Error al crear la llamada", e);
+                throw new RuntimeException(e.getMessage(), e);
             }
+        }catch(ParseException e) {
+            throw new RuntimeException("Error en el formato de fecha", e) ;
         }
+    }
+
+    @Override
+    public Call add(Call value)  {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -125,17 +124,19 @@ public class CallMySQLDao implements CallDao {
             PreparedStatement ps = connect.prepareStatement(UPDATE_CALLS_QUERY);
             ps.setInt(1, call.getDuration());
             ps.setDouble(2, call.getCost());
-            ps.setDouble(3, call.getTotalPrice());
-            ps.setDate(4, call.getDate());
-            ps.setString(5, call.getOrigin().getNumber());
-            ps.setString(6, call.getDestination().getNumber());
-            ps.setInt(7, call.getOrigin().getpLineId());
-            ps.setInt(8, call.getDestination().getpLineId());
-            ps.setInt(9, call.getOrigin().getUser().getCity().getCityId());
-            ps.setInt(10, call.getDestination().getUser().getCity().getCityId());
-            ps.setInt(11, call.getBill().getBillId());
-            ps.setInt(12, call.getTariff().getKey());
-            ps.setInt(13, call.getCallId());
+            ps.setDouble(3, call.getTotalCost());
+            ps.setDouble(4, call.getPrice());
+            ps.setDouble(5, call.getTotalPrice());
+            ps.setDate(6, call.getDate());
+            ps.setString(7, call.getOrigin().getNumber());
+            ps.setString(8, call.getDestination().getNumber());
+            ps.setInt(9, call.getOrigin().getpLineId());
+            ps.setInt(10, call.getDestination().getpLineId());
+            ps.setInt(11, call.getOrigin().getUser().getCity().getCityId());
+            ps.setInt(12, call.getDestination().getUser().getCity().getCityId());
+            ps.setInt(13, call.getBill().getBillId());
+            ps.setInt(14, call.getTariff().getKey());
+            ps.setInt(15, call.getCallId());
 
             Integer rowsAffected = ps.executeUpdate();
             return rowsAffected; // Retorno la cantidad de campos modificados
@@ -198,10 +199,10 @@ public class CallMySQLDao implements CallDao {
     }
 
     private Call createCall(ResultSet rs) throws SQLException {
-        return new Call(rs.getInt("id_call"), rs.getInt("duration"), rs.getDouble("cost"), rs.getDouble("total_price"), rs.getDate("call_date"),
+        return new Call(rs.getInt("id_call"), rs.getInt("duration"), rs.getDouble("cost"), rs.getDouble("total_cost"), rs.getDouble("price"), rs.getDouble("total_price"), rs.getDate("call_date"),
                 lineDao.getById(rs.getInt("pline_origin")),
                 lineDao.getById(rs.getInt("pline_destination")),
-                billDao.getById(rs.getInt("id_bill")),
+                null,
                 tariffDao.getById(rs.getInt("tariff_key")));
     }
 }

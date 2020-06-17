@@ -4,24 +4,24 @@ import java.util.Date;
 
 public class AddCallDto {
 
-    Integer from;
-    Integer to;
+    String from;
+    String to;
     Integer duration;
-    Date date;
+    String date;
 
-    public Integer getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(Integer from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public Integer getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(Integer to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
@@ -33,11 +33,11 @@ public class AddCallDto {
         this.duration = duration;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

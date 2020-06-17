@@ -2,6 +2,7 @@ package edu.phones.service;
 
 import edu.phones.dao.mysql.CallMySQLDao;
 import edu.phones.domain.Call;
+import edu.phones.dto.AddCallDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.hibernate.validator.constraints.br.TituloEleitoral;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -31,8 +33,12 @@ public class CallServiceTest {
 
     @Test
     public void testCreateCallOk() throws CallAlreadyExistsException {
-        Call toAdd = new Call(120, 1.0, 2.0, null, null, null, null, null);
-        Call added = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
+        AddCallDto toAdd = new AddCallDto();
+        toAdd.setDate("2020-06-17 00:00:00");
+        toAdd.setDuration(123);
+        toAdd.setFrom("2235997823");
+        toAdd.setTo("2617884563");
+        Call added = new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null);
         when(callDao.add(toAdd)).thenReturn(added);
 
         Call call = callService.createCall(toAdd);
@@ -43,7 +49,7 @@ public class CallServiceTest {
 
     @Test
     public void testRemoveCallOk() throws CallNotExistException {
-        Call toRemove = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
+        Call toRemove = new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null);
         when(callDao.remove(toRemove)).thenReturn(1);
         callService.removeCall(toRemove);
 
@@ -52,7 +58,7 @@ public class CallServiceTest {
 
     @Test(expected = CallNotExistException.class)
     public void testRemoveCallNotExist() throws CallNotExistException {
-        Call toRemove = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
+        Call toRemove = new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null);
         when(callDao.remove(toRemove)).thenReturn(0);
         callService.removeCall(toRemove);
 
@@ -61,7 +67,7 @@ public class CallServiceTest {
 
     @Test
     public void testUpdateCallOk() throws CallNotExistException {
-        Call toUpdate = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
+        Call toUpdate = new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null);
         when(callDao.update(toUpdate)).thenReturn(1);
 
         Call call = callService.updateCall(toUpdate);
@@ -72,7 +78,7 @@ public class CallServiceTest {
 
     @Test(expected = CallNotExistException.class)
     public void testUpdateCallNotExist() throws CallNotExistException {
-        Call toUpdate = new Call(1, 120, 1.0, 2.0, null, null, null, null, null);
+        Call toUpdate = new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null);
         when(callDao.update(toUpdate)).thenReturn(0);
         callService.updateCall(toUpdate);
 
@@ -81,7 +87,7 @@ public class CallServiceTest {
 
     @Test
     public void testGetCallOk(){
-        Call call = new Call(1,120, 1.0, 2.0, null, null, null, null, null);
+        Call call = new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null);
         Integer id = 1;
         when(callDao.getById(id)).thenReturn(call);
 
@@ -94,7 +100,7 @@ public class CallServiceTest {
     @Test
     public void testGetAllOk(){
         List<Call> calls = new ArrayList<>();
-        calls.add(new Call(1,120, 1.0, 2.0, null, null, null, null, null));
+        calls.add(new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
         when(callDao.getAll()).thenReturn(calls);
 
         List<Call> callList = callService.getAll();

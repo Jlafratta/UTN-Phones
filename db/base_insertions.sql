@@ -52,8 +52,8 @@ INSERT INTO `cities` (prefix, city_name, id_province) values ("263","San Martin"
 
 ------------------
 
-INSERT INTO `tariff` (tariff_key, value) values ("11223",  25);
-INSERT INTO `tariff` (tariff_key, value) values ("223249", 11);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("11223", 10,  25);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("223249", 4, 11);
 
 ------------------
 
@@ -85,51 +85,57 @@ insert into `phone_lines` (phone_number, state, id_user, id_type) values ("22352
 
 ------------------
 
-INSERT INTO `tariff` (tariff_key, value) values ("223263",  2);
-INSERT INTO `tariff` (tariff_key, value) values ("261260", 5);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("223263",  2, 5);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("261260", 5, 8);
 
 ------------------
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 2, 250, now(), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
+                    VALUES (100, 2, 4, 25, 50, now(), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 5, 100, DATE_ADD(NOW(),INTERVAL 2 DAY), "2615890643", "2608746395", 3, 4, 6, 5, null, "261260");
+                    VALUES (100, 5, 10, 50, 100, DATE_ADD(NOW(),INTERVAL 2 DAY), "2615890643", "2608746395", 3, 4, 6, 5, null, "261260");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 2, 250, DATE_ADD(NOW(),INTERVAL 4 DAY), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
+                    VALUES (100, 2, 4, 25, 50, DATE_ADD(NOW(),INTERVAL 4 DAY), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 5, 100, DATE_ADD(NOW(),INTERVAL 6 DAY), "2615890643", "2608746395", 3, 4, 6, 5, null, "261260");
+                    VALUES (100, 5, 10, 50, 100, DATE_ADD(NOW(),INTERVAL 6 DAY), "2615890643", "2608746395", 3, 4, 6, 5, null, "261260");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 2, 250, DATE_ADD(NOW(),INTERVAL 8 DAY), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
+                    VALUES (100, 2, 4, 100, 200, DATE_ADD(NOW(),INTERVAL 8 DAY), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 5, 100, DATE_ADD(NOW(),INTERVAL 10 DAY), "2615890643", "2608746395", 3, 4, 6, 5, null, "261260");
+                    VALUES (100, 5, 10, 50, 100, DATE_ADD(NOW(),INTERVAL 10 DAY), "2615890643", "2608746395", 3, 4, 6, 5, null, "261260");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 2, 250, DATE_ADD(NOW(),INTERVAL 12 DAY), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
+                    VALUES (100, 2, 4, 150, 300, DATE_ADD(NOW(),INTERVAL 12 DAY), "2235997823", "2635872341", 1, 2, 3, 7, null, "223263");
 
-INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination,
+INSERT INTO `calls` (duration, cost, total_cost, price, total_price, call_date, pnumber_origin, pnumber_destination,
                     pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)
-                    VALUES (100, 2, 250, DATE_ADD(NOW(),INTERVAL 4 DAY), "2235252225", "2635872341", 5, 2, 3, 7, null, "223263");
+                    VALUES (100, 7, 14, 75, 150, DATE_ADD(NOW(),INTERVAL 4 DAY), "2235252225", "2635872341", 5, 2, 3, 7, null, "223263");
                     
 ------------------
 
-INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline) values (1, 1000, now(), date_add(now(), INTERVAL 15 DAY), 4, 1);
-INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline) values (1, 250, now(), date_add(now(), INTERVAL 15 DAY), 1, 5);
-INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline) values (1, 750, now(), date_add(now(), INTERVAL 15 DAY), 1, 3);
+INSERT INTO `bills` (cost, price, bill_date, expire_date, calls_count, id_pline) values (1.2, 1000, now(), date_add(bill_date, INTERVAL 15 DAY), 4, 1);
+INSERT INTO `bills` (cost, price, bill_date, expire_date, calls_count, id_pline) values (1.7, 250, now(), date_add(now(), INTERVAL 15 DAY), 1, 5);
+INSERT INTO `bills` (cost, price, bill_date, expire_date, calls_count, id_pline) values (1.15, 750, now(), date_add(now(), INTERVAL 15 DAY), 1, 3);
+
+
+SET foreign_key_checks = 0;
+UPDATE `calls` SET id_bill = 10
+        WHERE pline_origin = 1;
+SET foreign_key_checks = 1;
 
 select * from bills;
-select * from calls;
+select * from calls order by pline_origin;
 
 
 

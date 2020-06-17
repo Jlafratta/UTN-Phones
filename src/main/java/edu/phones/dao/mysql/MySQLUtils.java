@@ -106,11 +106,11 @@ public class MySQLUtils {
     protected static String INSERT_BILLS_QUERY = "INSERT INTO `bills` (cost, total, bill_date, expire_date, calls_count, id_pline)" +
             "VALUES (?, ?, ?, ?, ? , ? )";
 
-    protected static String INSERT_TARIFF_QUERY = "INSERT INTO `tariff` (tariff_key, value)" +
-            "VALUES (?, ?)";
+    protected static String INSERT_TARIFF_QUERY = "INSERT INTO `tariff` (tariff_key, cost, price)" +
+            "VALUES (?, ?, ?)";
 
-    protected static String INSERT_CALLS_QUERY = "INSERT INTO `calls` (duration, cost, total_price, call_date, pnumber_origin, pnumber_destination, pline_origin, pline_destination, city_origin, city_destination, id_bill, tariff_key)" +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+    protected static String INSERT_CALLS_QUERY = "INSERT INTO `calls` (duration,  call_date, pnumber_origin, pnumber_destination)" +
+            "VALUES (?, ?, ?, ?)";
 
     /* UPDATEs */
 
@@ -135,10 +135,10 @@ public class MySQLUtils {
     protected static String UPDATE_BILLS_QUERY = "UPDATE `bills` SET cost = ?, total = ?, bill_date = ?, expire_date = ? , calls_count = ?, id_pline= ? " +
             "WHERE id_bill = ?";
 
-    protected static String UPDATE_TARIFF_QUERY = "UPDATE `tariff` SET value = ? " +
+    protected static String UPDATE_TARIFF_QUERY = "UPDATE `tariff` SET cost = ?, price = ? " +
             "WHERE id_tariff = ?";
 
-    protected static String UPDATE_CALLS_QUERY = "UPDATE `calls` SET duration = ?, cost = ?, total_price = ?, call_date = ? ,pnumber_origin = ?, pnumber_destination = ?, pline_origin = ?, pline_destination = ?, city_origin = ?, city_destination = ? , id_bill =? , tariff_key = ? " +
+    protected static String UPDATE_CALLS_QUERY = "UPDATE `calls` SET duration = ?, cost = ?, total_cost = ?, price = ?, total_price = ?, call_date = ? ,pnumber_origin = ?, pnumber_destination = ?, pline_origin = ?, pline_destination = ?, city_origin = ?, city_destination = ? , id_bill =? , tariff_key = ? " +
             "WHERE id_call = ?";
 
     /* DELETEs */

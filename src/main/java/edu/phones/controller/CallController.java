@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
+import edu.phones.dto.AddCallDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import edu.phones.service.CallService;
@@ -21,7 +22,7 @@ public class CallController {
         this.callService = callService;
     }
 
-    public Call createCall(Call call) throws CallAlreadyExistsException {
+    public Call createCall(AddCallDto call) throws CallAlreadyExistsException {
         return callService.createCall(call);
     }
 
