@@ -20,8 +20,8 @@ BEGIN
         
         SET NEW.city_origin = (select id_city from cities where prefix like prefixOrigin);
         SET NEW.city_destination = (select id_city from cities where prefix like prefixDestination);
-        SET NEW.pline_origin = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_origin);
-        SET NEW.pline_destination = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_destination);
+        SET NEW.pline_origin = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_origin AND state = 1);
+        SET NEW.pline_destination = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_destination AND state = 1);
         
         IF ISNULL(NEW.pline_origin) OR ISNULL(NEW.pline_destination) THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Phone number not found', MYSQL_ERRNO = 2;
@@ -42,9 +42,11 @@ DELIMITER ;
 
 
 INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)
-	VALUES (120, '2020-06-16 01:00:00', "2235252225", "2635872342");
+	VALUES (120, '2020-06-16 10:00:00', "2235252225", "2635872341");
     
 select * from calls;
+
+select * from phone_lines where state = 0;
 
 select * from cities;
 insert into cities (prefix, city_name, id_province) values (2232, "mardel3", 1);

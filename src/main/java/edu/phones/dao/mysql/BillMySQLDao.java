@@ -183,7 +183,7 @@ public class BillMySQLDao implements BillDao {
     }
 
     private Bill createBill(ResultSet rs) throws SQLException {
-        return new Bill(rs.getInt("id_bill"), rs.getDouble("cost"), rs.getDouble("total"), rs.getDate("bill_date"), rs.getDate("expire_date"), rs.getInt("calls_count"),
+        return new Bill(rs.getInt("id_bill"), rs.getDouble("cost"), rs.getDouble("price"), rs.getDate("bill_date"), rs.getDate("expire_date"), rs.getInt("calls_count"),
                 lineDao.getById(rs.getInt("id_pline")));
     }
 }

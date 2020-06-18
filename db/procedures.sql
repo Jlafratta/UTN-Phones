@@ -33,8 +33,9 @@ BEGIN
         SET vIdBill = last_insert_id();
         SET foreign_key_checks = 0; # Habilito la modificacion de las fk
         # Updateo las llamadas que inserte en la bill, asignandoles el id de la bill a la que pertenecen
-        UPDATE `calls` SET id_bill = vIdBill
-        WHERE pline_origin = vIdPhoneLine;
+        UPDATE `calls` as c SET id_bill = vIdBill
+        WHERE pline_origin = vIdPhoneLine
+        AND c.id_bill IS NULL;
         SET foreign_key_checks = 1; # Deshabilito la modificacion de las fk
         
         # Traigo los datos para la proxima pasada del while, si no hay datos corta el while x el corte del cursor (vFinished = 1)
