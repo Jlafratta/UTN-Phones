@@ -68,7 +68,7 @@ public class UserWebController {
         Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
         Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
 
-        toAdd = new User(userDto.getUsername(), userDto.getPassword(), profile, city);
+        toAdd = new User(userDto.getUsername(), userDto.getPassword(), userDto.isEmployee(), profile, city);
         toAdd = userController.createUser(toAdd);
 
         return ResponseEntity.created(getLocation(toAdd)).build();
@@ -84,7 +84,7 @@ public class UserWebController {
         Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
         Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
 
-        toUpdate = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
+        toUpdate = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), userDto.isEmployee(), profile, city);
         toUpdate = userController.updateUser(toUpdate);
 
         return ResponseEntity.ok(toUpdate);
@@ -100,7 +100,7 @@ public class UserWebController {
         Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
         Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
 
-        toRemove = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), profile, city);
+        toRemove = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), userDto.isEmployee(), profile, city);
         userController.removeUser(toRemove);
 
         return ResponseEntity.ok(toRemove);

@@ -49,4 +49,8 @@ public class CallController {
     public List<Call> getByOriginUser(User currentUser) {
         return callService.getByOriginUser(currentUser);
     }
+
+    public List<Call> getByOriginUserId(Integer id) {
+        return callService.getByOriginUserId(id);
+    }
 }

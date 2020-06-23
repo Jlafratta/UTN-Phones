@@ -4,10 +4,8 @@ import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.BillDao;
 import edu.phones.dao.PhoneLineDao;
 import edu.phones.domain.Bill;
-import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.BillAlreadyExistsException;
-import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -80,9 +78,9 @@ public class BillMySQLDao implements BillDao {
         try {
             PreparedStatement ps = connect.prepareStatement(INSERT_BILLS_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setDouble(1, bill.getCost());
-            ps.setDouble(2, bill.getTotal());
-            ps.setDate(3, bill.getDate());
-            ps.setDate(4, bill.getExpireDate());
+            ps.setDouble(2, bill.getPrice());
+            ps.setDate(3,  new java.sql.Date(bill.getDate().getTime()));
+            ps.setDate(4,  new java.sql.Date(bill.getExpireDate().getTime()));
             ps.setInt(5, bill.getCountCalls());
             ps.setInt(6, bill.getpLine().getpLineId());
 
@@ -115,9 +113,9 @@ public class BillMySQLDao implements BillDao {
         try {
             PreparedStatement ps = connect.prepareStatement(UPDATE_BILLS_QUERY);
             ps.setDouble(1, bill.getCost());
-            ps.setDouble(2, bill.getTotal());
-            ps.setDate(3, bill.getDate());
-            ps.setDate(4, bill.getExpireDate());
+            ps.setDouble(2, bill.getPrice());
+            ps.setDate(3, new java.sql.Date(bill.getDate().getTime()));
+            ps.setDate(4, new java.sql.Date(bill.getExpireDate().getTime()));
             ps.setInt(5, bill.getCountCalls());
             ps.setInt(6, bill.getpLine().getpLineId());
             ps.setInt(7, bill.getBillId());

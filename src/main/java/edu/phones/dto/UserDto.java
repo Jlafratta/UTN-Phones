@@ -5,6 +5,7 @@ public class UserDto {
     Integer id;
     String username;
     String password;
+    Boolean isEmployee;
     Integer profileId;
     Integer cityId;
 
@@ -30,6 +31,14 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean isEmployee() {
+        return isEmployee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        isEmployee = employee;
     }
 
     public Integer getProfileId() {

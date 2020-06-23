@@ -8,10 +8,12 @@ import edu.phones.domain.PhoneLine;
 import edu.phones.domain.User;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import net.bytebuddy.dynamic.scaffold.MethodRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,6 +38,24 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
         this.typeDao = typeDao;
     }
 
+    @Override
+    public List<PhoneLine> getTopTen(User user) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_TOP_TEN_USER_QUERY);
+            ps.setInt(1, user.getUserId());
+            ResultSet rs = ps.executeQuery();
+
+            List<PhoneLine> topTen = new ArrayList<>();
+            while(rs.next()){
+                topTen.add(createLine(rs));
+            }
+            rs.close();
+            ps.close();
+            return topTen;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar el top 10 de destinos", e);
+        }
+    }
 
     /** CRUD **/
     @Override
@@ -53,6 +73,9 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
             if(rs != null && rs.next()){
                 line.setpLineId(rs.getInt(1));
             }
+
+            rs.close();
+            ps.close();
 
             return line;
 
@@ -81,6 +104,7 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
             ps.setInt(5, line.getpLineId());
 
             Integer rowsAffected = ps.executeUpdate();
+            ps.close();
             return rowsAffected; // Retorno la cantidad de campos modificados
 
         } catch (SQLException e) {
@@ -93,8 +117,9 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
         try {
             PreparedStatement ps = connect.prepareStatement(DELETE_PLINE_QUERY);
             ps.setInt(1, id);
-            return ps.executeUpdate();
-
+            Integer rowsAffected = ps.executeUpdate();
+            ps.close();
+            return rowsAffected;
         } catch (SQLException e) {
             throw new RuntimeException("Error al eliminar la linea", e);
         }
@@ -132,6 +157,9 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
             while(rs.next()){
                 lineList.add(createLine(rs));
             }
+
+            rs.close();
+            ps.close();
 
             return lineList;
 

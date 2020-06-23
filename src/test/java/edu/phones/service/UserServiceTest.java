@@ -30,7 +30,7 @@ public class UserServiceTest {
     /** login tests **/
     @Test
     public void testLoginOk() throws UserNotExistException {
-        User logged = new User(1, "username", "password", null, null);
+        User logged = new User(1, "username", "password", null, null, null);
         when(userDao.getByUsernameAndPassword("username", "password")).thenReturn(logged);
         User returned = userService.login("username", "password");
 
@@ -48,7 +48,7 @@ public class UserServiceTest {
     /** getById test **/
     @Test
     public void testGetByIdOk(){
-        User toSearch = new User(1, "username", "password", null, null);
+        User toSearch = new User(1, "username", "password", null, null, null);
         when(userDao.getById(1)).thenReturn(toSearch);
 
         User user = userService.getUser(1);
@@ -61,7 +61,7 @@ public class UserServiceTest {
     @Test
     public void testGetAllOk(){
         List<User> userList = new ArrayList<>();
-        userList.add(new User(1, "username", "password", null, null));
+        userList.add(new User(1, "username", "password", null, null, null));
         when(userDao.getAll()).thenReturn(userList);
 
         List<User> users = userService.getAll();
@@ -73,8 +73,8 @@ public class UserServiceTest {
     /** addUser test **/
     @Test
     public void testAddUser() throws UserAlreadyExistsException {
-        User toAdd = new User( "username", "password", null, null);
-        User added = new User(1, "username", "password", null, null);
+        User toAdd = new User( "username", "password", null, null, null);
+        User added = new User(1, "username", "password", null, null, null);
         when(userDao.add(toAdd)).thenReturn(added);
 
         User returned = userService.createUser(toAdd);
@@ -87,7 +87,7 @@ public class UserServiceTest {
     /** modifyUser tests **/
     @Test
     public void testModifyUserOk() throws UserNotExistException {
-        User toModify = new User(1, "username", "password", null, null);
+        User toModify = new User(1, "username", "password", null, null, null);
         when(userDao.update(toModify)).thenReturn(1);
         User modified = userService.updateUser(toModify);
 
@@ -98,7 +98,7 @@ public class UserServiceTest {
 
     @Test(expected = UserNotExistException.class)
     public void testModifyUserNotExists() throws UserNotExistException {
-        User toModify = new User(1, "username", "password", null, null);
+        User toModify = new User(1, "username", "password", null, null, null);
         when(userDao.update(toModify)).thenReturn(0);
         userService.updateUser(toModify);
     }
@@ -106,7 +106,7 @@ public class UserServiceTest {
     /** removeUser test **/
     @Test
     public void testRemoveUserOk() throws UserNotExistException {
-        User toRemove = new User(1, "username", "password", null, null);
+        User toRemove = new User(1, "username", "password", null, null, null);
         when(userDao.remove(toRemove)).thenReturn(1);
         userService.removeUser(toRemove);
         verify(userDao, times(1)).remove(toRemove);

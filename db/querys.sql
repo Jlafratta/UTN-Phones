@@ -40,6 +40,11 @@ where u.id_user = 1 AND c.call_date >= CAST('2020-06-01' AS DATE) AND c.call_dat
 
 select CAST(concat( (select(year(now()))) , '-05-01') AS DATE);
 
+SELECT CAST(CONCAT( year(now()), '-', month(now()) , '-01') AS DATE);
+
+select now();
+select CURDATE();
+
 select date_add( (select CAST(concat( (select(year(now()))) , '-05-01') AS DATE)) , INTERVAL 1 MONTH );
 
 select year(now());

@@ -63,10 +63,10 @@ INSERT INTO `user_profile` (name, lastname, dni) values ("admin", "admin", 99999
 INSERT INTO `user_profile` (name, lastname, dni) values ("admin2", "admin2", 99999999);
 
 ------------------
-INSERT INTO `users` (username, password, id_profile, id_city) values ("LaGorrita", "asd123", 1, 3);
-INSERT INTO `users` (username, password, id_profile, id_city) values ("NicoGarcia137", "asd123", 2, 7);
-INSERT INTO `users` (username, password, id_profile, id_city) values ("admin", "admin", 3, 6);
-INSERT INTO `users` (username, password, id_profile, id_city) values ("admin2", "admin2", 4, 5);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("LaGorrita", "asd123", true, 1, 3);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("NicoGarcia137", "asd123", false, 2, 7);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("admin", "admin", true, 3, 6);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("admin2", "admin2", true, 4, 5);
 
 ------------------
 

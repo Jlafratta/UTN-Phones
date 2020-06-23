@@ -24,8 +24,8 @@ public class SessionManager {
 
     public Session getSession(String token) {
 
-        if(StringUtils.isEmpty(token)){         // ESTO ESTA CROTO
-            return null;                        // pero anda xd
+        if(StringUtils.isEmpty(token)){
+            return null;
         }
 
         Session session = sessionMap.get(token);

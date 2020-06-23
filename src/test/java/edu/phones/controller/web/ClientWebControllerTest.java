@@ -1,9 +1,8 @@
 package edu.phones.controller.web;
 
-import edu.phones.controller.BillController;
-import edu.phones.controller.CallController;
-import edu.phones.controller.UserController;
+import edu.phones.controller.*;
 import edu.phones.domain.Call;
+import edu.phones.domain.PhoneLine;
 import edu.phones.domain.User;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
@@ -32,6 +31,10 @@ public class ClientWebControllerTest {
     @Mock
     UserController userController;
     @Mock
+    PhoneLineController lineController;
+    @Mock
+    TariffController tariffController;
+    @Mock
     SessionManager sessionManager;
 
     ClientWebController appWebController;
@@ -39,7 +42,7 @@ public class ClientWebControllerTest {
     @Before
     public void setUp() {
         initMocks(this);
-        this.appWebController = new ClientWebController(callController, billController, userController, sessionManager);
+        this.appWebController = new ClientWebController(callController, billController, userController, lineController, tariffController, sessionManager);
     }
 
     @Test
@@ -50,7 +53,7 @@ public class ClientWebControllerTest {
         String sessionToken = "StringValue";
         List<Call> calls = new ArrayList<>();
         calls.add(new Call( 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
-        User currentUser = new User (1, "username", "password", null, null);
+        User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to))).thenReturn(calls);
@@ -71,7 +74,7 @@ public class ClientWebControllerTest {
         String sessionToken = "StringValue";
         List<Call> calls = new ArrayList<>();
         calls.add(new Call(120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
-        User currentUser = new User (1, "username", "password", null, null);
+        User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(callController.getByOriginUser(currentUser)).thenReturn(calls);

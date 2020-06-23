@@ -40,6 +40,25 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
+    public List<Call> getByOriginUserId(Integer id) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_ID_CALLS_QUERY);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            List<Call> calls = new ArrayList<>();
+            while (rs.next()){
+                calls.add(createCall(rs));
+            }
+
+            return calls;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las llamdas", e);
+        }
+    }
+
+    @Override
     public List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
@@ -127,7 +146,7 @@ public class CallMySQLDao implements CallDao {
             ps.setDouble(3, call.getTotalCost());
             ps.setDouble(4, call.getPrice());
             ps.setDouble(5, call.getTotalPrice());
-            ps.setDate(6, call.getDate());
+            ps.setDate(6, new java.sql.Date(call.getDate().getTime()));
             ps.setString(7, call.getOrigin().getNumber());
             ps.setString(8, call.getDestination().getNumber());
             ps.setInt(9, call.getOrigin().getpLineId());

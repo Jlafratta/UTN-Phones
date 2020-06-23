@@ -32,7 +32,7 @@ public class UserControllerTest {
     @Test   // Las excepciones van en el encabezado debido a que son propias de algunos metodos, no se espera que sean lanzadas en el test
     public void testLoginOk() throws UserNotExistException, ValidationException {
         // userProfile y city van null debido a que no es lo que se esta testeando
-        User loggedUser = new User(1, "username", "password", null, null);
+        User loggedUser = new User(1, "username", "password", null, null, null);
 
         when(userService.login("username", "password")).thenReturn(loggedUser);
         User returnedUser = userController.login("username", "password");
@@ -60,7 +60,7 @@ public class UserControllerTest {
     /** getById test **/
     @Test
     public void testGetByIdOk(){
-        User userToSearch = new User(1, "username", "password", null, null);
+        User userToSearch = new User(1, "username", "password", null, null, null);
         when(userService.getUser(1)).thenReturn(userToSearch);
         User userFounded = userController.getUser(1);
 
@@ -74,7 +74,7 @@ public class UserControllerTest {
     @Test
     public void testGetAllOk(){
         List<User> users = new ArrayList<>();
-        users.add(new User(1, "username", "password", null, null));
+        users.add(new User(1, "username", "password", null, null, null));
         when(userService.getAll()).thenReturn(users);
 
         List<User> userList = userController.getAll();
@@ -86,8 +86,8 @@ public class UserControllerTest {
     /** addUser test **/
     @Test
     public void testCreateUserOk() throws UserAlreadyExistsException {
-        User userToAdd = new User("username", "password", null, null);
-        User userAdded = new User(1,"username", "password", null, null);
+        User userToAdd = new User("username", "password", null, null, null);
+        User userAdded = new User(1,"username", "password", null, null, null);
         when(userService.createUser(userToAdd)).thenReturn(userAdded);
 
         User user = userController.createUser(userToAdd);
@@ -100,8 +100,8 @@ public class UserControllerTest {
     /** modifyUser test **/
     @Test
     public void testUpdateUserOk() throws UserNotExistException {
-        User toModify = new User(1,"username", "password", null, null);
-        User modified = new User(1,"username2", "password2", null, null);
+        User toModify = new User(1,"username", "password", null, null, null);
+        User modified = new User(1,"username2", "password2", null, null, null);
         when(userService.updateUser(toModify)).thenReturn(modified);
 
         User user = userController.updateUser(toModify);
@@ -113,7 +113,7 @@ public class UserControllerTest {
     /** removeUser test **/
     @Test
     public void testRemoveUserOk() throws UserNotExistException {
-        User toRemove = new User(1,"username", "password", null, null);
+        User toRemove = new User(1,"username", "password", null, null, null);
         doNothing().when(userService).removeUser(toRemove);
         userController.removeUser(toRemove);
 

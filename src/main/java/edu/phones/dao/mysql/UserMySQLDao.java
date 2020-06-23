@@ -85,7 +85,7 @@ public class UserMySQLDao implements UserDao {
 
     // Crea el usuario con la data traida del result set y lo devuelve
     private User createUser(ResultSet rs) throws SQLException {
-        User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"),
+        User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"), rs.getBoolean("isEmployee"),
                 profileDao.getById(rs.getInt("id_profile")),
                 cityDao.getById(rs.getInt("id_city")) );
         return user;
@@ -98,8 +98,9 @@ public class UserMySQLDao implements UserDao {
             PreparedStatement ps = connect.prepareStatement(INSERT_USER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-            ps.setInt(3, user.getUserProfile().getProfileId());
-            ps.setInt(4, user.getCity().getCityId());
+            ps.setBoolean(3, user.isEmployee());
+            ps.setInt(4, user.getUserProfile().getProfileId());
+            ps.setInt(5, user.getCity().getCityId());
             ps.execute();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -142,9 +143,10 @@ public class UserMySQLDao implements UserDao {
             PreparedStatement ps = connect.prepareStatement(UPDATE_USER_QUERY);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
-            ps.setInt(3, user.getUserProfile().getProfileId());
-            ps.setInt(4, user.getCity().getCityId());
-            ps.setInt(5, user.getUserId());
+            ps.setBoolean(3, user.isEmployee());
+            ps.setInt(4, user.getUserProfile().getProfileId());
+            ps.setInt(5, user.getCity().getCityId());
+            ps.setInt(6, user.getUserId());
 
             Integer rowsAffected = ps.executeUpdate();
             return rowsAffected; // Retorno la cantidad de campos modificados

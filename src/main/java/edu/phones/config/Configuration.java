@@ -1,5 +1,7 @@
 package edu.phones.config;
 
+import edu.phones.session.BackofficeSessionFilter;
+import edu.phones.session.InfrastructureSessionFilter;
 import edu.phones.session.SessionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,13 @@ public class Configuration {
 
     @Autowired
     SessionFilter sessionFilter;
+
+    @Autowired
+    BackofficeSessionFilter backofficeSessionFilter;
+
+    @Autowired
+    InfrastructureSessionFilter infrastructureSessionFilter;
+
     @Value("${db.driver}")
     String driver;
     @Value("${db.name}")
@@ -54,12 +63,28 @@ public class Configuration {
                 .build();
     }
 
-    // Registro el filtro en spring
+    // Registro el filtro de clientes en spring
     @Bean
-    public FilterRegistrationBean myFilter() {
+    public FilterRegistrationBean clientFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(sessionFilter);  //Genera un filtro con mi sessionFilter
         registration.addUrlPatterns("/api/*");  //para todas las url que esten delante de /api/
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean backofficeFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(backofficeSessionFilter);  //Genera un filtro con mi sessionFilter
+        registration.addUrlPatterns("/backoffice/*");  //para todas las url que esten delante de /api/
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean infrastructureFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(infrastructureSessionFilter);  //Genera un filtro con mi sessionFilter
+        registration.addUrlPatterns("/inf/*");  //para todas las url que esten delante de /api/
         return registration;
     }
 

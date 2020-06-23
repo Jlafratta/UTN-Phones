@@ -4,6 +4,23 @@ public class MySQLUtils {
 
     /* Custom */
 
+    protected static String GET_TOP_TEN_USER_QUERY = "SELECT * from users as u " +
+                                                     "INNER JOIN phone_lines as pl " +
+                                                     "ON u.id_user = pl.id_user " +
+                                                     "INNER JOIN calls as c " +
+                                                     "ON c.pline_origin = pl.id_pline " +
+                                                     "WHERE u.id_user = ? " +
+                                                     "GROUP BY c.pline_destination " +
+                                                     "ORDER BY count(c.pline_destination) desc " +
+                                                     "LIMIT 10";
+
+    protected static String GET_BY_ORIGIN_USER_ID_CALLS_QUERY = "SELECT * FROM users as u " +
+                                                                "INNER join phone_lines as pl " +
+                                                                "ON u.id_user = pl.id_user " +
+                                                                "INNER join calls as c " +
+                                                                "ON c.pline_origin = pl.id_pline " +
+                                                                "WHERE u.id_user = ?";
+
     protected static String GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY = "SELECT * FROM users as u " +
                                                                             "INNER JOIN phone_lines as pl " +
                                                                             "ON u.id_user = pl.id_user " +
@@ -50,9 +67,9 @@ public class MySQLUtils {
 
     protected static String BASE_CALLS_QUERY = " SELECT * FROM `calls` as c";
 
-    protected  static String BASE_PROFILE_QUERY  = "SELECT * FROM `user_profile` AS up";
+    protected static String BASE_PROFILE_QUERY  = "SELECT * FROM `user_profile` AS up";
 
-    protected  static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t";
+    protected static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t";
 
 
 
@@ -85,8 +102,8 @@ public class MySQLUtils {
 
     /* INSERTs */
 
-    protected static String INSERT_USER_QUERY = "INSERT INTO `users` (username, password, id_profile, id_city)" +
-            "VALUES (?, ?, ?, ?)";
+    protected static String INSERT_USER_QUERY = "INSERT INTO `users` (username, password, isEmployee, id_profile, id_city)" +
+            "VALUES (?, ?, ?, ?, ?)";
 
     protected static String INSERT_PROFILE_QUERY = "INSERT INTO `user_profile` (name, lastname, dni)" +
             " VALUES (?, ?, ?)";
@@ -114,7 +131,7 @@ public class MySQLUtils {
 
     /* UPDATEs */
 
-    protected static String UPDATE_USER_QUERY = "UPDATE `users` SET username = ?, password = ?, id_profile = ?, id_city = ? " +
+    protected static String UPDATE_USER_QUERY = "UPDATE `users` SET username = ?, password = ?, isEmployee = ?, id_profile = ?, id_city = ? " +
             "WHERE id_user = ?";
 
     protected static String UPDATE_TYPE_QUERY = "UPDATE `user_types` SET type_name =? " +

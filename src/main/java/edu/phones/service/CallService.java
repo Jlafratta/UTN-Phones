@@ -56,4 +56,8 @@ public class CallService {
     public List<Call> getByOriginUser(User currentUser) {
         return callDao.getByOriginUser(currentUser);
     }
+
+    public List<Call> getByOriginUserId(Integer id) {
+        return callDao.getByOriginUserId(id);
+    }
 }

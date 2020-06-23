@@ -5,6 +5,7 @@ CREATE DATABASE `PhonesAPI`;
 USE `PhonesAPI`;
 
 SET @@global.time_zone = '-03:00';
+SET GLOBAL event_scheduler = ON;
 
 SHOW TABLES;
 
@@ -35,6 +36,7 @@ CREATE TABLE `users`(
 	`id_user` INTEGER NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(20) UNIQUE NOT NULL,
 	`password` VARCHAR(8) NOT NULL,
+    `isEmployee` BOOLEAN NOT NULL,
 	`id_profile` INTEGER,
 	`id_city` INTEGER,
 	PRIMARY KEY (`id_user`),
