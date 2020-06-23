@@ -18,6 +18,8 @@ import java.io.IOException;
  *  Registrado en spring en el Configuration
  */
 
+// Filtro para clientes
+
 @Service
 public class SessionFilter extends OncePerRequestFilter {
 
@@ -34,13 +36,12 @@ public class SessionFilter extends OncePerRequestFilter {
         String sessionToken = request.getHeader("Authorization");
         Session session = sessionManager.getSession(sessionToken);
 
-        if(null!= session){
+        if(null!= session && !sessionManager.getCurrentUser(sessionToken).isEmployee()){    // Valido que no sea empleado
             filterChain.doFilter(request, response);
         }else{
-            response.setStatus(HttpStatus.FORBIDDEN.value());   // Si el token es null envia un status 403
+            response.setStatus(HttpStatus.FORBIDDEN.value());   // Si el token es null (invalido) envia un status 403
         }                                                       // sin dejarlo entrar al metodo del controller
 
     }
-
 
 }

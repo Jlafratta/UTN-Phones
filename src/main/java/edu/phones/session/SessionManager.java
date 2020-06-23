@@ -14,7 +14,7 @@ public class SessionManager {
 
     Map<String, Session> sessionMap = new Hashtable<>();
 
-    int sessionExpiration = 600;
+    int sessionExpiration = 60000;
 
     public String createSession(User user){
         String token = UUID.randomUUID().toString();
@@ -24,8 +24,8 @@ public class SessionManager {
 
     public Session getSession(String token) {
 
-        if(StringUtils.isEmpty(token)){         // ESTO ESTA CROTO
-            return null;                        // pero anda xd
+        if(StringUtils.isEmpty(token)){
+            return null;
         }
 
         Session session = sessionMap.get(token);

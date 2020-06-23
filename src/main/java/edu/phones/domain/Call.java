@@ -1,23 +1,28 @@
 package edu.phones.domain;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 public class Call {
 
     Integer callId;
     Integer duration;
-    Integer cost;
-    Integer totalPrice;
+    Double cost;
+    Double totalCost;
+    Double price;
+    Double totalPrice;
     Date date;
     PhoneLine origin;
     PhoneLine destination;
     Bill bill;
     Tariff tariff;
 
-    public Call(Integer callId, Integer duration, Integer cost, Integer totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
+    public Call(Integer callId, Integer duration, Double cost, Double totalCost, Double price, Double totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
         this.callId = callId;
         this.duration = duration;
         this.cost = cost;
+        this.totalCost = totalCost;
+        this.price = price;
         this.totalPrice = totalPrice;
         this.date = date;
         this.origin = origin;
@@ -26,9 +31,11 @@ public class Call {
         this.tariff = tariff;
     }
 
-    public Call(Integer duration, Integer cost, Integer totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
+    public Call(Integer duration, Double cost, Double totalCost, Double price, Double totalPrice, Date date, PhoneLine origin, PhoneLine destination, Bill bill, Tariff tariff) {
         this.duration = duration;
         this.cost = cost;
+        this.totalCost = totalCost;
+        this.price = price;
         this.totalPrice = totalPrice;
         this.date = date;
         this.origin = origin;
@@ -53,19 +60,35 @@ public class Call {
         this.duration = duration;
     }
 
-    public Integer getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Integer cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(Double totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -115,6 +138,8 @@ public class Call {
                 "callId=" + callId +
                 ", duration=" + duration +
                 ", cost=" + cost +
+                ", totalCost=" + totalCost +
+                ", price=" + price +
                 ", totalPrice=" + totalPrice +
                 ", date=" + date +
                 ", origin=" + origin +

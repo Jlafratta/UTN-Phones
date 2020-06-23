@@ -20,6 +20,8 @@ public class City {
         this.province = province;
     }
 
+
+
     public Integer getCityId() {
         return cityId;
     }

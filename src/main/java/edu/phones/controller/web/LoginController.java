@@ -4,7 +4,7 @@ import edu.phones.controller.UserController;
 import edu.phones.domain.User;
 import edu.phones.dto.LoginRequestDto;
 import edu.phones.exceptions.InvalidLoginException;
-import edu.phones.exceptions.UserNotExistException;
+import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.exceptions.ValidationException;
 import edu.phones.session.SessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
