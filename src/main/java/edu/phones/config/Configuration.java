@@ -44,7 +44,7 @@ public class Configuration {
     public FilterRegistrationBean myFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(sessionFilter);  //Genera un filtro con mi sessionFilter
-        registration.addUrlPatterns("/api/*");  //para todas las url que esten delante de /api/
+        registration.addUrlPatterns("/api/adsadas*");  //para todas las url que esten delante de /api/
         return registration;
     }
 
