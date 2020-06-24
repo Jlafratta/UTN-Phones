@@ -10,6 +10,8 @@ public interface UserProfileDao extends AbstractDao<UserProfile> {
 
     /** CRUD **/
     UserProfile add(UserProfile profile) throws ProfileAlreadyExistException;
+
     Integer update(UserProfile profile);
+
     UserProfile getById(Integer id);
 }

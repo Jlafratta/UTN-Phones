@@ -12,9 +12,13 @@ public interface CallDao extends AbstractDao<Call>{
 
     /** CRUD **/
     Call add(AddCallDto call) throws CallAlreadyExistsException;
+
     Integer remove(Call call);
+
     Integer update(Call call);
+
     Call getById(Integer id);
+
     List<Call> getAll();
 
     List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to);

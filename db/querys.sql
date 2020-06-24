@@ -17,6 +17,7 @@ on c.pline_origin = pl.id_pline
 where u.id_user = 1 AND c.call_date >= CAST('2020-06-03' AS DATE) AND c.call_date <= CAST('2020-06-12'AS DATE);
 
 select * from calls;
+select * from phone_lines;
 
 -- traer las facturas de un usuario
 SELECT * from users as u
@@ -73,3 +74,17 @@ inner join users as u
 on pl.id_user = u.id_user
 where u.id_user = 1
 order by call_date desc limit 1;
+
+ -- top 10 destinos llamados por el usuario
+ 
+select u.username, pl.id_pline, c.pline_destination, count(c.pline_destination) as cant
+from users as u
+inner join phone_lines as pl
+on u.id_user = pl.id_user
+inner join calls as c
+on c.pline_origin = pl.id_pline
+where u.id_user = 1
+group by c.pline_destination
+order by cant desc
+limit 10;
+ 

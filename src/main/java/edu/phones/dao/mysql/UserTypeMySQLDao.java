@@ -31,60 +31,23 @@ public class UserTypeMySQLDao implements UserTypeDao {
     }
 
     @Override
-    public UserType add(UserType type) throws TypeAlreadyExistsException {
-        try {
-            PreparedStatement ps = connect.prepareStatement(INSERT_TYPE_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1, type.getName());
-
-            ps.execute();
-
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if(rs != null && rs.next()){
-                type.setTypeId(rs.getInt(1));
-            }
-
-            return type;
-
-        } catch (SQLException e) {
-            if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY){
-                throw new TypeAlreadyExistsException();
-            }else{
-                throw new RuntimeException("Error al crear el nuevo tipo", e);
-            }
-        }
+    public UserType add(UserType type) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Integer remove(Integer id) {
-        try {
-            PreparedStatement ps = connect.prepareStatement(DELETE_TYPE_QUERY);
-            ps.setInt(1, id);
-            return ps.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar el tipo", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Integer remove(UserType type) {
-        return remove(type.getTypeId());
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Integer update(UserType type) {
-        try {
-            PreparedStatement ps = connect.prepareStatement(UPDATE_TYPE_QUERY);
-            ps.setString(1, type.getName());
-            ps.setInt(2, type.getTypeId());
-
-            Integer rowsAffected = ps.executeUpdate();
-            return rowsAffected; // Retorno la cantidad de campos modificados
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al modificar el tipo", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override

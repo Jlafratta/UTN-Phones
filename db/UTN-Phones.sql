@@ -1,13 +1,11 @@
-DROP DATABASE PhonesAPI;
+DROP DATABASE IF EXISTS PhonesAPI;
 
-CREATE DATABASE `PhonesAPI`;
+CREATE DATABASE IF NOT EXISTS `PhonesAPI`;
 
 USE `PhonesAPI`;
 
 SET @@global.time_zone = '-03:00';
 SET GLOBAL event_scheduler = ON;
-
-SHOW TABLES;
 
 CREATE TABLE `provinces`(
 	`id_province` INTEGER NOT NULL AUTO_INCREMENT,
@@ -105,4 +103,3 @@ CREATE TABLE `calls`(
     CONSTRAINT `fk_id_bill` FOREIGN KEY (`id_bill`) REFERENCES `bills` (`id_bill`),
     CONSTRAINT `fk_tariff_key` FOREIGN KEY (`tariff_key`) REFERENCES `tariff` (`tariff_key`)
 );
-

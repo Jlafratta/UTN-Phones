@@ -22,7 +22,7 @@ public class BillService {
         this.billDao = billDao;
     }
 
-    public Bill createBill(Bill bill) throws BillAlreadyExistsException {
+    public Bill createBill(Bill bill) {
         return billDao.add(bill);
     }
 

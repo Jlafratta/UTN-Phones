@@ -12,9 +12,13 @@ public interface UserDao extends AbstractDao<User>{
 
     /** CRUD **/
     User add(User user) throws UserAlreadyExistsException;
+
     Integer remove(User user);
+
     Integer update(User user);
+
     User getById(Integer id);
+
     List<User> getAll();
 
     User getByUsername(String username);

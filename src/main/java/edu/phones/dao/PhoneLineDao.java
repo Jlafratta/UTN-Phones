@@ -10,9 +10,13 @@ public interface PhoneLineDao extends AbstractDao<PhoneLine>{
 
     /** CRUD **/
     PhoneLine add(PhoneLine line) throws PhoneLineAlreadyExistsException;
+
     Integer remove(PhoneLine line);
+
     Integer update(PhoneLine line);
+
     PhoneLine getById(Integer id);
+
     List<PhoneLine> getAll();
 
     List<PhoneLine> getTopTen(User currentUser);

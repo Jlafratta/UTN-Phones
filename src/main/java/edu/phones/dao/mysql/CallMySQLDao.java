@@ -134,47 +134,17 @@ public class CallMySQLDao implements CallDao {
 
     @Override
     public Integer remove(Call call) {
-        return remove(call.getCallId());
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Integer update(Call call) {
-        try {
-            PreparedStatement ps = connect.prepareStatement(UPDATE_CALLS_QUERY);
-            ps.setInt(1, call.getDuration());
-            ps.setDouble(2, call.getCost());
-            ps.setDouble(3, call.getTotalCost());
-            ps.setDouble(4, call.getPrice());
-            ps.setDouble(5, call.getTotalPrice());
-            ps.setDate(6, new java.sql.Date(call.getDate().getTime()));
-            ps.setString(7, call.getOrigin().getNumber());
-            ps.setString(8, call.getDestination().getNumber());
-            ps.setInt(9, call.getOrigin().getpLineId());
-            ps.setInt(10, call.getDestination().getpLineId());
-            ps.setInt(11, call.getOrigin().getUser().getCity().getCityId());
-            ps.setInt(12, call.getDestination().getUser().getCity().getCityId());
-            ps.setInt(13, call.getBill().getBillId());
-            ps.setInt(14, call.getTariff().getKey());
-            ps.setInt(15, call.getCallId());
-
-            Integer rowsAffected = ps.executeUpdate();
-            return rowsAffected; // Retorno la cantidad de campos modificados
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al modificar la llamada", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Integer remove(Integer id) {
-        try {
-            PreparedStatement ps = connect.prepareStatement(DELETE_CALLS_QUERY);
-            ps.setInt(1, id);
-            return ps.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar la llamada", e);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override

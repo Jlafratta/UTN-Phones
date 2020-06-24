@@ -46,5 +46,3 @@ BEGIN
     CLOSE cur_calls_facturation;
 END //
 DELIMITER ;
-
-CALL sp_bills_facturation;

@@ -88,22 +88,6 @@ public class PhoneLineWebController {
         return ResponseEntity.created(getLocation(line)).build();
     }
 
-    @PutMapping
-    public ResponseEntity<PhoneLine> updateLine(@RequestBody LineDto lineDto, @RequestHeader("Authorization") String sessionToken) throws PhoneLineNotExistException, UserNotExistException, TypeNotExistException {
-
-        PhoneLine toUpdate;
-        User user = userController.getUser(lineDto.getUserId());
-        UserType type = typeController.getType(lineDto.getTypeId());
-
-        Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
-        Optional.ofNullable(type).orElseThrow(TypeNotExistException::new);
-
-        toUpdate = new PhoneLine(lineDto.getLineId(), lineDto.getNumber(), lineDto.getState(), user, type);
-        toUpdate = lineController.updateLine(toUpdate);
-
-        return ResponseEntity.ok(toUpdate);
-    }
-
     @DeleteMapping
     public ResponseEntity<PhoneLine> removeLine(@RequestBody LineDto lineDto, @RequestHeader("Authorization") String sessionToken) throws PhoneLineNotExistException, UserNotExistException, TypeNotExistException {
 

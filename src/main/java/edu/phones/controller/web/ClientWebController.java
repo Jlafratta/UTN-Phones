@@ -4,6 +4,7 @@ import edu.phones.controller.*;
 import edu.phones.domain.*;
 import edu.phones.dto.AddCallDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
+import edu.phones.exceptions.notExist.TariffNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class ClientWebController {
         calls = (from != null && to != null)
                 ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to))
                 : callController.getByOriginUser(currentUser);
-        return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /* 3) Consulta de facturas del usuario logueado por rango de fechas.*/
@@ -69,7 +70,7 @@ public class ClientWebController {
         bills = (from != null && to != null)
                 ? billController.getByUserFilterByDate(currentUser, dateConverter(from), dateConverter(to))
                 : billController.getByUser(currentUser);
-        return (bills.size() > 0) ? ResponseEntity.ok(bills) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return (bills.size() > 0) ? ResponseEntity.ok(bills) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /* 4) Consulta de TOP 10 destinos más llamados por el usuario. */
@@ -77,7 +78,7 @@ public class ClientWebController {
     public ResponseEntity<List<PhoneLine>> getTopTenCalls(@RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
         User currentUser = getCurrentUser(sessionToken);
         List<PhoneLine> topTen = lineController.getTopTen(currentUser);
-        return (topTen.size() > 0) ? ResponseEntity.ok(topTen) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return (topTen.size() > 0) ? ResponseEntity.ok(topTen) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /** Employees **/
@@ -89,31 +90,39 @@ public class ClientWebController {
     // realizado en PhoneLineWebController
 
     /* 4) Consulta de tarifas. */
+    @GetMapping("/backoffice/tariffs/{fromPrefix}/{toPrefix}")
+    public ResponseEntity<Tariff> getTariff(@PathVariable String fromPrefix,
+                                            @PathVariable String toPrefix,
+                                            @RequestHeader("Authorization") String sessionToken) {
+            Tariff tariff = tariffController.getTariff(Integer.parseInt(fromPrefix + toPrefix));
+        return (tariff != null) ? ResponseEntity.ok(tariff) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
     @GetMapping("/backoffice/tariffs")
-    public ResponseEntity<List<Tariff>> getTariffs(@RequestParam(value = "fromPrefix", required = false) String fromPrefix,
-                                                   @RequestParam(value = "toPrefix", required = false) String toPrefix,
-                                                   @RequestHeader("Authorization") String sessionToken){
-        List<Tariff> tariffList = new ArrayList<>();
-        if(fromPrefix != null && toPrefix != null){
-            tariffList.add(tariffController.getTariff(Integer.parseInt(fromPrefix + toPrefix)));
-        }else {
-            tariffList = tariffController.getAll();
-        }
-        return (tariffList.size() > 0) ? ResponseEntity.ok(tariffList) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<List<Tariff>> getAllTariffs(@RequestHeader("Authorization") String sessionToken) {
+        List<Tariff> tariffList = tariffController.getAll();
+        return (tariffList.size() > 0) ? ResponseEntity.ok(tariffList) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /* 5) Consulta de llamadas por usuario. */
     @GetMapping("/backoffice/calls")
     public ResponseEntity<List<Call>> getCallsByUsername(@RequestParam(value = "username", required = false) String username,
-                                                         @RequestHeader("Authorization") String sessionToken){
+                                                         @RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
         List<Call> calls;
-        calls = username != null ? callController.getByOriginUser(userController.getByUsername(username)) : callController.getAll();
-        return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        if(username != null){
+            User user = userController.getByUsername(username);
+            Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
+            calls = callController.getByOriginUser(user);
+        }else {
+            calls = callController.getAll();
+        }
+        return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // Consulta de llamada x id que satisface al getLocation
     @GetMapping("/backoffice/calls/{id}")
-    public ResponseEntity<Call> getCall(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken){
+    public ResponseEntity<Call> getCallById(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken){
         Call call = callController.getCall(id);
         return (call != null) ? ResponseEntity.ok(call) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -132,10 +141,11 @@ public class ClientWebController {
     }
     // Consulta por cliente
     @GetMapping("/backoffice/client/{id}/bills")
-    public ResponseEntity<List<Bill>> getBillsByUser(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken){
-        List<Bill> bills;
-        bills = billController.getByUser(userController.getUser(id));
-        return (bills.size() > 0) ? ResponseEntity.ok(bills) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<List<Bill>> getBillsByUser(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
+        User user = userController.getUser(id);
+        Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
+        List<Bill> bills = billController.getByUser(user);
+        return (bills.size() > 0) ? ResponseEntity.ok(bills) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /** Infrastructure **/

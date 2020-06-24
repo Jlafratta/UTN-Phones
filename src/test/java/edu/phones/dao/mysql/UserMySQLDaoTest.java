@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -44,11 +46,55 @@ public class UserMySQLDaoTest {
     }
 
     /** getByUsername tests **/
-/**
+
     @Test
     public void testGetByUsernameOk() throws SQLException {
         // mock del ps
         when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenReturn(ps);
+        doNothing().when(ps).setString(1, "username");
+
+        // mock del rs
+        when(ps.executeQuery()).thenReturn(rs);
+        // simulo el if como valido
+        when(rs.next()).thenReturn(true);
+        // simulo la devolucion de datos de la query (los valores no tienen importancia)
+        when(rs.getInt("id_user")).thenReturn(1);
+        when(rs.getInt("id_profile")).thenReturn(1);
+        when(rs.getInt("id_city")).thenReturn(1);
+        // a todos los string que traiga la query les asigno 'StringValue'
+        when(rs.getString(any())).thenReturn("StringValue");
+
+        when(profileDao.getById(rs.getInt("id_profile"))).thenReturn(new UserProfile(1, "name", "lastname", 12312312));
+        when(cityDao.getById(rs.getInt("id_city"))).thenReturn(new City(1, "223", "cityName", null));
+
+        doNothing().when(rs).close();
+        doNothing().when(ps).close();
+
+        // invoco el metodo a testear
+        User user = userDao.getByUsername("username");
+
+        // Asserts para comparar lo retornado (los valores tienen que ser los mismos que simulo devolver en la query para que este ok)
+        assertEquals(Integer.valueOf(1), user.getUserId());
+        assertEquals(Integer.valueOf(1), user.getUserProfile().getProfileId());
+        assertEquals(Integer.valueOf(1), user.getCity().getCityId());
+
+        // verifico que el ps haga los setString 2 veces,
+        // para los campos correspondientes (username y password son los unicos 2 campos String)
+        verify(ps, times(1)).setString(anyInt(), anyString());
+        verify(profileDao, times(1)).getById(rs.getInt("id_profile"));
+        verify(cityDao, times(1)).getById(rs.getInt("id_city"));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetByUsernameSQLError() throws SQLException {
+        when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenThrow(new SQLException());
+        User user = userDao.getByUsername("username");
+    }
+
+    @Test
+    public void testGetByUsernameAndPassOk() throws SQLException {
+        // mock del ps
+        when(connect.prepareStatement(GET_BY_USERNAME_AND_PASS_USER_QUERY)).thenReturn(ps);
         doNothing().when(ps).setString(1, "username");
         doNothing().when(ps).setString(2, "password");
 
@@ -82,33 +128,14 @@ public class UserMySQLDaoTest {
         verify(ps, times(2)).setString(anyInt(), anyString());
         verify(profileDao, times(1)).getById(rs.getInt("id_profile"));
         verify(cityDao, times(1)).getById(rs.getInt("id_city"));
-    }*/
+    }
 
     @Test(expected = RuntimeException.class)
-    public void testGetByUserNameSQLError() throws SQLException {
-        when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenThrow(new SQLException());
+    public void testGetByUsernameAndPassSQLError() throws SQLException {
+        when(connect.prepareStatement(GET_BY_USERNAME_AND_PASS_USER_QUERY)).thenThrow(new SQLException());
         User user = userDao.getByUsernameAndPassword("username", "password");
     }
-/**
-    @Test
-    public void testGetByUsernameNotFound() throws SQLException {
-        when(connect.prepareStatement(GET_BY_USERNAME_USER_QUERY)).thenReturn(ps);
 
-        doNothing().when(ps).setString(1, "username");
-        doNothing().when(ps).setString(2, "password");
-
-        when(ps.executeQuery()).thenReturn(rs);
-
-        when(rs.next()).thenReturn(false);
-
-        doNothing().when(rs).close();
-        doNothing().when(ps).close();
-
-        User user = userDao.getByUsernameAndPassword("username", "password");
-        // el usuario retornado es = a null
-        assertNull(user);
-    }
-*/
     /** add tests **/
     @Test
     public void testAddOk() throws SQLException, UserAlreadyExistsException {
@@ -197,7 +224,7 @@ public class UserMySQLDaoTest {
     /** remove tests **/
     @Test
     public void testRemoveByIdOk() throws SQLException {
-        Integer id = 1;
+        int id = 1;
         when(connect.prepareStatement(DELETE_USER_QUERY)).thenReturn(ps);
         doNothing().when(ps).setInt(1, id);
 
@@ -215,8 +242,6 @@ public class UserMySQLDaoTest {
         when(connect.prepareStatement(DELETE_USER_QUERY)).thenThrow(new SQLException());
         userDao.remove(id);
     }
-
-    // TODO remove con User como parametro
 
     /** getById tests **/
     @Test
@@ -249,23 +274,10 @@ public class UserMySQLDaoTest {
     }
 
     /** getAll tests **/
-    /**@Test
-    public void testGetAllOk() throws SQLException {
-        List<User> userList = new ArrayList<>();
-        userList.add(new User(1, "username", "password", null, null));
-
-        when(connect.prepareStatement(BASE_USER_QUERY)).thenReturn(ps);
-        when(ps.executeQuery()).thenReturn(rs);
-
-        when(rs.next()).thenReturn(true);
-        when(rs.getInt("id_client")).thenReturn(1);
-        when(rs.getString("username")).thenReturn("username");
-        when(rs.getString("password")).thenReturn("password");
-
-
+    @Test(expected = RuntimeException.class)
+    public void testGetAllError() throws SQLException {
+        when(connect.prepareStatement(BASE_USER_QUERY)).thenThrow(new SQLException());
         userDao.getAll();
-
-
-    }**/
+    }
 
 }

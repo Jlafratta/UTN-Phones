@@ -43,6 +43,17 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.2</version>
+                <configuration>
+                    <excludes>
+
+                        <exclude>**/edu/phones/config/**/*</exclude>
+                        <exclude>**/edu/phones/controller/web/ControllerAdvice.class</exclude>
+                        <exclude>**/edu/phones/domain/**/*</exclude>
+                        <exclude>**/edu/phones/dto/**/*</exclude>
+                        <exclude>**/edu/phones/exceptions/**/*</exclude>
+
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -63,9 +74,7 @@
                             <goal>check</goal>
                         </goals>
                         <configuration>
-                            <excludes>
-                                <exclude>edu/phones/domain/**</exclude>
-                            </excludes>
+
                             <rules>
                                 <rule>
                                     <element>BUNDLE</element>

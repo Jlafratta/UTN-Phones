@@ -38,17 +38,3 @@ BEGIN
 		SET NEW.id_bill = null;
 END //
 DELIMITER ;
-
-
-
-INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)
-	VALUES (120, '2020-06-16 10:00:00', "2235252225", "2635872341");
-    
-select * from calls;
-
-select * from phone_lines where state = 0;
-
-select * from cities;
-insert into cities (prefix, city_name, id_province) values (2232, "mardel3", 1);
-
-SELECT prefix from cities where 2235297823 like concat(prefix, '%') order by prefix desc limit 1;
