@@ -42,8 +42,8 @@ public class UserWebController {
     }
 
     /********************************************************/
-    @GetMapping ("/{Province, Id}")
-    public ResponseEntity<List<User>> getUsersByProvinceAndDni(@RequestBody String Province , @RequestBody Integer Id,@RequestHeader("Authorization") String sessionToken) {
+    @GetMapping ("/{Province},{id}")
+    public ResponseEntity<List<User>> getUsersByProvinceAndDni(@RequestParam String Province , @RequestParam Integer Id,@RequestHeader("Authorization") String sessionToken) {
 
 
 
@@ -52,6 +52,7 @@ public class UserWebController {
                 return (users.size() > 0) ? ResponseEntity.ok(users) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
+
 
     /********************************************************/
 
