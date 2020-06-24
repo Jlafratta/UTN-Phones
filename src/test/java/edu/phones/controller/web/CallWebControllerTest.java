@@ -36,7 +36,7 @@ public class CallWebControllerTest {
 
         when(callController.getCallsFromChristmas()).thenReturn(dto);
 
-        ResponseEntity<CallQuantityDto> response = callWebController.getCantCallsFromChristmas(sessionToken);
+        ResponseEntity<CallQuantityDto> response = callWebController.getCantCallsFromChristmas();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(dto, response.getBody());
@@ -50,7 +50,7 @@ public class CallWebControllerTest {
 
         when(callController.getCallsFromChristmas()).thenReturn(null);
 
-        ResponseEntity<CallQuantityDto> response = callWebController.getCantCallsFromChristmas(sessionToken);
+        ResponseEntity<CallQuantityDto> response = callWebController.getCantCallsFromChristmas();
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull( response.getBody());

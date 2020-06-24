@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/call")
+@RequestMapping("/call")
 public class CallWebController {
 
     CallController callController;
@@ -25,10 +25,10 @@ public class CallWebController {
     }
 
     @GetMapping("/xmas")
-    public ResponseEntity<CallQuantityDto> getCantCallsFromChristmas(@RequestHeader("Authorization") String sessionToken){
+    public ResponseEntity<CallQuantityDto> getCantCallsFromChristmas(){
 
         CallQuantityDto dto = callController.getCallsFromChristmas();
 
-        return (dto != null) ? ResponseEntity.ok(dto) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return (dto != null) ? ResponseEntity.ok(dto) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
