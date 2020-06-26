@@ -1,35 +1,71 @@
 package edu.phones.dao.mysql;
 
+import com.mysql.cj.exceptions.MysqlErrorNumbers;
+import edu.phones.dao.CityDao;
+import edu.phones.dao.UserProfileDao;
 import edu.phones.dao.UserDao;
-import edu.phones.domain.City;
-import edu.phones.domain.Province;
 import edu.phones.domain.User;
-import edu.phones.domain.UserProfile;
+import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-/**     Los metodos que no se usan tiran un
- *  throw new UnsupportedOperationException()
- * **/
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
 
+/**     Los metodos que no se usan tiran un
+ *  throw new UnsupportedOperationException();
+ **/
+
+@Repository
+@Qualifier("userMySQLDao")
 public class UserMySQLDao implements UserDao {
 
-    Connection connect;
+    final Connection connect;
 
-    public UserMySQLDao(Connection connect) {
+    UserProfileDao profileDao;
+    CityDao cityDao;
+
+    @Autowired
+    public UserMySQLDao(Connection connect, @Qualifier("profileMySQLDao") UserProfileDao profileDao, @Qualifier("cityMySQLDao") CityDao cityDao) {
         this.connect = connect;
+        this.profileDao = profileDao;
+        this.cityDao = cityDao;
+    }
+
+    /** METHODS **/
+
+    @Override
+    public User getByUsername(String username){
+        try{
+            PreparedStatement ps = connect.prepareStatement(GET_BY_USERNAME_USER_QUERY);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            User user = null;
+            if(rs.next()){
+                user = createUser(rs);
+            }
+            rs.close();
+            ps.close();
+            return user;
+
+        }catch(SQLException e){
+            throw new RuntimeException("Error al obtener datos del usuario");
+        }
     }
 
     @Override
-    public User getByUsername(String username, String password) {
+    public User getByUsernameAndPassword(String username, String password) {
         try{
-            PreparedStatement ps = connect.prepareStatement(GET_BY_USERNAME_USER_QUERY);
+            PreparedStatement ps = connect.prepareStatement(GET_BY_USERNAME_AND_PASS_USER_QUERY);
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -47,42 +83,120 @@ public class UserMySQLDao implements UserDao {
         }
     }
 
+    // Crea el usuario con la data traida del result set y lo devuelve
     private User createUser(ResultSet rs) throws SQLException {
-        User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"),
-                        (new UserProfile(rs.getInt("id_profile"), rs.getString("name"), rs.getString("lastname"), rs.getInt("dni") )),
-                         new City(rs.getInt("id_city"),rs.getString("prefix"), rs.getString("city_name"),
-                            (new Province(rs.getInt("id_province"), rs.getString("province_name"))) ) );
+        User user = new User(rs.getInt("id_user"), rs.getString("username"), rs.getString("password"), rs.getBoolean("isEmployee"),
+                profileDao.getById(rs.getInt("id_profile")),
+                cityDao.getById(rs.getInt("id_city")) );
         return user;
     }
 
+    /** CRUD **/
     @Override
-    public User add(User value) {
-        return null;
-    }
+    public User add(User user) throws UserAlreadyExistsException {
+        try {
+            PreparedStatement ps = connect.prepareStatement(INSERT_USER_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setBoolean(3, user.isEmployee());
+            ps.setInt(4, user.getUserProfile().getProfileId());
+            ps.setInt(5, user.getCity().getCityId());
+            ps.execute();
 
-    @Override
-    public Integer update(User value) {
-        return null;
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if(rs != null && rs.next()){
+                user.setUserId(rs.getInt(1));
+            }
+
+            return user;
+
+        } catch (SQLException e) {
+            if(e.getErrorCode() == MysqlErrorNumbers.ER_DUP_ENTRY){
+                throw new UserAlreadyExistsException();
+            }else{
+                throw new RuntimeException("Error al crear el nuevo usuario", e);
+            }
+        }
     }
 
     @Override
     public Integer remove(Integer id) {
-        return null;
+        try {
+            PreparedStatement ps = connect.prepareStatement(DELETE_USER_QUERY);
+            ps.setInt(1, id);
+            return ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar el usuario", e);
+        }
     }
 
     @Override
-    public Integer remove(User value) {
-        return null;
+    public Integer remove(User user) {
+        return remove(user.getUserId());
+    }
+
+    @Override
+    public Integer update(User user) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(UPDATE_USER_QUERY);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setBoolean(3, user.isEmployee());
+            ps.setInt(4, user.getUserProfile().getProfileId());
+            ps.setInt(5, user.getCity().getCityId());
+            ps.setInt(6, user.getUserId());
+
+            Integer rowsAffected = ps.executeUpdate();
+            return rowsAffected; // Retorno la cantidad de campos modificados
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al modificar el usuario", e);
+        }
     }
 
     @Override
     public User getById(Integer id) {
-        return null;
+
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ID_USER_QUERY);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            User u = null;
+            if(rs.next()){
+                u = createUser(rs);
+            }
+            rs.close();
+            ps.close();
+
+            return u;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException("Error al buscar por id", e);
+        }
+
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+
+        try {
+            PreparedStatement ps = connect.prepareStatement(BASE_USER_QUERY);
+            ResultSet rs = ps.executeQuery();
+
+            List<User> userList = new ArrayList<>();
+            while(rs.next()){
+                userList.add(createUser(rs));
+            }
+
+            return userList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todos los usuarios", e);
+        }
     }
 
 }

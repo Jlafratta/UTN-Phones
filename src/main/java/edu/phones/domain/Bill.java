@@ -1,30 +1,31 @@
 package edu.phones.domain;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 public class Bill {
 
     Integer billId;
-    Integer cost;
-    Integer total;
+    Double cost;
+    Double price;
     Date date;
     Date expireDate;
     Integer countCalls;
     PhoneLine pLine;
 
-    public Bill(Integer billId, Integer cost, Integer total, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
+    public Bill(Integer billId, Double cost, Double price, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
         this.billId = billId;
         this.cost = cost;
-        this.total = total;
+        this.price = price;
         this.date = date;
         this.expireDate = expireDate;
         this.countCalls = countCalls;
         this.pLine = pLine;
     }
 
-    public Bill(Integer cost, Integer total, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
+    public Bill(Double cost, Double price, Date date, Date expireDate, Integer countCalls, PhoneLine pLine) {
         this.cost = cost;
-        this.total = total;
+        this.price = price;
         this.date = date;
         this.expireDate = expireDate;
         this.countCalls = countCalls;
@@ -39,20 +40,20 @@ public class Bill {
         this.billId = billId;
     }
 
-    public Integer getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Integer cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public Integer getTotal() {
-        return total;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setTotal(Integer total) {
-        this.total = total;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Date getDate() {
@@ -92,7 +93,7 @@ public class Bill {
         return "Bill{" +
                 "billId=" + billId +
                 ", cost=" + cost +
-                ", total=" + total +
+                ", total=" + price +
                 ", date=" + date +
                 ", expireDate=" + expireDate +
                 ", countCalls=" + countCalls +

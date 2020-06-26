@@ -5,20 +5,23 @@ public class User {
     Integer userId;
     String username;
     String password;
+    Boolean isEmployee;
     UserProfile userProfile;
     City city;
 
-    public User(Integer userId, String username, String password, UserProfile userProfile, City city) {
+    public User(Integer userId, String username, String password, Boolean isEmployee, UserProfile userProfile, City city) {
         this.userId = userId;
         this.username = username;
         this.password = password;
+        this.isEmployee = isEmployee;
         this.userProfile = userProfile;
         this.city = city;
     }
 
-    public User(String username, String password, UserProfile userProfile, City city) {
+    public User(String username, String password, Boolean isEmployee, UserProfile userProfile, City city) {
         this.username = username;
         this.password = password;
+        this.isEmployee = isEmployee;
         this.userProfile = userProfile;
         this.city = city;
     }
@@ -47,6 +50,14 @@ public class User {
         this.password = password;
     }
 
+    public Boolean isEmployee() {
+        return isEmployee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        isEmployee = employee;
+    }
+
     public UserProfile getUserProfile() {
         return userProfile;
     }
@@ -65,7 +76,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [" +
+        return "\nUser [" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + "\']" +
