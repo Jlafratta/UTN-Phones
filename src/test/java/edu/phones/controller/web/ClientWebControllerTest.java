@@ -95,7 +95,7 @@ public class ClientWebControllerTest {
         User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
-        when(callController.getByOriginUser(currentUser)).thenReturn(calls);
+        when(callController.getByOriginUserId(currentUser.getUserId())).thenReturn(calls);
 
         ResponseEntity<List<Call>> response =  clientWebController.getCalls(from, to, sessionToken);
 
@@ -103,7 +103,7 @@ public class ClientWebControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(calls, response.getBody());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
-        verify(callController, times(1)).getByOriginUser(currentUser);
+        verify(callController, times(1)).getByOriginUserId(currentUser.getUserId());
     }
 
     @Test   // "api/calls"
@@ -115,13 +115,13 @@ public class ClientWebControllerTest {
         User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
-        when(callController.getByOriginUser(currentUser)).thenReturn(calls);
+        when(callController.getByOriginUserId(currentUser.getUserId())).thenReturn(calls);
 
         ResponseEntity<List<Call>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
-        verify(callController, times(1)).getByOriginUser(currentUser);
+        verify(callController, times(1)).getByOriginUserId(currentUser.getUserId());
     }
 
 
@@ -307,7 +307,7 @@ public class ClientWebControllerTest {
         calls.add(new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
 
         when(userController.getByUsername(username)).thenReturn(user);
-        when(callController.getByOriginUser(user)).thenReturn(calls);
+        when(callController.getByOriginUserId(user.getUserId())).thenReturn(calls);
 
         ResponseEntity<List<Call>> response = clientWebController.getCallsByUsername(username, sessionToken);
 
@@ -315,7 +315,7 @@ public class ClientWebControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(calls, response.getBody());
         verify(userController, times(1)).getByUsername(username);
-        verify(callController, times(1)).getByOriginUser(user);
+        verify(callController, times(1)).getByOriginUserId(user.getUserId());
     }
 
     @Test   // "backoffice/calls"
@@ -326,13 +326,13 @@ public class ClientWebControllerTest {
         List<Call> calls = new ArrayList<>();
 
         when(userController.getByUsername(username)).thenReturn(user);
-        when(callController.getByOriginUser(user)).thenReturn(calls);
+        when(callController.getByOriginUserId(user.getUserId())).thenReturn(calls);
 
         ResponseEntity<List<Call>> response = clientWebController.getCallsByUsername(username, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(userController, times(1)).getByUsername(username);
-        verify(callController, times(1)).getByOriginUser(user);
+        verify(callController, times(1)).getByOriginUserId(user.getUserId());
     }
 
     @Test(expected = UserNotExistException.class)   // "backoffice/calls"
