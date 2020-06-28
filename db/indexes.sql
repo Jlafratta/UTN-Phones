@@ -1,4 +1,4 @@
-explain extended SELECT * FROM users as u
+explain format='json' SELECT * FROM users as u
 INNER JOIN phone_lines as pl 
 ON u.id_user = pl.id_user 
 INNER JOIN calls as c 
@@ -6,10 +6,17 @@ ON c.pline_origin = pl.id_pline
 WHERE u.id_user = 1
 AND c.call_date between "2020-06-28 000000" AND "2020-07-01 000000";
 
+explain format='json' SELECT * FROM users as u
+INNER JOIN phone_lines as pl 
+ON u.id_user = pl.id_user 
+INNER JOIN calls as c 
+ON c.pline_origin = pl.id_pline 
+WHERE u.id_user = 1
+AND c.call_date >= "2020-06-28 000000" AND c.call_date <= "2020-07-01 000000";
+
 explain extended select pnumber_origin, city_origin, pnumber_destination, city_destination, total_price, duration, call_date from calls where call_date between cast("2020-06-28" as date) AND cast("2020-07-01" as date);
 
 explain format='json' select * from calls where call_date between cast("2019-01-01" as date) AND cast("2020-12-12" as date);
-
 
 CREATE INDEX idx_calls_date ON calls(call_date) USING BTREE;
 CREATE INDEX idx_bills_date ON bills(bill_date) USING BTREE;
@@ -45,7 +52,7 @@ DELIMITER ;
 
 CALL sp_insert_calls;
 
-select count(*) from calls;
+explain extended select count(*) from calls;
 select * from calls;
 
 SELECT table_schema AS "Database",

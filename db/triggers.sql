@@ -19,7 +19,9 @@ BEGIN
         END IF;
         
         SET NEW.city_origin = (select id_city from cities where prefix like prefixOrigin);
+        SET NEW.city_origin_name = (select city_name from cities where prefix like prefixOrigin);
         SET NEW.city_destination = (select id_city from cities where prefix like prefixDestination);
+        SET NEW.city_destination_name = (select city_name from cities where prefix like prefixDestination);
         SET NEW.pline_origin = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_origin AND state = 1);
         SET NEW.pline_destination = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_destination AND state = 1);
         
@@ -29,10 +31,10 @@ BEGIN
         
         # Asigno los valores correspondientes a la tarifa
         SET NEW.tariff_key = concat(prefixOrigin, prefixDestination);
-        SET NEW.cost = (select cost from tariff where tariff_key = NEW.tariff_key);
-		SET NEW.price = (select price from tariff where tariff_key = NEW.tariff_key);
-        SET NEW.total_cost = NEW.cost * (NEW.duration / 60);
-        SET NEW.total_price = NEW.price * (NEW.duration / 60);
+        SET NEW.cost = format((select cost from tariff where tariff_key = NEW.tariff_key),2);
+		SET NEW.price = format((select price from tariff where tariff_key = NEW.tariff_key),2);
+        SET NEW.total_cost = format((NEW.cost * (NEW.duration / 60)),2);
+        SET NEW.total_price = format((NEW.price * (NEW.duration / 60)),2);
         
         # Seteo la bill en null, debido a que no esta facturado (se asigna en el sp de facturacion)
 		SET NEW.id_bill = null;

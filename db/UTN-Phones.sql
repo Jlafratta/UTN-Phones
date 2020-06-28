@@ -88,6 +88,8 @@ CREATE TABLE `calls`(
     `call_date` DATETIME,
     `pnumber_origin` VARCHAR(11) NOT NULL,
     `pnumber_destination` VARCHAR(11) NOT NULL,
+    `city_origin_name` VARCHAR(20) NOT NULL,
+    `city_destination_name` VARCHAR(20) NOT NULL,
     -- FK's --
     `pline_origin` INTEGER NOT NULL,
     `pline_destination` INTEGER NOT NULL,
