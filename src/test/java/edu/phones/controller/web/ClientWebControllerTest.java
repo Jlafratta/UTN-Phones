@@ -3,6 +3,7 @@ package edu.phones.controller.web;
 import edu.phones.controller.*;
 import edu.phones.domain.*;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
@@ -50,14 +51,14 @@ public class ClientWebControllerTest {
         String from = "01/01/2020";
         String to = "01/01/2021";
         String sessionToken = "StringValue";
-        List<Call> calls = new ArrayList<>();
-        calls.add(new Call( 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
+        List<CallRequestDto> calls = new ArrayList<>();
+        calls.add(new CallRequestDto( "2231111111", "StringValue", "2211111111", "StringValue", 1.0, 1, null));
         User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to))).thenReturn(calls);
 
-        ResponseEntity<List<Call>> response =  clientWebController.getCalls(from, to, sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertNotNull(calls);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -72,13 +73,13 @@ public class ClientWebControllerTest {
         String from = "01/01/2020";
         String to = "01/01/2021";
         String sessionToken = "StringValue";
-        List<Call> calls = new ArrayList<>();
+        List<CallRequestDto> calls = new ArrayList<>();
         User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to))).thenReturn(calls);
 
-        ResponseEntity<List<Call>> response =  clientWebController.getCalls(from, to, sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
@@ -90,14 +91,14 @@ public class ClientWebControllerTest {
         String from = null;
         String to = null;
         String sessionToken = "StringValue";
-        List<Call> calls = new ArrayList<>();
-        calls.add(new Call(120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
+        List<CallRequestDto> calls = new ArrayList<>();
+        calls.add(new CallRequestDto( "2231111111", "StringValue", "2211111111", "StringValue", 1.0, 1, null));
         User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(callController.getByOriginUserId(currentUser.getUserId())).thenReturn(calls);
 
-        ResponseEntity<List<Call>> response =  clientWebController.getCalls(from, to, sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertNotNull(calls);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -111,13 +112,13 @@ public class ClientWebControllerTest {
         String from = null;
         String to = null;
         String sessionToken = "StringValue";
-        List<Call> calls = new ArrayList<>();
+        List<CallRequestDto> calls = new ArrayList<>();
         User currentUser = new User (1, "username", "password", false, null, null);
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(callController.getByOriginUserId(currentUser.getUserId())).thenReturn(calls);
 
-        ResponseEntity<List<Call>> response =  clientWebController.getCalls(from, to, sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
@@ -307,7 +308,7 @@ public class ClientWebControllerTest {
         calls.add(new Call(1, 120, 1.0, 2.0, 2.0, 4.0, null, null, null, null, null));
 
         when(userController.getByUsername(username)).thenReturn(user);
-        when(callController.getByOriginUserId(user.getUserId())).thenReturn(calls);
+        when(callController.getByOriginUserIdAll(user.getUserId())).thenReturn(calls);
 
         ResponseEntity<List<Call>> response = clientWebController.getCallsByUsername(username, sessionToken);
 
@@ -315,7 +316,7 @@ public class ClientWebControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(calls, response.getBody());
         verify(userController, times(1)).getByUsername(username);
-        verify(callController, times(1)).getByOriginUserId(user.getUserId());
+        verify(callController, times(1)).getByOriginUserIdAll(user.getUserId());
     }
 
     @Test   // "backoffice/calls"
@@ -326,13 +327,13 @@ public class ClientWebControllerTest {
         List<Call> calls = new ArrayList<>();
 
         when(userController.getByUsername(username)).thenReturn(user);
-        when(callController.getByOriginUserId(user.getUserId())).thenReturn(calls);
+        when(callController.getByOriginUserIdAll(user.getUserId())).thenReturn(calls);
 
         ResponseEntity<List<Call>> response = clientWebController.getCallsByUsername(username, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(userController, times(1)).getByUsername(username);
-        verify(callController, times(1)).getByOriginUserId(user.getUserId());
+        verify(callController, times(1)).getByOriginUserIdAll(user.getUserId());
     }
 
     @Test(expected = UserNotExistException.class)   // "backoffice/calls"

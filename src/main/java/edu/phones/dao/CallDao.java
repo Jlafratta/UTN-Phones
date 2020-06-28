@@ -3,6 +3,7 @@ package edu.phones.dao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 
 import java.util.Date;
@@ -21,7 +22,9 @@ public interface CallDao extends AbstractDao<Call>{
 
     List<Call> getAll();
 
-    List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to);
+    List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to);
 
-    List<Call> getByOriginUserId(Integer id);
+    List<CallRequestDto> getByOriginUserId(Integer id);
+
+    List<Call> getByOriginUserIdAll(Integer userId);
 }

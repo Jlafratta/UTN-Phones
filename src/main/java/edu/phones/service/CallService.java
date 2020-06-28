@@ -4,6 +4,7 @@ import edu.phones.dao.CallDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +50,15 @@ public class CallService {
         return callDao.getAll();
     }
 
-    public List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
         return callDao.getByOriginUserFilterByDate(currentUser, from, to);
     }
 
-    public List<Call> getByOriginUserId(Integer id) {
+    public List<CallRequestDto> getByOriginUserId(Integer id) {
         return callDao.getByOriginUserId(id);
+    }
+
+    public List<Call> getByOriginUserIdAll(Integer userId) {
+        return callDao.getByOriginUserIdAll(userId);
     }
 }

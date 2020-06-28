@@ -8,6 +8,7 @@ import edu.phones.dao.TariffDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,7 +41,7 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public List<Call> getByOriginUserId(Integer id) {
+    public List<Call> getByOriginUserIdAll(Integer id) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_ID_CALLS_QUERY);
             ps.setInt(1, id);
@@ -59,7 +60,26 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+    public List<CallRequestDto> getByOriginUserId(Integer id) {
+        try {
+            PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            List<CallRequestDto> calls = new ArrayList<>();
+            while (rs.next()){
+                calls.add(createCallDto(rs));
+            }
+
+            return calls;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al traer todas las llamdas", e);
+        }
+    }
+
+    @Override
+    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
             ps.setInt(1, currentUser.getUserId());
@@ -67,9 +87,9 @@ public class CallMySQLDao implements CallDao {
             ps.setDate(3, new java.sql.Date(to.getTime()));
             ResultSet rs = ps.executeQuery();
 
-            List<Call> calls = new ArrayList<>();
+            List<CallRequestDto> calls = new ArrayList<>();
             while (rs.next()){
-                calls.add(createCall(rs));
+                calls.add(createCallDto(rs));
             }
 
             return calls;
@@ -166,6 +186,10 @@ public class CallMySQLDao implements CallDao {
         } catch (SQLException e) {
             throw new RuntimeException("Error al traer todas las llamdas", e);
         }
+    }
+
+    private CallRequestDto createCallDto(ResultSet rs) throws SQLException{
+        return new CallRequestDto(rs.getString("pnumber_origin"), rs.getString("city_origin_name"), rs.getString("pnumber_destination"), rs.getString("city_destination_name"), rs.getDouble("total_price"), rs.getInt("duration"), rs.getDate("call_date"));
     }
 
     private Call createCall(ResultSet rs) throws SQLException {

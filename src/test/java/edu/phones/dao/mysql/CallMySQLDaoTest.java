@@ -7,6 +7,7 @@ import edu.phones.dao.TariffDao;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.junit.Before;
@@ -59,7 +60,7 @@ public class CallMySQLDaoTest {
         doNothing().when(rs).close();
         doNothing().when(ps).close();
 
-        List<Call> calls = callDao.getByOriginUserId(1);
+        List<Call> calls = callDao.getByOriginUserIdAll(1);
 
         assertTrue(calls.isEmpty());
         verify(connection, times(1)).prepareStatement(GET_BY_ORIGIN_USER_ID_CALLS_QUERY);
@@ -69,7 +70,7 @@ public class CallMySQLDaoTest {
     @Test(expected = RuntimeException.class)
     public void testGetByOriginUserIdError() throws SQLException {
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_CALLS_QUERY)).thenThrow(new SQLException());
-        List<Call> calls = callDao.getByOriginUserId(1);
+        List<Call> calls = callDao.getByOriginUserIdAll(1);
     }
 
     @Test
@@ -87,7 +88,7 @@ public class CallMySQLDaoTest {
         doNothing().when(rs).close();
         doNothing().when(ps).close();
 
-        List<Call> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to);
+        List<CallRequestDto> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to);
 
         assertTrue(calls.isEmpty());
         verify(connection, times(1)).prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
@@ -99,7 +100,7 @@ public class CallMySQLDaoTest {
         Date from = new Date(new java.util.Date().getTime());
         Date to = new Date(new java.util.Date().getTime());
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY)).thenThrow(new SQLException());
-        List<Call> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to);
+        List<CallRequestDto> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to);
     }
 
     @Test
