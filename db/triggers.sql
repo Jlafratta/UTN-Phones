@@ -11,8 +11,8 @@ BEGIN
 		# Traigo los valores de los prefijos
 		DECLARE prefixOrigin varchar(4);
         DECLARE prefixDestination varchar(4);
-        SET prefixOrigin = (SELECT prefix from cities where NEW.pnumber_origin like concat(prefix, '%') order by prefix desc limit 1);
-        SET prefixDestination = (SELECT prefix from cities where NEW.pnumber_destination like concat(prefix, '%') order by prefix desc limit 1);
+        SET prefixOrigin = (SELECT prefix from cities where NEW.pnumber_origin like concat(prefix, '%') order by length(prefix) desc limit 1);
+        SET prefixDestination = (SELECT prefix from cities where NEW.pnumber_destination like concat(prefix, '%') order by length(prefix) desc limit 1);
         
 		IF ISNULL(prefixOrigin) OR ISNULL(prefixDestination) THEN
 			SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Prefix not found', MYSQL_ERRNO = 1;

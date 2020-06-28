@@ -23,7 +23,5 @@ public interface CallDao extends AbstractDao<Call>{
 
     List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to);
 
-    List<Call> getByOriginUser(User currentUser);
-
     List<Call> getByOriginUserId(Integer id);
 }

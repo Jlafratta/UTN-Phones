@@ -77,15 +77,13 @@ public class UserWebController {
     @PutMapping
     public ResponseEntity<User> updateUser(@RequestBody UserDto userDto, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ProfileNotExistException, CityNotExistException {
 
-        User toUpdate;
-        UserProfile profile = profileController.getProfile(userDto.getProfileId());
-        City city = cityController.getCity(userDto.getCityId());
+        UserProfile profile = userDto.getProfileId() != null ? profileController.getProfile(userDto.getProfileId()) : null;
+        City city = userDto.getCityId() != null ? cityController.getCity(userDto.getCityId()) : null;
 
         Optional.ofNullable(city).orElseThrow(CityNotExistException::new);
         Optional.ofNullable(profile).orElseThrow(ProfileNotExistException::new);
 
-        toUpdate = new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), userDto.isEmployee(), profile, city);
-        toUpdate = userController.updateUser(toUpdate);
+        User toUpdate = userController.updateUser(new User(userDto.getId(), userDto.getUsername(), userDto.getPassword(), userDto.isEmployee(), profile, city));
 
         return ResponseEntity.ok(toUpdate);
     }

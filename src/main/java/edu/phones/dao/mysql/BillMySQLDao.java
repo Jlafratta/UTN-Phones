@@ -47,6 +47,9 @@ public class BillMySQLDao implements BillDao {
                 bills.add(createBill(rs));
             }
 
+            rs.close();
+            ps.close();
+
             return bills;
 
         } catch (SQLException e) {

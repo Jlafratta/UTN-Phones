@@ -80,25 +80,6 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public List<Call> getByOriginUser(User currentUser) {
-        try {
-            PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_CALLS_QUERY);
-            ps.setInt(1, currentUser.getUserId());
-            ResultSet rs = ps.executeQuery();
-
-            List<Call> calls = new ArrayList<>();
-            while (rs.next()){
-                calls.add(createCall(rs));
-            }
-
-            return calls;
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al traer todas las llamdas", e);
-        }
-    }
-
-    @Override
     public Call add(AddCallDto call) throws CallAlreadyExistsException {
         try {
             PreparedStatement ps = connect.prepareStatement(INSERT_CALLS_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);

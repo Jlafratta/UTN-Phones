@@ -51,6 +51,7 @@
                         <exclude>**/edu/phones/domain/**/*</exclude>
                         <exclude>**/edu/phones/dto/**/*</exclude>
                         <exclude>**/edu/phones/exceptions/**/*</exclude>
+                        <exclude>**/edu/phones/session/**/*</exclude>
 
                     </excludes>
                 </configuration>

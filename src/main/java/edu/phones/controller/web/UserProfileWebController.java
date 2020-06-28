@@ -46,8 +46,7 @@ public class UserProfileWebController {
     @PutMapping
     public ResponseEntity<UserProfile> updateProfile(@RequestBody ProfileDto profileDto, @RequestHeader("Authorization") String sessionToken) throws ProfileNotExistException {
 
-        UserProfile profile = new UserProfile(profileDto.getProfileId(), profileDto.getName(), profileDto.getLastname(), profileDto.getDni());
-        profile = profileController.updateProfile(profile);
+        UserProfile profile = profileController.updateProfile(new UserProfile(profileDto.getProfileId(), profileDto.getName(), profileDto.getLastname(), profileDto.getDni()));
 
         return ResponseEntity.ok(profile);
     }

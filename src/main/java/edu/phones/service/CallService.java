@@ -53,10 +53,6 @@ public class CallService {
         return callDao.getByOriginUserFilterByDate(currentUser, from, to);
     }
 
-    public List<Call> getByOriginUser(User currentUser) {
-        return callDao.getByOriginUser(currentUser);
-    }
-
     public List<Call> getByOriginUserId(Integer id) {
         return callDao.getByOriginUserId(id);
     }

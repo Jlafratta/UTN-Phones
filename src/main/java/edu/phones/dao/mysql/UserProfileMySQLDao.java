@@ -43,7 +43,7 @@ public class UserProfileMySQLDao implements UserProfileDao {
             if(rs != null && rs.next()){
                 profile.setProfileId(rs.getInt(1));
             }
-
+            ps.close();
             return profile;
 
         } catch (SQLException e) {

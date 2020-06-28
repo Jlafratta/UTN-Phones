@@ -46,10 +46,6 @@ public class CallController {
         return callService.getByOriginUserFilterByDate(currentUser, from, to);
     }
 
-    public List<Call> getByOriginUser(User currentUser) {
-        return callService.getByOriginUser(currentUser);
-    }
-
     public List<Call> getByOriginUserId(Integer id) {
         return callService.getByOriginUserId(id);
     }

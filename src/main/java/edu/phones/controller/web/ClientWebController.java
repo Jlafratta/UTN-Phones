@@ -56,7 +56,7 @@ public class ClientWebController {
         List<Call> calls;
         calls = (from != null && to != null)
                 ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to))
-                : callController.getByOriginUser(currentUser);
+                : callController.getByOriginUserId(currentUser.getUserId());
         return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -113,7 +113,7 @@ public class ClientWebController {
         if(username != null){
             User user = userController.getByUsername(username);
             Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
-            calls = callController.getByOriginUser(user);
+            calls = callController.getByOriginUserId(user.getUserId());
         }else {
             calls = callController.getAll();
         }
@@ -154,6 +154,9 @@ public class ClientWebController {
     @PostMapping("/inf")
     public ResponseEntity<Call> addCall(@RequestBody AddCallDto dto,
                                         @RequestHeader("Authorization") String sessionToken) throws CallAlreadyExistsException {
+        if(dto.getFrom().equals(dto.getTo())){
+            return ResponseEntity.badRequest().build();
+        }
         Call call = callController.createCall(dto);
         return ResponseEntity.created(getLocation(call)).build();
     }

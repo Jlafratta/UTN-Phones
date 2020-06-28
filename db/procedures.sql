@@ -27,7 +27,9 @@ BEGIN
     # Traigo los datos del cursor por primera vez
     FETCH cur_calls_facturation INTO vIdPhoneLine, vCallsCount, vCost, vPrice;
     # Si hay datos, ejecuto el while
+    SET autocommit = 0;
     WHILE (vFinished=0) DO
+    START TRANSACTION;
         # Creo la bill con la data del cursor
         INSERT INTO `bills` (cost, price, bill_date, expire_date, calls_count, id_pline) values (vCost, vPrice, now(), date_add(bill_date, INTERVAL 15 DAY), vCallsCount, vIdPhoneLine);
         SET vIdBill = last_insert_id();
@@ -40,8 +42,9 @@ BEGIN
         
         # Traigo los datos para la proxima pasada del while, si no hay datos corta el while x el corte del cursor (vFinished = 1)
         FETCH cur_calls_facturation INTO vIdPhoneLine, vCallsCount, vCost, vPrice;
+	COMMIT;
     END WHILE;
-
+	SET autocommit = 1;
     # Cierro el cursor
     CLOSE cur_calls_facturation;
 END //
