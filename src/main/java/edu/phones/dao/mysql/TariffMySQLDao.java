@@ -32,17 +32,12 @@ public class TariffMySQLDao implements TariffDao {
     @Override
     public Tariff add(Tariff tariff) throws TarriffAlreadyExistsException {
         try {
-            PreparedStatement ps = connect.prepareStatement(INSERT_TARIFF_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connect.prepareStatement(INSERT_TARIFF_QUERY);
             ps.setInt(1, tariff.getKey());
             ps.setDouble(2, tariff.getCost());
             ps.setDouble(3, tariff.getPrice());
             ps.execute();
-
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if(rs != null && rs.next()){
-                tariff.setKey(rs.getInt(1));
-            }
+            ps.close();
 
             return tariff;
 

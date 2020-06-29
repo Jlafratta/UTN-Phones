@@ -45,9 +45,9 @@ INSERT INTO `user_profile` (name, lastname, dni) values ("admin", "admin", 99999
 
 -- ----------------
 
-INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("LaGorrita", "asd123", false, 1, 3);
-INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("NicoGarcia137", "asd123", false, 2, 7);
-INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("admin", "admin", true, 3, 6);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("LaGorrita", "bfd59291e825b5f2bbf1eb76569f8fe7", false, 1, 3);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("NicoGarcia137", "bfd59291e825b5f2bbf1eb76569f8fe7", false, 2, 7);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("admin", "21232f297a57a5a743894a0e4a801fc3", true, 3, 6);
 
 -- ----------------
 
@@ -60,16 +60,32 @@ insert into `phone_lines` (phone_number, state, id_user, id_type) values ("22311
 INSERT INTO `phone_lines` (phone_number, state, id_user, id_type) values ("2602222222", true, 1, 1);
 INSERT INTO `phone_lines` (phone_number, state, id_user, id_type) values ("2213333333", true, 2, 1);
 INSERT INTO `phone_lines` (phone_number, state, id_user, id_type) values ("1144444444", true, 2, 1);
-INSERT INTO `phone_lines` (phone_number, state, id_user, id_type) values ("2615555555", true, 2, 1);
 
 -- ----------------
 
 INSERT INTO `tariff` (tariff_key, cost, price) values ("22311", 3,  5);
 INSERT INTO `tariff` (tariff_key, cost, price) values ("223221", 4, 7);
 INSERT INTO `tariff` (tariff_key, cost, price) values ("223260", 5, 8);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("223261", 5, 8);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("223223", 5, 8);
+
 INSERT INTO `tariff` (tariff_key, cost, price) values ("26011", 6, 10);
 INSERT INTO `tariff` (tariff_key, cost, price) values ("260221", 7, 12);
 INSERT INTO `tariff` (tariff_key, cost, price) values ("260261", 8, 14);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("260223", 8, 14);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("260260", 8, 14);
+
+INSERT INTO `tariff` (tariff_key, cost, price) values ("1111", 6, 10);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("11221", 7, 12);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("11261", 8, 14);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("11223", 8, 14);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("11260", 8, 14);
+
+INSERT INTO `tariff` (tariff_key, cost, price) values ("22111", 6, 10);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("221221", 7, 12);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("221261", 8, 14);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("221223", 8, 14);
+INSERT INTO `tariff` (tariff_key, cost, price) values ("221260", 8, 14);
 
 -- ----------------
       
@@ -98,10 +114,5 @@ INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)
 	VALUES (200, '2020-06-16 15:00:00', "2602222222", "2213333333");
 INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)
 	VALUES (120, '2020-06-16 10:00:00', "2602222222", "2213333333");
-
-INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)
-	VALUES (200, '2020-06-16 15:00:00', "2602222222", "2615555555");
-INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)
-	VALUES (120, '2020-06-16 10:00:00', "2602222222", "2615555555");
       
 -- ----------------

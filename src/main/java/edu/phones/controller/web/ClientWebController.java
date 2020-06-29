@@ -3,6 +3,7 @@ package edu.phones.controller.web;
 import edu.phones.controller.*;
 import edu.phones.domain.*;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.TariffNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
@@ -49,14 +50,14 @@ public class ClientWebController {
 
     /* 2) Consulta de llamadas del usuario logueado por rango de fechas. */
     @GetMapping("/api/calls")
-    public ResponseEntity<List<Call>> getCalls(@RequestParam(value = "from", required = false) String from,
-                                               @RequestParam(value = "to", required = false) String to,
-                                               @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
+    public ResponseEntity<List<CallRequestDto>> getCalls(@RequestParam(value = "from", required = false) String from,
+                                                         @RequestParam(value = "to", required = false) String to,
+                                                         @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
         User currentUser = getCurrentUser(sessionToken);
-        List<Call> calls;
+        List<CallRequestDto> calls;
         calls = (from != null && to != null)
                 ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to))
-                : callController.getByOriginUser(currentUser);
+                : callController.getByOriginUserId(currentUser.getUserId());
         return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -113,7 +114,7 @@ public class ClientWebController {
         if(username != null){
             User user = userController.getByUsername(username);
             Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
-            calls = callController.getByOriginUser(user);
+            calls = callController.getByOriginUserIdAll(user.getUserId());
         }else {
             calls = callController.getAll();
         }
@@ -154,6 +155,9 @@ public class ClientWebController {
     @PostMapping("/inf")
     public ResponseEntity<Call> addCall(@RequestBody AddCallDto dto,
                                         @RequestHeader("Authorization") String sessionToken) throws CallAlreadyExistsException {
+        if(dto.getFrom().equals(dto.getTo())){
+            return ResponseEntity.badRequest().build();
+        }
         Call call = callController.createCall(dto);
         return ResponseEntity.created(getLocation(call)).build();
     }

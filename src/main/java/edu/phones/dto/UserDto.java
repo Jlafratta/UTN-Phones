@@ -1,5 +1,7 @@
 package edu.phones.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class UserDto {
 
     Integer id;

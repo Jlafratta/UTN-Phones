@@ -3,6 +3,7 @@ package edu.phones.controller;
 import edu.phones.domain.Call;
 import edu.phones.domain.User;
 import edu.phones.dto.AddCallDto;
+import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.CallNotExistException;
 import edu.phones.service.CallService;
@@ -42,15 +43,15 @@ public class CallController {
         return callService.getAll();
     }
 
-    public List<Call> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
         return callService.getByOriginUserFilterByDate(currentUser, from, to);
     }
 
-    public List<Call> getByOriginUser(User currentUser) {
-        return callService.getByOriginUser(currentUser);
+    public List<CallRequestDto> getByOriginUserId(Integer id) {
+        return callService.getByOriginUserId(id);
     }
 
-    public List<Call> getByOriginUserId(Integer id) {
-        return callService.getByOriginUserId(id);
+    public List<Call> getByOriginUserIdAll(Integer userId) {
+        return callService.getByOriginUserIdAll(userId);
     }
 }
