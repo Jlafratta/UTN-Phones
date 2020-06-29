@@ -35,6 +35,7 @@ public class LoginController {
     public ResponseEntity login(@RequestBody LoginRequestDto loginRequestDto) throws InvalidLoginException, ValidationException {
         ResponseEntity response;
         try{
+            
             User u = userController.login(loginRequestDto.getUsername(), loginRequestDto.getPassword()); //Loguea con la data del dto
             String token = sessionManager.createSession(u);         //Genera el token con su session
             response = ResponseEntity.ok().headers(createHeaders(token)).build();   //Crea el header con el token

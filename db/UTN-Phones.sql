@@ -33,7 +33,7 @@ CREATE TABLE `user_profile`(
 CREATE TABLE `users`(
 	`id_user` INTEGER NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(20) UNIQUE NOT NULL,
-	`password` VARCHAR(8) NOT NULL,
+	`password` VARCHAR(255) NOT NULL,
     `isEmployee` BOOLEAN NOT NULL,
 	`id_profile` INTEGER,
 	`id_city` INTEGER,

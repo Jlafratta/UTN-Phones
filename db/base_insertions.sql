@@ -45,9 +45,9 @@ INSERT INTO `user_profile` (name, lastname, dni) values ("admin", "admin", 99999
 
 -- ----------------
 
-INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("LaGorrita", "asd123", false, 1, 3);
-INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("NicoGarcia137", "asd123", false, 2, 7);
-INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("admin", "admin", true, 3, 6);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("LaGorrita", "bfd59291e825b5f2bbf1eb76569f8fe7", false, 1, 3);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("NicoGarcia137", "bfd59291e825b5f2bbf1eb76569f8fe7", false, 2, 7);
+INSERT INTO `users` (username, password, isEmployee, id_profile, id_city) values ("admin", "21232f297a57a5a743894a0e4a801fc3", true, 3, 6);
 
 -- ----------------
 

@@ -19,9 +19,9 @@ BEGIN
         END IF;
         
         SET NEW.city_origin = (select id_city from cities where prefix like prefixOrigin);
-        SET NEW.city_origin_name = (select city_name from cities where prefix like prefixOrigin);
+        SET NEW.city_origin_name = (select city_name from cities where id_city = NEW.city_origin);
         SET NEW.city_destination = (select id_city from cities where prefix like prefixDestination);
-        SET NEW.city_destination_name = (select city_name from cities where prefix like prefixDestination);
+        SET NEW.city_destination_name = (select city_name from cities where id_city = NEW.city_destination);
         SET NEW.pline_origin = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_origin AND state = 1);
         SET NEW.pline_destination = (SELECT id_pline FROM phone_lines where phone_number like NEW.pnumber_destination AND state = 1);
         
