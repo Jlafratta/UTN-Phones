@@ -108,8 +108,15 @@ public class TariffMySQLDao implements TariffDao {
 
     @Override
     public List<Tariff> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<Tariff> getAll(Integer page, Integer size) {
         try {
-            PreparedStatement ps = connect.prepareStatement(BASE_TARIFF_QUERY);
+            PreparedStatement ps = connect.prepareStatement(GET_TARIFF_QUERY_PAGINATION);
+            ps.setInt(1,size );
+            ps.setInt(2,page);
             ResultSet rs = ps.executeQuery();
 
             List<Tariff> tariffList = new ArrayList<>();

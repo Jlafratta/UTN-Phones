@@ -72,7 +72,7 @@ public class MySQLUtils {
 
     protected static String BASE_PROFILE_QUERY  = "SELECT * FROM `user_profile` AS up";
 
-    protected static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t";
+    protected static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t ";
 
 
 
@@ -81,6 +81,9 @@ public class MySQLUtils {
     protected static String GET_BY_USERNAME_AND_PASS_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ? AND u.password = ?";
 
     protected static String GET_BY_USERNAME_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ?";
+
+    protected static String GET_TARIFF_QUERY_PAGINATION  = "SELECT * FROM `tariff` AS t "+
+                                                            "LIMIT ? OFFSET ? ";
 
     // byId
     protected static String GET_BY_ID_USER_QUERY = BASE_USER_QUERY + " WHERE u.id_user = ?";
