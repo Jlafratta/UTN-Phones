@@ -4,6 +4,7 @@ import edu.phones.controller.*;
 import edu.phones.domain.*;
 import edu.phones.dto.AddCallDto;
 import edu.phones.dto.CallRequestDto;
+import edu.phones.dto.LineRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.TariffNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
@@ -76,9 +77,9 @@ public class ClientWebController {
 
     /* 4) Consulta de TOP 10 destinos más llamados por el usuario. */
     @GetMapping("/api/lines/top10")
-    public ResponseEntity<List<PhoneLine>> getTopTenCalls(@RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
+    public ResponseEntity<List<LineRequestDto>> getTopTenCalls(@RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
         User currentUser = getCurrentUser(sessionToken);
-        List<PhoneLine> topTen = lineController.getTopTen(currentUser);
+        List<LineRequestDto> topTen = lineController.getTopTen(currentUser);
         return (topTen.size() > 0) ? ResponseEntity.ok(topTen) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

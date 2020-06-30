@@ -6,6 +6,7 @@ import edu.phones.dao.UserDao;
 import edu.phones.dao.UserTypeDao;
 import edu.phones.domain.PhoneLine;
 import edu.phones.domain.User;
+import edu.phones.dto.LineRequestDto;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import net.bytebuddy.dynamic.scaffold.MethodRegistry;
@@ -39,15 +40,15 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
     }
 
     @Override
-    public List<PhoneLine> getTopTen(User user) {
+    public List<LineRequestDto> getTopTen(User user) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_TOP_TEN_USER_QUERY);
             ps.setInt(1, user.getUserId());
             ResultSet rs = ps.executeQuery();
 
-            List<PhoneLine> topTen = new ArrayList<>();
+            List<LineRequestDto> topTen = new ArrayList<>();
             while(rs.next()){
-                topTen.add(createLine(rs));
+                topTen.add(createLineRequestDto(rs));
             }
             rs.close();
             ps.close();
@@ -74,7 +75,6 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
                 line.setpLineId(rs.getInt(1));
             }
 
-            rs.close();
             ps.close();
 
             return line;
@@ -172,5 +172,9 @@ public class PhoneLineMySQLDao implements PhoneLineDao {
         return new PhoneLine(rs.getInt("id_pline"), rs.getString("phone_number"), rs.getBoolean("state"),
                 userDao.getById(rs.getInt("id_user")),
                 typeDao.getById(rs.getInt("id_type")));
+    }
+
+    private LineRequestDto createLineRequestDto(ResultSet rs) throws SQLException {
+        return new LineRequestDto(rs.getString("pnumber_destination"), rs.getString("city_destination_name"), rs.getInt("cantCalls"));
     }
 }

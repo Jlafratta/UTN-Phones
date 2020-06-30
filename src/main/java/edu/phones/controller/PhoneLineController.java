@@ -2,6 +2,7 @@ package edu.phones.controller;
 
 import edu.phones.domain.PhoneLine;
 import edu.phones.domain.User;
+import edu.phones.dto.LineRequestDto;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import edu.phones.service.PhoneLineService;
@@ -41,7 +42,7 @@ public class PhoneLineController {
         return lineService.getAll();
     }
 
-    public List<PhoneLine> getTopTen(User currentUser) {
+    public List<LineRequestDto> getTopTen(User currentUser) {
         return lineService.getTopTen(currentUser);
     }
 }

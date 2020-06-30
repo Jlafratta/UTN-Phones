@@ -4,6 +4,7 @@ import com.mysql.cj.exceptions.MysqlErrorNumbers;
 import edu.phones.dao.UserDao;
 import edu.phones.dao.UserTypeDao;
 import edu.phones.domain.*;
+import edu.phones.dto.LineRequestDto;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.junit.Before;
@@ -55,7 +56,7 @@ public class PhoneLineMySQLDaoTest {
         doNothing().when(rs).close();
         doNothing().when(ps).close();
 
-        List<PhoneLine> topTen = lineDao.getTopTen(new User(1, "username", "password", false, null, null));
+        List<LineRequestDto> topTen = lineDao.getTopTen(new User(1, "username", "password", false, null, null));
 
         assertTrue(topTen.isEmpty());
         verify(ps, times(1)).executeQuery();
@@ -65,7 +66,7 @@ public class PhoneLineMySQLDaoTest {
     @Test(expected = RuntimeException.class)
     public void testGetTopTenError() throws SQLException {
         when(connect.prepareStatement(GET_TOP_TEN_USER_QUERY)).thenThrow(new SQLException());
-        List<PhoneLine> topTen = lineDao.getTopTen(new User(1, "username", "password", false, null, null));
+        List<LineRequestDto> topTen = lineDao.getTopTen(new User(1, "username", "password", false, null, null));
     }
 
     @Test

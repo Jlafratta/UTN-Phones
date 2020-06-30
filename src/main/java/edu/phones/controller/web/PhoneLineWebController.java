@@ -77,9 +77,11 @@ public class PhoneLineWebController {
 
         PhoneLine line;
         User user = userController.getUser(lineDto.getUserId());
-        UserType type = typeController.getType(lineDto.getTypeId());
-
         Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
+        if(user.isEmployee()){  //  Si es empleado no puede tener una phoneline. Tiene permitido crearse otro perfil de usuario para ser cliente
+            return ResponseEntity.badRequest().build();
+        }
+        UserType type = typeController.getType(lineDto.getTypeId());
         Optional.ofNullable(type).orElseThrow(TypeNotExistException::new);
 
         line = new PhoneLine(lineDto.getNumber(), lineDto.getState(), user, type);
