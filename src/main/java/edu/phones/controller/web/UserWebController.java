@@ -13,6 +13,7 @@ import edu.phones.exceptions.notExist.CityNotExistException;
 import edu.phones.exceptions.notExist.ProfileNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

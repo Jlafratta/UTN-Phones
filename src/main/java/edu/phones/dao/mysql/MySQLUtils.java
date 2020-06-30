@@ -26,7 +26,8 @@ public class MySQLUtils {
                                                                     "ON u.id_user = pl.id_user " +
                                                                     "INNER join calls as c " +
                                                                     "ON c.pline_origin = pl.id_pline " +
-                                                                    "WHERE u.id_user = ?";
+                                                                    "WHERE u.id_user = ?"+
+                                                                    "LIMIT ? OFFSET ?" ;
 
     protected static String GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY = "SELECT c.pnumber_origin, c.city_origin_name, c.pnumber_destination, c.city_destination_name, c.total_price, c.duration, c.call_date FROM users as u " +
                                                                             "INNER JOIN phone_lines as pl " +
@@ -34,7 +35,8 @@ public class MySQLUtils {
                                                                             "INNER JOIN calls as c " +
                                                                             "ON c.pline_origin = pl.id_pline " +
                                                                             "WHERE u.id_user = ? " +
-                                                                            "AND c.call_date between ? AND ?";
+                                                                            "AND c.call_date between ? AND ? "+
+                                                                             "LIMIT ? OFFSET ?";
 
     protected static String GET_BY_USER_FILTER_BY_DATE_BILLS_QUERY = "SELECT * FROM users as u " +
                                                                      "INNER JOIN phone_lines as pl " +

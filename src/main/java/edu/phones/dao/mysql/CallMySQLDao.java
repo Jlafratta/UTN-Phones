@@ -60,10 +60,12 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public List<CallRequestDto> getByOriginUserId(Integer id) {
+    public List<CallRequestDto> getByOriginUserId(Integer id,Integer page, Integer cant) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY);
             ps.setInt(1, id);
+            ps.setInt(4,cant );
+            ps.setInt(5,page);
             ResultSet rs = ps.executeQuery();
 
             List<CallRequestDto> calls = new ArrayList<>();
@@ -79,12 +81,14 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to,Integer page, Integer cant) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
             ps.setInt(1, currentUser.getUserId());
             ps.setDate(2, new java.sql.Date(from.getTime()));
             ps.setDate(3, new java.sql.Date(to.getTime()));
+            ps.setInt(4,cant );
+            ps.setInt(5,page);
             ResultSet rs = ps.executeQuery();
 
             List<CallRequestDto> calls = new ArrayList<>();
