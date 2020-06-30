@@ -104,7 +104,7 @@ public class CallMySQLDao implements CallDao {
         try {
             PreparedStatement ps = connect.prepareStatement(INSERT_CALLS_QUERY, PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setInt(1, call.getDuration());
-            ps.setDate(2, new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(call.getDate()) .getTime()));
+            ps.setString(2, call.getDate().replaceAll("/", "-"));
             ps.setString(3, call.getFrom());
             ps.setString(4, call.getTo());
 
@@ -123,8 +123,6 @@ public class CallMySQLDao implements CallDao {
             }else{
                 throw new RuntimeException(e.getMessage(), e);
             }
-        }catch(ParseException e) {
-            throw new RuntimeException("Error en el formato de fecha", e) ;
         }
     }
 
@@ -189,7 +187,7 @@ public class CallMySQLDao implements CallDao {
     }
 
     private CallRequestDto createCallDto(ResultSet rs) throws SQLException{
-        return new CallRequestDto(rs.getString("pnumber_origin"), rs.getString("city_origin_name"), rs.getString("pnumber_destination"), rs.getString("city_destination_name"), rs.getDouble("total_price"), rs.getInt("duration"), rs.getDate("call_date"));
+        return new CallRequestDto(rs.getString("pnumber_origin"), rs.getString("city_origin_name"), rs.getString("pnumber_destination"), rs.getString("city_destination_name"), rs.getDouble("total_price"), rs.getInt("duration"), rs.getString("call_date"));
     }
 
     private Call createCall(ResultSet rs) throws SQLException {

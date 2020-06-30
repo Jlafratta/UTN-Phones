@@ -10,9 +10,9 @@ public class CallRequestDto {
     String cityDestination;
     Double totalPrice;
     Integer duration;
-    Date call_date;
+    String call_date;
 
-    public CallRequestDto(String numberOrigin, String citiyOrigin, String numberDestination, String cityDestination, Double totalPrice, Integer duration, Date call_date) {
+    public CallRequestDto(String numberOrigin, String citiyOrigin, String numberDestination, String cityDestination, Double totalPrice, Integer duration, String call_date) {
         this.numberOrigin = numberOrigin;
         this.citiyOrigin = citiyOrigin;
         this.numberDestination = numberDestination;
@@ -70,11 +70,11 @@ public class CallRequestDto {
         this.duration = duration;
     }
 
-    public Date getCall_date() {
+    public String getCall_date() {
         return call_date;
     }
 
-    public void setCall_date(Date call_date) {
+    public void setCall_date(String call_date) {
         this.call_date = call_date;
     }
 }

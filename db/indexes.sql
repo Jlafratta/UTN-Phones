@@ -1,7 +1,7 @@
 
-	CREATE INDEX idx_calls_date ON calls(call_date) USING BTREE;
-	CREATE INDEX idx_bills_date ON bills(bill_date) USING BTREE;
-    CREATE INDEX idx_pline_origin ON calls(pline_origin) USING BTREE;
+	CREATE INDEX idx_calls_date ON calls(call_date) USING BTREE;	-- Rango de fechas entre llamadas
+	CREATE INDEX idx_bills_date ON bills(bill_date) USING BTREE;	-- Rango de fechas entre facturas
+    CREATE INDEX idx_pline_origin ON calls(pline_origin) USING BTREE; -- Ordenado para top 10
 
 explain extended SELECT * FROM users as u
 INNER JOIN phone_lines as pl 
@@ -21,7 +21,8 @@ explain extended SELECT * from users as u
 	 ORDER BY count(c.pline_destination) desc 
 	LIMIT 10;
 
-explain extended select pnumber_origin, city_origin, pnumber_destination, city_destination, total_price, duration, call_date from calls where call_date between cast("2020-06-28" as date) AND cast("2020-07-01" as date);
+explain extended select pnumber_origin, city_origin, pnumber_destination, city_destination, total_price, duration, call_date 
+from calls where call_date between cast("2020-06-28" as date) AND cast("2020-07-01" as date);
 
 
 
@@ -51,9 +52,6 @@ END //
 DELIMITER ;
 
 CALL sp_insert_calls;
-
-explain extended select count(*) from calls;
-select * from calls;
 
 SELECT table_schema AS "Database",
 ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS "Size (MB)"

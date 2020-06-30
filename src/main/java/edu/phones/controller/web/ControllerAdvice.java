@@ -37,8 +37,6 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
         return new ErrorResponseDto(3, "User not exists");
     }
 
-
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ProfileNotExistException.class)
     public ErrorResponseDto handleProfileNotExist(){
@@ -102,9 +100,6 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ErrorResponseDto handlePhoneLineNotExist(){
         return new ErrorResponseDto(9, "PhoneLine not exists");
     }
-
-
-
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(TypeNotExistException.class)

@@ -136,7 +136,7 @@ public class MySQLUtils {
     protected static String INSERT_TARIFF_QUERY = "INSERT INTO `tariff` (tariff_key, cost, price)" +
             "VALUES (?, ?, ?)";
 
-    protected static String INSERT_CALLS_QUERY = "INSERT INTO `calls` (duration,  call_date, pnumber_origin, pnumber_destination)" +
+    protected static String INSERT_CALLS_QUERY = "INSERT INTO `calls` (duration, call_date, pnumber_origin, pnumber_destination)" +
             "VALUES (?, ?, ?, ?)";
 
     /* UPDATEs */
