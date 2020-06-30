@@ -78,13 +78,15 @@ public class TariffControllerTest {
     @Test
     public void testGetAllTariffsOk(){
         List<Tariff> tariffList = new ArrayList<>();
+        int page = 1;
+        int size = 1;
         tariffList.add( new Tariff(22311, 1.0, 1.0));
-        when(tariffService.getAll()).thenReturn(tariffList);
+        when(tariffService.getAll(page, size)).thenReturn(tariffList);
 
-        List<Tariff> tariffsGetted = tariffController.getAll();
+        List<Tariff> tariffsGetted = tariffController.getAll(page, size);
 
         assertNotNull(tariffsGetted);
         assertEquals(tariffList, tariffsGetted);
-        verify(tariffService, times(1)).getAll();
+        verify(tariffService, times(1)).getAll(page, size);
     }
 }

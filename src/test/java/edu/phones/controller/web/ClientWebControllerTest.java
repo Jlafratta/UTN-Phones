@@ -280,31 +280,35 @@ public class ClientWebControllerTest {
 
     @Test   // "backoffice/tariffs"
     public void testGetAllTariffsOk(){
+        int page = 1;
+        int size = 1;
         String sessionToken = "StringValue";
         List<Tariff> tariffList = new ArrayList<>();
         tariffList.add(new Tariff(123321, 1.0, 1.0));
 
-        when(tariffController.getAll()).thenReturn(tariffList);
+        when(tariffController.getAll(page, size)).thenReturn(tariffList);
 
-        ResponseEntity<List<Tariff>> response = clientWebController.getAllTariffs(sessionToken);
+        ResponseEntity<List<Tariff>> response = clientWebController.getAllTariffs(page, size, sessionToken);
 
         assertNotNull(tariffList);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(tariffList, response.getBody());
-        verify(tariffController, times(1)).getAll();
+        verify(tariffController, times(1)).getAll(page, size);
     }
 
     @Test   // "backoffice/tariffs"
     public void testGetAllTariffsNoContent(){
+        int page = 1;
+        int size = 1;
         String sessionToken = "StringValue";
         List<Tariff> tariffList = new ArrayList<>();
 
-        when(tariffController.getAll()).thenReturn(tariffList);
+        when(tariffController.getAll(page, size)).thenReturn(tariffList);
 
-        ResponseEntity<List<Tariff>> response = clientWebController.getAllTariffs(sessionToken);
+        ResponseEntity<List<Tariff>> response = clientWebController.getAllTariffs(page, size, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-        verify(tariffController, times(1)).getAll();
+        verify(tariffController, times(1)).getAll(page, size);
     }
 
     @Test   // "backoffice/calls"

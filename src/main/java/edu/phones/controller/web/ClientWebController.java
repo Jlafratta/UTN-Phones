@@ -126,7 +126,7 @@ public class ClientWebController {
 
     /* 5) Consulta de llamadas por usuario. */
     @GetMapping("/backoffice/calls")
-    public ResponseEntity<List<Call>> getCallsByUsername(@RequestParam(value = "username", required = false) String username,
+    public ResponseEntity<List<Call>> getCallsByUsername(@RequestParam(value = "user", required = false) String username,
                                                          @RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
         List<Call> calls;
 
@@ -159,6 +159,7 @@ public class ClientWebController {
         Bill bill = billController.getBill(id);
         return (bill != null) ? ResponseEntity.ok(bill) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
     // Consulta por cliente
     @GetMapping("/backoffice/client/{id}/bills")
     public ResponseEntity<List<Bill>> getBillsByUser(@PathVariable Integer id, @RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
