@@ -60,10 +60,12 @@ public class CallMySQLDao implements CallDao {
     }
 
     @Override
-    public List<CallRequestDto> getByOriginUserId(Integer id,Integer page, Integer offset) {
+    public List<CallRequestDto> getByOriginUserId(Integer id,Integer page, Integer cant) {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY);
             ps.setInt(1, id);
+            ps.setInt(4,cant );
+            ps.setInt(5,page);
             ResultSet rs = ps.executeQuery();
 
             List<CallRequestDto> calls = new ArrayList<>();
