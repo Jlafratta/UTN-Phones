@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static edu.phones.dao.mysql.MySQLUtils.*;
@@ -49,8 +50,46 @@ public class CallMySQLDaoTest {
     }
 
     @Test
-    public void testGetByOriginUserIdNoContent() throws SQLException {
+    public void testGetByOriginUserIdOk() throws SQLException {
+        int id = 1;
+        int page = 1;
+        int size = 1;
+        when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY)).thenReturn(ps);
+        doNothing().when(ps).setInt(1, id);
+        doNothing().when(ps).setInt(2, size);
+        doNothing().when(ps).setInt(3, page);
+        when(ps.executeQuery()).thenReturn(rs);
 
+        List<CallRequestDto> calls = new ArrayList<>();
+        when(rs.next()).thenReturn(true).thenReturn(false);
+        when(rs.getString("pnumber_origin")).thenReturn("2231111111");
+        when(rs.getString("city_origin_name")).thenReturn("city1");
+        when(rs.getString("pnumber_destination")).thenReturn("2213333333");
+        when(rs.getString("city_destination_name")).thenReturn("city2");
+        when(rs.getDouble("total_price")).thenReturn(1.0);
+        when(rs.getInt("duration")).thenReturn(1);
+        when(rs.getDate("call_date")).thenReturn(new Date(new java.util.Date().getTime()));
+
+        calls = callDao.getByOriginUserId(1, page, size);
+
+        assertNotNull(calls);
+        assertEquals(1, calls.size());
+        verify(ps, times(1)).executeQuery();
+        verify(rs, times(2)).next();
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetByOriginUserIdError() throws SQLException {
+        int id = 1;
+        int page = 1;
+        int size = 1;
+        when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY)).thenThrow(new SQLException());
+
+        List<CallRequestDto> calls = callDao.getByOriginUserId(1, page, size);
+    }
+
+    @Test
+    public void testGetByOriginUserIdAllNoContent() throws SQLException {
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_CALLS_QUERY)).thenReturn(ps);
         doNothing().when(ps).setInt(1, 1);
         when(ps.executeQuery()).thenReturn(rs);
@@ -68,7 +107,7 @@ public class CallMySQLDaoTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testGetByOriginUserIdError() throws SQLException {
+    public void testGetByOriginUserIdAllError() throws SQLException {
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_CALLS_QUERY)).thenThrow(new SQLException());
         List<Call> calls = callDao.getByOriginUserIdAll(1);
     }

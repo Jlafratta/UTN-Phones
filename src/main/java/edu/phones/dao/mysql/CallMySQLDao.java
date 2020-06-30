@@ -64,8 +64,8 @@ public class CallMySQLDao implements CallDao {
         try {
             PreparedStatement ps = connect.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY);
             ps.setInt(1, id);
-            ps.setInt(4,cant );
-            ps.setInt(5,page);
+            ps.setInt(2,cant );
+            ps.setInt(3,page);
             ResultSet rs = ps.executeQuery();
 
             List<CallRequestDto> calls = new ArrayList<>();
