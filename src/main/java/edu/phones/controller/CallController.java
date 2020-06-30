@@ -43,12 +43,12 @@ public class CallController {
         return callService.getAll();
     }
 
-    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to,Integer page, Integer cant) {
-        return callService.getByOriginUserFilterByDate(currentUser, from, to, page, cant);
+    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to,Integer page, Integer size) {
+        return callService.getByOriginUserFilterByDate(currentUser, from, to, page, size);
     }
 
-    public List<CallRequestDto> getByOriginUserId(Integer id, Integer page, Integer offset) {
-        return callService.getByOriginUserId(id, page, offset);
+    public List<CallRequestDto> getByOriginUserId(Integer id, Integer page, Integer size) {
+        return callService.getByOriginUserId(id, page, size);
     }
 
     public List<Call> getByOriginUserIdAll(Integer userId) {

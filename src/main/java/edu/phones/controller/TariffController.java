@@ -35,8 +35,8 @@ public class TariffController {
         return tariffService.getTariff(id);
     }
 
-    public List<Tariff>getAll(){
-        return tariffService.getAll();
+    public List<Tariff>getAll(Integer page,Integer size){
+        return tariffService.getAll(page , size);
     }
 
 }

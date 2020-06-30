@@ -9,6 +9,7 @@ import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.TariffNotExistException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,15 +55,15 @@ public class ClientWebController {
     public ResponseEntity<List<CallRequestDto>> getCalls(@RequestParam(value = "from", required = false) String from,
                                                          @RequestParam(value = "to", required = false) String to,
                                                          @RequestParam(value = "page") Integer page,
-                                                         @RequestParam(value = "offset")Integer cant,
+                                                         @RequestParam(value = "size")Integer size,
                                                          @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
         User currentUser = getCurrentUser(sessionToken);
         List<CallRequestDto> calls;
-        if(cant>0 && page>0)
+        if(size>0 && page>0)
         {
             calls = (from != null && to != null)
-                ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to), page , cant)
-                : callController.getByOriginUserId(currentUser.getUserId(), page , cant);
+                ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to), page , size)
+                : callController.getByOriginUserId(currentUser.getUserId(), page , size);
         }
         else{
             return ResponseEntity.badRequest().build();
@@ -110,8 +111,16 @@ public class ClientWebController {
     }
 
     @GetMapping("/backoffice/tariffs")
-    public ResponseEntity<List<Tariff>> getAllTariffs(@RequestHeader("Authorization") String sessionToken) {
-        List<Tariff> tariffList = tariffController.getAll();
+    public ResponseEntity<List<Tariff>> getAllTariffs(  @RequestParam(value = "page") Integer page,
+                                                        @RequestParam(value = "size")Integer size,
+                                                        @RequestHeader("Authorization") String sessionToken) {
+        List<Tariff> tariffList =new ArrayList<>();
+       if(size>0 && page>0) {
+            tariffList = tariffController.getAll(page,size);
+       }
+       else{
+           return ResponseEntity.badRequest().build();
+       }
         return (tariffList.size() > 0) ? ResponseEntity.ok(tariffList) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

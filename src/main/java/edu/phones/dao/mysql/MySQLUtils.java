@@ -27,7 +27,7 @@ public class MySQLUtils {
                                                                     "ON u.id_user = pl.id_user " +
                                                                     "INNER join calls as c " +
                                                                     "ON c.pline_origin = pl.id_pline " +
-                                                                    "WHERE u.id_user = ?"+
+                                                                    "WHERE u.id_user = ? "+
                                                                     "LIMIT ? OFFSET ?" ;
 
     protected static String GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY = "SELECT c.pnumber_origin, c.city_origin_name, c.pnumber_destination, c.city_destination_name, c.total_price, c.duration, c.call_date FROM users as u " +
@@ -72,7 +72,7 @@ public class MySQLUtils {
 
     protected static String BASE_PROFILE_QUERY  = "SELECT * FROM `user_profile` AS up";
 
-    protected static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t";
+    protected static String BASE_TARIFF_QUERY  = "SELECT * FROM `tariff` AS t ";
 
 
 
@@ -81,6 +81,9 @@ public class MySQLUtils {
     protected static String GET_BY_USERNAME_AND_PASS_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ? AND u.password = ?";
 
     protected static String GET_BY_USERNAME_USER_QUERY = BASE_USER_QUERY +  " WHERE u.username = ?";
+
+    protected static String GET_TARIFF_QUERY_PAGINATION  = "SELECT * FROM `tariff` AS t "+
+                                                            "LIMIT ? OFFSET ? ";
 
     // byId
     protected static String GET_BY_ID_USER_QUERY = BASE_USER_QUERY + " WHERE u.id_user = ?";

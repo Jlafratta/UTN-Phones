@@ -42,7 +42,8 @@ public class TariffService {
         return tariffDao.getById(id);
     }
 
-    public List<Tariff> getAll() {
-        return tariffDao.getAll();
+    public List<Tariff> getAll(Integer page, Integer size) {
+        page = size * (page-1);
+        return tariffDao.getAll(page,size);
     }
 }

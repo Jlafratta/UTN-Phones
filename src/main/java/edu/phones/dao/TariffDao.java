@@ -16,5 +16,5 @@ public interface TariffDao extends AbstractDao<Tariff>{
 
     Tariff getById(Integer id);
 
-    List<Tariff> getAll();
+    List<Tariff> getAll(Integer page,Integer size);
 }
