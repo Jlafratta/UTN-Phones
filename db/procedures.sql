@@ -31,7 +31,7 @@ BEGIN
     WHILE (vFinished=0) DO
     START TRANSACTION;
         # Creo la bill con la data del cursor
-        INSERT INTO `bills` (cost, price, bill_date, expire_date, calls_count, id_pline) values (vCost, vPrice, now(), date_add(bill_date, INTERVAL 15 DAY), vCallsCount, vIdPhoneLine);
+        INSERT INTO `bills` (cost, price, bill_date, expire_date, calls_count, id_pline) values (format((vCost),2),format((vPrice),2) , now(), date_add(bill_date, INTERVAL 15 DAY), vCallsCount, vIdPhoneLine);
         SET vIdBill = last_insert_id();
         SET foreign_key_checks = 0; # Habilito la modificacion de las fk
         # Updateo las llamadas que inserte en la bill, asignandoles el id de la bill a la que pertenecen
