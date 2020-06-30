@@ -52,12 +52,14 @@ public class ClientWebController {
     @GetMapping("/api/calls")
     public ResponseEntity<List<CallRequestDto>> getCalls(@RequestParam(value = "from", required = false) String from,
                                                          @RequestParam(value = "to", required = false) String to,
+                                                         @RequestParam(value = "page") Integer page,
+                                                         @RequestParam(value = "offset")Integer cant,
                                                          @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
         User currentUser = getCurrentUser(sessionToken);
         List<CallRequestDto> calls;
         calls = (from != null && to != null)
-                ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to))
-                : callController.getByOriginUserId(currentUser.getUserId());
+                ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to), page , cant)
+                : callController.getByOriginUserId(currentUser.getUserId(), page , cant);
         return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
