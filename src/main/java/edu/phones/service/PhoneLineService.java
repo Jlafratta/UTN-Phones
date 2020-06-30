@@ -3,6 +3,7 @@ package edu.phones.service;
 import edu.phones.dao.PhoneLineDao;
 import edu.phones.domain.PhoneLine;
 import edu.phones.domain.User;
+import edu.phones.dto.LineRequestDto;
 import edu.phones.exceptions.alreadyExist.PhoneLineAlreadyExistsException;
 import edu.phones.exceptions.notExist.PhoneLineNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class PhoneLineService {
         return lineDao.getAll();
     }
 
-    public List<PhoneLine> getTopTen(User currentUser) {
+    public List<LineRequestDto> getTopTen(User currentUser) {
         return lineDao.getTopTen(currentUser);
     }
 }

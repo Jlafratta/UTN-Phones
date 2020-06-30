@@ -26,8 +26,7 @@ public class UserService {
 
     /** METHODS **/
     public User login(String username, String password) throws UserNotExistException {
-        User user = null;
-        user = userDao.getByUsernameAndPassword(username, hashPass(password));
+        User user = userDao.getByUsernameAndPassword(username, hashPass(password));
         return Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
     }
 

@@ -31,12 +31,13 @@ public class UserServiceTest {
     @Test
     public void testLoginOk() throws UserNotExistException {
         User logged = new User(1, "username", "password", null, null, null);
-        when(userDao.getByUsernameAndPassword("username", "password")).thenReturn(logged);
-        User returned = userService.login("username", "password");
+        String hashedPass = "21232f297a57a5a743894a0e4a801fc3";
+        when(userDao.getByUsernameAndPassword("username", hashedPass)).thenReturn(logged);
+        User returned = userService.login("username", "admin");
 
         assertEquals(logged.getUserId(), returned.getUserId());
         assertEquals(logged.getUsername(), returned.getUsername());
-        verify(userDao, times(1)).getByUsernameAndPassword("username", "password");
+        verify(userDao, times(1)).getByUsernameAndPassword("username", hashedPass);
     }
 
     @Test(expected = UserNotExistException.class)

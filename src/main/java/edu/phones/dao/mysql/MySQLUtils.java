@@ -4,14 +4,15 @@ public class MySQLUtils {
 
     /* Custom */
 
-    protected static String GET_TOP_TEN_USER_QUERY = "SELECT * from users as u " +
+    protected static String GET_TOP_TEN_USER_QUERY = "SELECT c.pnumber_destination, c.city_destination_name, count(c.pline_destination) as cantCalls " +
+                                                     "FROM users as u " +
                                                      "INNER JOIN phone_lines as pl " +
                                                      "ON u.id_user = pl.id_user " +
                                                      "INNER JOIN calls as c " +
                                                      "ON c.pline_origin = pl.id_pline " +
                                                      "WHERE u.id_user = ? " +
                                                      "GROUP BY c.pline_destination " +
-                                                     "ORDER BY count(c.pline_destination) desc " +
+                                                     "ORDER BY cantCalls desc " +
                                                      "LIMIT 10";
 
     protected static String GET_BY_ORIGIN_USER_ID_CALLS_QUERY = "SELECT * FROM users as u " +

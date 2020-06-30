@@ -4,6 +4,7 @@ import edu.phones.controller.*;
 import edu.phones.domain.*;
 import edu.phones.dto.AddCallDto;
 import edu.phones.dto.CallRequestDto;
+import edu.phones.dto.LineRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
 import edu.phones.exceptions.notExist.UserNotExistException;
 import edu.phones.session.SessionManager;
@@ -215,13 +216,13 @@ public class ClientWebControllerTest {
     public void testGetTopTenCallsOk() throws UserNotExistException {
         String sessionToken = "StringValue";
         User currentUser = new User (1, "username", "password", false, null, null);
-        List<PhoneLine> topTen = new ArrayList<>();
-        topTen.add(new PhoneLine(1, "2231111111", null, null, null));
+        List<LineRequestDto> topTen = new ArrayList<>();
+        topTen.add(new LineRequestDto("2231111111", "Mar del Plata", 1));
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(lineController.getTopTen(currentUser)).thenReturn(topTen);
 
-        ResponseEntity<List<PhoneLine>> response = clientWebController.getTopTenCalls(sessionToken);
+        ResponseEntity<List<LineRequestDto>> response = clientWebController.getTopTenCalls(sessionToken);
 
         assertNotNull(topTen);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -234,12 +235,12 @@ public class ClientWebControllerTest {
     public void testGetTopTenCallsNoContent() throws UserNotExistException {
         String sessionToken = "StringValue";
         User currentUser = new User (1, "username", "password", false, null, null);
-        List<PhoneLine> topTen = new ArrayList<>();
+        List<LineRequestDto> topTen = new ArrayList<>();
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
         when(lineController.getTopTen(currentUser)).thenReturn(topTen);
 
-        ResponseEntity<List<PhoneLine>> response = clientWebController.getTopTenCalls(sessionToken);
+        ResponseEntity<List<LineRequestDto>> response = clientWebController.getTopTenCalls(sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
