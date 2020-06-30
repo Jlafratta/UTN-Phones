@@ -51,7 +51,7 @@ public class CallService {
     }
 
     public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to,Integer page, Integer cant) {
-        page = page * (cant-1);
+        page = cant * (page-1);
         return callDao.getByOriginUserFilterByDate(currentUser, from, to, page, cant);
     }
 
