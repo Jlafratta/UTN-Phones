@@ -50,14 +50,12 @@ public class CallService {
         return callDao.getAll();
     }
 
-    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to,Integer page, Integer cant) {
-        page = cant * (page-1);
-        return callDao.getByOriginUserFilterByDate(currentUser, from, to, page, cant);
+    public List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to) {
+        return callDao.getByOriginUserFilterByDate(currentUser, from, to);
     }
 
-    public List<CallRequestDto> getByOriginUserId(Integer id,Integer page, Integer cant) {
-        page = cant * (page-1);
-        return callDao.getByOriginUserId(id,page,cant);
+    public List<CallRequestDto> getByOriginUserId(Integer id) {
+        return callDao.getByOriginUserId(id);
     }
 
     public List<Call> getByOriginUserIdAll(Integer userId) {

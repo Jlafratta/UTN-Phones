@@ -129,9 +129,18 @@ public class TariffMySQLDaoTest {
         Tariff tariff = tariffDao.getById(1);
     }
 
+    @Test(expected = UnsupportedOperationException.class)
+    public void testGetAllUnsupported(){
+        List<Tariff> tariffList = tariffDao.getAll();
+    }
+
     @Test
     public void testGetAllOk() throws SQLException {
-        when(connect.prepareStatement(BASE_TARIFF_QUERY)).thenReturn(ps);
+        int page = 1;
+        int size = 1;
+        when(connect.prepareStatement(GET_TARIFF_QUERY_PAGINATION)).thenReturn(ps);
+        doNothing().when(ps).setInt(1, size);
+        doNothing().when(ps).setInt(2, page);
         when(ps.executeQuery()).thenReturn(rs);
 
         when(rs.next()).thenReturn(true).thenReturn(false);
@@ -139,7 +148,7 @@ public class TariffMySQLDaoTest {
         when(rs.getDouble("cost")).thenReturn(1.0);
         when(rs.getDouble("price")).thenReturn(1.0);
 
-        List<Tariff> tariffList = tariffDao.getAll();
+        List<Tariff> tariffList = tariffDao.getAll(page, size);
 
         assertNotNull(tariffList);
         assertEquals(1, tariffList.size());
@@ -149,7 +158,9 @@ public class TariffMySQLDaoTest {
 
     @Test(expected = RuntimeException.class)
     public void testGetAllError() throws SQLException {
+        int page = 1;
+        int size = 1;
         when(connect.prepareStatement(BASE_TARIFF_QUERY)).thenThrow(new SQLException());
-        List<Tariff> tariffList = tariffDao.getAll();
+        List<Tariff> tariffList = tariffDao.getAll(page, size);
     }
 }

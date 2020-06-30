@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -54,20 +55,14 @@ public class ClientWebController {
     @GetMapping("/api/calls")
     public ResponseEntity<List<CallRequestDto>> getCalls(@RequestParam(value = "from", required = false) String from,
                                                          @RequestParam(value = "to", required = false) String to,
-                                                         @RequestParam(value = "page") Integer page,
-                                                         @RequestParam(value = "size")Integer size,
                                                          @RequestHeader("Authorization") String sessionToken) throws UserNotExistException, ParseException {
         User currentUser = getCurrentUser(sessionToken);
         List<CallRequestDto> calls;
-        if(size>0 && page>0)
-        {
+
             calls = (from != null && to != null)
-                ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to), page , size)
-                : callController.getByOriginUserId(currentUser.getUserId(), page , size);
-        }
-        else{
-            return ResponseEntity.badRequest().build();
-        }
+                ? callController.getByOriginUserFilterByDate(currentUser, dateConverter(from), dateConverter(to))
+                : callController.getByOriginUserId(currentUser.getUserId());
+
 
         return (calls.size() > 0) ? ResponseEntity.ok(calls) : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -126,14 +121,14 @@ public class ClientWebController {
 
     /* 5) Consulta de llamadas por usuario. */
     @GetMapping("/backoffice/calls")
-    public ResponseEntity<List<Call>> getCallsByUsername(@RequestParam(value = "user", required = false) String username,
+    public ResponseEntity<List<Call>> getCallsByUsername(@RequestParam(value = "user", required = false) String user,
                                                          @RequestHeader("Authorization") String sessionToken) throws UserNotExistException {
         List<Call> calls;
 
-        if(username != null){
-            User user = userController.getByUsername(username);
-            Optional.ofNullable(user).orElseThrow(UserNotExistException::new);
-            calls = callController.getByOriginUserIdAll(user.getUserId());
+        if(user != null){
+            User u = userController.getByUsername(user);
+            Optional.ofNullable(u).orElseThrow(UserNotExistException::new);
+            calls = callController.getByOriginUserIdAll(u.getUserId());
         }else {
             calls = callController.getAll();
         }

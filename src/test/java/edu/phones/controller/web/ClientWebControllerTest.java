@@ -55,19 +55,17 @@ public class ClientWebControllerTest {
         List<CallRequestDto> calls = new ArrayList<>();
         calls.add(new CallRequestDto( "2231111111", "StringValue", "2211111111", "StringValue", 1.0, 1, null));
         User currentUser = new User (1, "username", "password", false, null, null);
-        Integer page =1;
-        Integer cant = 5;
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
-        when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to),page,cant)).thenReturn(calls);
+        when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to))).thenReturn(calls);
 
-        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, page,cant ,sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertNotNull(calls);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(calls, response.getBody());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
-        verify(callController, times(1)).getByOriginUserFilterByDate(currentUser, new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to),page , cant);
+        verify(callController, times(1)).getByOriginUserFilterByDate(currentUser, new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to));
     }
 
     @Test   // "/api/calls"
@@ -78,17 +76,16 @@ public class ClientWebControllerTest {
         String sessionToken = "StringValue";
         List<CallRequestDto> calls = new ArrayList<>();
         User currentUser = new User (1, "username", "password", false, null, null);
-        Integer page =1;
-        Integer cant = 5;
+
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
-        when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to),page,cant)).thenReturn(calls);
+        when(callController.getByOriginUserFilterByDate(currentUser,  new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to))).thenReturn(calls);
 
-        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to,page,cant, sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
-        verify(callController, times(1)).getByOriginUserFilterByDate(currentUser, new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to),page,cant);
+        verify(callController, times(1)).getByOriginUserFilterByDate(currentUser, new SimpleDateFormat("dd/MM/yyyy").parse(from), new SimpleDateFormat("dd/MM/yyyy").parse(to));
     }
 
     @Test   // "api/calls"
@@ -99,19 +96,17 @@ public class ClientWebControllerTest {
         List<CallRequestDto> calls = new ArrayList<>();
         calls.add(new CallRequestDto( "2231111111", "StringValue", "2211111111", "StringValue", 1.0, 1, null));
         User currentUser = new User (1, "username", "password", false, null, null);
-        Integer page =1;
-        Integer cant = 5;
 
         when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
-        when(callController.getByOriginUserId(currentUser.getUserId(),page,cant)).thenReturn(calls);
+        when(callController.getByOriginUserId(currentUser.getUserId())).thenReturn(calls);
 
-        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to,page,cant,sessionToken);
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertNotNull(calls);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(calls, response.getBody());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
-        verify(callController, times(1)).getByOriginUserId(currentUser.getUserId(),page,cant);
+        verify(callController, times(1)).getByOriginUserId(currentUser.getUserId());
     }
 
     @Test   // "api/calls"
@@ -121,16 +116,15 @@ public class ClientWebControllerTest {
         String sessionToken = "StringValue";
         List<CallRequestDto> calls = new ArrayList<>();
         User currentUser = new User (1, "username", "password", false, null, null);
-        Integer page =1;
-        Integer cant = 5;
-        when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
-        when(callController.getByOriginUserId(currentUser.getUserId(),page,cant)).thenReturn(calls);
 
-        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to,page,cant, sessionToken);
+        when(sessionManager.getCurrentUser(sessionToken)).thenReturn(currentUser);
+        when(callController.getByOriginUserId(currentUser.getUserId())).thenReturn(calls);
+
+        ResponseEntity<List<CallRequestDto>> response =  clientWebController.getCalls(from, to, sessionToken);
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(sessionManager, times(1)).getCurrentUser(sessionToken);
-        verify(callController, times(1)).getByOriginUserId(currentUser.getUserId(),page,cant);
+        verify(callController, times(1)).getByOriginUserId(currentUser.getUserId());
     }
 
 

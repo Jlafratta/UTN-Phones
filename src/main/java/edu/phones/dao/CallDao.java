@@ -22,9 +22,9 @@ public interface CallDao extends AbstractDao<Call>{
 
     List<Call> getAll();
 
-    List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to,Integer page, Integer offset);
+    List<CallRequestDto> getByOriginUserFilterByDate(User currentUser, Date from, Date to);
 
-    List<CallRequestDto> getByOriginUserId(Integer id,Integer page , Integer size);
+    List<CallRequestDto> getByOriginUserId(Integer id);
 
     List<Call> getByOriginUserIdAll(Integer userId);
 }

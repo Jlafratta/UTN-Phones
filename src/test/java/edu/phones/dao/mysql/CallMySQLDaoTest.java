@@ -9,7 +9,6 @@ import edu.phones.domain.User;
 import edu.phones.dto.AddCallDto;
 import edu.phones.dto.CallRequestDto;
 import edu.phones.exceptions.alreadyExist.CallAlreadyExistsException;
-import edu.phones.exceptions.alreadyExist.UserAlreadyExistsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -52,12 +51,8 @@ public class CallMySQLDaoTest {
     @Test
     public void testGetByOriginUserIdOk() throws SQLException {
         int id = 1;
-        int page = 1;
-        int size = 1;
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY)).thenReturn(ps);
         doNothing().when(ps).setInt(1, id);
-        doNothing().when(ps).setInt(2, size);
-        doNothing().when(ps).setInt(3, page);
         when(ps.executeQuery()).thenReturn(rs);
 
         List<CallRequestDto> calls = new ArrayList<>();
@@ -70,7 +65,7 @@ public class CallMySQLDaoTest {
         when(rs.getInt("duration")).thenReturn(1);
         when(rs.getDate("call_date")).thenReturn(new Date(new java.util.Date().getTime()));
 
-        calls = callDao.getByOriginUserId(1, page, size);
+        calls = callDao.getByOriginUserId(1);
 
         assertNotNull(calls);
         assertEquals(1, calls.size());
@@ -81,11 +76,9 @@ public class CallMySQLDaoTest {
     @Test(expected = RuntimeException.class)
     public void testGetByOriginUserIdError() throws SQLException {
         int id = 1;
-        int page = 1;
-        int size = 1;
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_ID_DTO_CALLS_QUERY)).thenThrow(new SQLException());
 
-        List<CallRequestDto> calls = callDao.getByOriginUserId(1, page, size);
+        List<CallRequestDto> calls = callDao.getByOriginUserId(id);
     }
 
     @Test
@@ -116,8 +109,7 @@ public class CallMySQLDaoTest {
     public void testGetByOriginUserFilterByDateNoContent() throws SQLException {
         Date from = new Date(new java.util.Date().getTime());
         Date to = new Date(new java.util.Date().getTime());
-        Integer page =1;
-        Integer cant = 5;
+
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY)).thenReturn(ps);
         doNothing().when(ps).setInt(1, 1);
         doNothing().when(ps).setDate(2, from);
@@ -129,7 +121,7 @@ public class CallMySQLDaoTest {
         doNothing().when(rs).close();
         doNothing().when(ps).close();
 
-        List<CallRequestDto> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to,page,cant);
+        List<CallRequestDto> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to);
 
         assertTrue(calls.isEmpty());
         verify(connection, times(1)).prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY);
@@ -140,10 +132,8 @@ public class CallMySQLDaoTest {
     public void testGetByOriginUserFilterByDateError() throws SQLException {
         Date from = new Date(new java.util.Date().getTime());
         Date to = new Date(new java.util.Date().getTime());
-        Integer page =1;
-        Integer cant = 5;
         when(connection.prepareStatement(GET_BY_ORIGIN_USER_FILTER_BY_DATE_CALLS_QUERY)).thenThrow(new SQLException());
-        List<CallRequestDto> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to,page,cant);
+        List<CallRequestDto> calls = callDao.getByOriginUserFilterByDate(new User(1, "username", "password", false, null, null), from, to);
     }
 
     @Test

@@ -108,7 +108,7 @@ public class TariffMySQLDao implements TariffDao {
 
     @Override
     public List<Tariff> getAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
